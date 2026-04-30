@@ -1,4 +1,5 @@
 import { Globe } from 'lucide-react';
+import { LogoSymbol } from '@/components/ui/LogoSymbol';
 
 export default function Footer() {
   return (
@@ -7,9 +8,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-2">
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-olivo text-white shrink-0">
-                <Globe size={20} />
-              </div>
+              <LogoSymbol className="w-8 h-8 shrink-0 text-olivo" />
               <div className="flex flex-col">
                 <span className="font-display font-bold text-lg leading-tight uppercase">Sentido Migrante</span>
                 <span className="text-[0.65rem] font-medium leading-tight text-white/50">Psicoterapia humanista y vínculo cultural</span>

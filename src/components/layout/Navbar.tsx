@@ -4,7 +4,7 @@ import { Bell, User, Menu, X, Home, Stethoscope, Calendar, BookOpen, UserCircle,
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-
+import { LogoSymbol } from '@/components/ui/LogoSymbol';
 export default function Navbar() {
   const [lang, setLang] = useState('ES');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,9 +36,7 @@ export default function Navbar() {
         <div className="flex h-16 items-center justify-between px-4 md:px-6 max-w-5xl mx-auto">
           {/* Isotype: Symbol + Text + Subtitle */}
           <Link href="/" className="flex items-center gap-2 z-50 relative" onClick={() => setIsMenuOpen(false)}>
-            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-olivo text-white shrink-0">
-               <Globe size={20} />
-            </div>
+            <LogoSymbol className={`w-8 h-8 shrink-0 transition-colors ${isMenuOpen ? 'text-white' : 'text-olivo'}`} />
             <div className="flex flex-col">
               <span className={`font-display font-bold text-lg leading-tight uppercase transition-colors uppercase ${isMenuOpen ? 'text-white' : 'text-bluegrey-900'}`}>Sentido Migrante</span>
               <span className={`text-[0.65rem] font-medium leading-tight transition-colors ${isMenuOpen ? 'text-suculenta' : 'text-bosque-dark'}`}>Psicoterapia humanista y vínculo cultural</span>
