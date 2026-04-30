@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
+import Credentials from "next-auth/providers/credentials";
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || "http://127.0.0.1:1337";
 
@@ -8,6 +9,42 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Google({
       clientId: process.env.AUTH_GOOGLE_ID,
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
+    }),
+    Credentials({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) return null;
+
+        try {
+          const res = await fetch(`${STRAPI_URL}/api/auth/local`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              identifier: credentials.email,
+              password: credentials.password,
+            }),
+          });
+
+          const data = await res.json();
+
+          if (res.ok && data.user) {
+            return {
+              id: data.user.id.toString(),
+              name: data.user.username,
+              email: data.user.email,
+              strapiToken: data.jwt,
+            };
+          }
+          return null;
+        } catch (error) {
+          console.error("Error with credentials login:", error);
+          return null;
+        }
+      }
     }),
   ],
   callbacks: {
@@ -67,7 +104,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     /**
      * jwt callback: Enriquece el token JWT con el Strapi JWT y datos del usuario.
      */
-    async jwt({ token, account, profile }) {
+    async jwt({ token, account, profile, user }) {
+      // Si el inicio de sesión es vía Credentials
+      if (user && "strapiToken" in user) {
+        token.strapiToken = (user as any).strapiToken;
+        token.strapiUserId = user.id;
+      }
+
       // En el primer login, obtenemos el JWT de Strapi
       if (account?.provider === "google" && account.access_token) {
         try {
