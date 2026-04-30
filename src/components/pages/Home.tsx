@@ -256,30 +256,30 @@ export default function Home({
       </AnimatePresence>
 
       {/* Testimonials */}
-      <section className="py-20 overflow-hidden bg-bluegrey-900 text-white relative">
-        <div className="max-w-6xl mx-auto px-6 mb-16 text-center relative z-10">
-          <h2 className="text-3xl md:text-5xl font-bold font-display tracking-tight mb-4 text-white">Lo que dicen nuestros pacientes</h2>
-          <p className="text-bluegrey-300 font-light text-lg max-w-2xl mx-auto">Experiencias reales de quienes han dado el paso para cuidar su salud mental a la distancia.</p>
+      <section className="py-24 px-6 max-w-7xl mx-auto relative">
+        <div className="flex flex-col items-center text-center mb-16 gap-4">
+          <h2 className="text-3xl md:text-5xl font-bold font-display tracking-tight text-bluegrey-900">Lo que dicen nuestros pacientes</h2>
+          <p className="text-bluegrey-600 font-light text-lg max-w-2xl">Experiencias reales de quienes han dado el paso para cuidar su salud mental a la distancia.</p>
         </div>
         
-        <div className="relative w-full overflow-hidden flex z-10">
-          <motion.div 
-            className="flex gap-6 px-6"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ ease: "linear", duration: 40, repeat: Infinity }}
-            style={{ width: "fit-content" }}
-          >
-            {[...testinomialsData, ...testinomialsData, ...testinomialsData].map((review, i) => (
-              <div key={i} className="w-[350px] shrink-0 bg-bluegrey-800/50 backdrop-blur-sm rounded-3xl p-8 border border-bluegrey-700/50 hover:bg-bluegrey-800 transition-colors flex flex-col">
-                <span className="text-suculenta text-6xl leading-none font-serif opacity-40 mb-4 h-8 inline-block select-none">"</span>
-                <p className="text-bluegrey-100 mb-8 font-light text-base leading-relaxed flex-1">{review.text}</p>
-                <div className="flex flex-col pt-6 border-t border-bluegrey-700/50 mt-auto">
-                  <span className="font-bold text-white tracking-wide">{review.author}</span>
-                  <span className="text-suculenta text-[0.65rem] font-bold tracking-widest uppercase mt-1">{review.location}</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {testinomialsData.slice(0, 6).map((review, i) => (
+            <div key={i} className="bg-white p-8 rounded-3xl border border-cream-200 shadow-sm hover:shadow-md transition-shadow flex flex-col relative group">
+              <Quote className="absolute top-8 right-8 text-cream-200 w-12 h-12 -z-0 rotate-180 transition-transform duration-500 group-hover:scale-110 group-hover:text-cream-300" />
+              <div className="relative z-10 flex-1 flex flex-col">
+                <p className="text-bluegrey-800 font-light text-[15px] leading-relaxed mb-8 flex-1">"{review.text}"</p>
+                <div className="flex items-center gap-4 pt-6 border-t border-cream-100 mt-auto">
+                  <div className="w-10 h-10 rounded-full bg-bluegrey-50 border border-cream-200 flex items-center justify-center text-bluegrey-600 font-bold text-sm shrink-0">
+                    {review.author.charAt(0)}
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-bold text-bluegrey-900 text-sm">{review.author}</span>
+                    <span className="text-bluegrey-500 text-xs font-medium uppercase tracking-wider">{review.location}</span>
+                  </div>
                 </div>
               </div>
-            ))}
-          </motion.div>
+            </div>
+          ))}
         </div>
       </section>
 
