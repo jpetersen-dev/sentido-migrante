@@ -1,15 +1,53 @@
+"use client";
+
 import { FileText, Calendar, Link2, Download, LogOut, ChevronRight, HelpCircle, User } from 'lucide-react';
+import { useSession, signOut, signIn } from 'next-auth/react';
 
 export default function Profile() {
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return (
+      <div className="flex flex-col w-full px-4 pt-16 pb-20 max-w-2xl mx-auto items-center">
+        <div className="animate-pulse flex flex-col items-center gap-4">
+          <div className="w-20 h-20 bg-cream-200 rounded-full"></div>
+          <div className="h-6 w-32 bg-cream-200 rounded"></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!session?.user) {
+    return (
+      <div className="flex flex-col w-full px-4 pt-16 pb-20 max-w-2xl mx-auto items-center text-center">
+        <div className="w-20 h-20 bg-cream-100 text-bosque rounded-full flex items-center justify-center mb-6 shadow-sm border-2 border-white">
+          <User size={40} strokeWidth={1.5} />
+        </div>
+        <h1 className="text-3xl font-bold font-display tracking-tight text-bluegrey-900 mb-3">Mi Cuenta</h1>
+        <p className="text-bluegrey-500 mb-8 max-w-sm">Inicia sesión para ver tu historial de sesiones, facturas y progreso de tu plan terapéutico.</p>
+        <button 
+          onClick={() => signIn("google")}
+          className="px-8 py-4 bg-bosque text-white font-bold rounded-2xl shadow-[0_4px_15px_rgba(20,184,166,0.2)] hover:bg-bosque-dark transition-all active:scale-[0.98]"
+        >
+          Ingresar con Google
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col w-full px-4 pt-6 pb-20 max-w-2xl mx-auto">
       <div className="flex items-center justify-between mb-10">
         <div>
           <h1 className="text-3xl md:text-4xl font-bold font-display tracking-tight text-bluegrey-900 mb-1">Mi Cuenta</h1>
-          <p className="text-bluegrey-500 text-sm font-light">Hola, 👋 Jonathan</p>
+          <p className="text-bluegrey-500 text-sm font-light">Hola, 👋 {session.user.name?.split(' ')[0] || "Paciente"}</p>
         </div>
-        <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-md bg-cream-100 flex-shrink-0">
-          <img src="https://i.pravatar.cc/150?img=47" alt="User Profile" className="w-full h-full object-cover" />
+        <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-md bg-cream-100 flex-shrink-0 flex items-center justify-center">
+          {session.user.image ? (
+            <img src={session.user.image} alt={session.user.name || "User Profile"} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+          ) : (
+            <span className="text-xl font-bold text-bosque">{session.user.name?.charAt(0).toUpperCase() || "U"}</span>
+          )}
         </div>
       </div>
 
@@ -77,7 +115,7 @@ export default function Profile() {
                 <span className="font-semibold text-bluegrey-900 flex-1 text-left text-[15px]">Soporte y Ayuda</span>
                 <ChevronRight size={18} className="text-bluegrey-300" />
               </button>
-              <button className="flex items-center gap-4 p-5 w-full hover:bg-red-50 transition-colors text-red-600 group">
+              <button onClick={() => signOut({ callbackUrl: '/' })} className="flex items-center gap-4 p-5 w-full hover:bg-red-50 transition-colors text-red-600 group">
                 <div className="p-3 rounded-2xl bg-red-50 group-hover:bg-red-100 text-red-600 transition-colors shrink-0">
                   <LogOut size={22} />
                 </div>

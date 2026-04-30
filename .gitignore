@@ -16,3 +16,5 @@ out/
 
 # AI Agents / Misc
 .agents/
+
+.vercel
