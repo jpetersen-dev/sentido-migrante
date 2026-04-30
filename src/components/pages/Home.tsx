@@ -104,13 +104,14 @@ export default function Home({
       </section>
 
       {/* Services summary with dynamic modals */}
-      <section className="px-6 py-20 max-w-6xl mx-auto">
-        <div className="flex flex-col gap-2 mb-10">
-          <h2 className="text-3xl md:text-5xl font-bold text-bluegrey-900 font-display tracking-tight">Nuestros Servicios</h2>
-          <p className="text-bluegrey-600 font-light text-lg">Terapias adaptadas a tu momento vital</p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+      <section className="w-full bg-cream-100 py-24 border-y border-cream-200">
+        <div className="px-6 max-w-6xl mx-auto">
+          <div className="flex flex-col gap-2 mb-10">
+            <h2 className="text-3xl md:text-5xl font-bold text-bluegrey-900 font-display tracking-tight">Nuestros Servicios</h2>
+            <p className="text-bluegrey-600 font-light text-lg">Terapias adaptadas a tu momento vital</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {servicesData.map((srv, i) => {
             const Icon = typeof srv.icon === 'string' ? IconMap[srv.icon] : srv.icon;
             return (
@@ -151,6 +152,7 @@ export default function Home({
               </motion.div>
             )
           })}
+          </div>
         </div>
       </section>
 
@@ -343,20 +345,21 @@ export default function Home({
       </section>
 
       {/* Articles preview */}
-      <section className="px-6 py-12">
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex flex-col gap-1">
-            <h2 className="text-3xl font-bold text-bluegrey-900 font-display">Recursos</h2>
-            <p className="text-bluegrey-600 font-medium">Artículos y herramientas para ti</p>
+      <section className="w-full bg-cream-50 py-20 border-t border-cream-200 mt-12">
+        <div className="px-6 max-w-6xl mx-auto">
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex flex-col gap-1">
+              <h2 className="text-3xl font-bold text-bluegrey-900 font-display">Recursos</h2>
+              <p className="text-bluegrey-600 font-medium">Artículos y herramientas para ti</p>
+            </div>
+            <Link href="/recursos" className="text-bosque font-bold text-sm hidden sm:block hover:underline">Ver todos</Link>
           </div>
-          <Link href="/recursos" className="text-bosque font-bold text-sm hidden sm:block hover:underline">Ver todos</Link>
-        </div>
 
-        <div 
-          ref={scrollRef}
-          onScroll={handleScroll}
-          className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory no-scrollbar"
-        >
+          <div 
+            ref={scrollRef}
+            onScroll={handleScroll}
+            className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory no-scrollbar"
+          >
           {resourcesContent.map((item, i) => (
             <div key={i} className="min-w-[280px] max-w-[300px] shrink-0 bg-white rounded-[2rem] shadow-sm border border-cream-200 overflow-hidden snap-start hover:shadow-md transition-shadow cursor-pointer">
               <div className="h-40 bg-bluegrey-200 relative">
@@ -375,15 +378,16 @@ export default function Home({
           ))}
         </div>
         
-        {/* Pagination Dots */}
-        <div className="flex justify-center gap-2 mt-4">
-           {[0, 1, 2].map(idx => {
-             // Basic logic for 3 elements.
-             const isActive = Math.abs(scrollProgress - (idx / 2)) < 0.25; 
-             return (
-               <div key={idx} className={`h-2 rounded-full transition-all ${isActive ? 'w-6 bg-bosque' : 'w-2 bg-cream-300'}`} />
-             )
-           })}
+          {/* Pagination Dots */}
+          <div className="flex justify-center gap-2 mt-4">
+             {[0, 1, 2].map(idx => {
+               // Basic logic for 3 elements.
+               const isActive = Math.abs(scrollProgress - (idx / 2)) < 0.25; 
+               return (
+                 <div key={idx} className={`h-2 rounded-full transition-all ${isActive ? 'w-6 bg-bosque' : 'w-2 bg-cream-300'}`} />
+               )
+             })}
+          </div>
         </div>
       </section>
       
