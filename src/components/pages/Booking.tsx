@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from 'react';
-import { format, addDays, isSameDay } from 'date-fns';
+import { format, isSameDay, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, isSameMonth, addMonths, subMonths, isBefore, startOfDay } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { Calendar as CalendarIcon, Clock, CreditCard, ChevronRight, User, X } from 'lucide-react';
+import { Calendar as CalendarIcon, Clock, CreditCard, ChevronRight, ChevronLeft, User, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 const teamData = [
@@ -19,10 +19,24 @@ export default function Booking() {
   const [patientName, setPatientName] = useState("");
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   
+  const [currentMonth, setCurrentMonth] = useState(startOfMonth(new Date()));
+  
   // Fake data
-  const today = new Date();
-  const nextDays = Array.from({ length: 14 }).map((_, i) => addDays(today, i));
+  const today = startOfDay(new Date());
   const availableSlots = ['09:00', '10:00', '14:00', '15:30', '17:00'];
+
+  const monthStart = startOfMonth(currentMonth);
+  const monthEnd = endOfMonth(currentMonth);
+  const startDate = startOfWeek(monthStart, { weekStartsOn: 1 });
+  const endDate = endOfWeek(monthEnd, { weekStartsOn: 1 });
+
+  const calendarDays = eachDayOfInterval({
+    start: startDate,
+    end: endDate
+  });
+
+  const nextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
+  const prevMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
 
   const services = [
     { id: '1', name: 'Psicoterapia Individual', price: 'CHF 150', duration: '50 min' },
@@ -102,30 +116,60 @@ export default function Booking() {
             <button onClick={() => setStep(1)} className="text-sm font-semibold text-bosque underline">Cambiar</button>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-sm border border-cream-200 p-4">
-            <h3 className="font-bold text-lg mb-4 flex items-center gap-2 text-bluegrey-800">
-              <CalendarIcon size={20} className="text-bosque" />
-              Selecciona una fecha
-            </h3>
-            <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory">
-              {nextDays.map(date => {
+          <div className="bg-white rounded-2xl shadow-sm border border-cream-200 p-4 sm:p-5">
+            <div className="flex items-center justify-between mb-4 text-bluegrey-800">
+              <h3 className="font-bold text-lg flex items-center gap-2">
+                <CalendarIcon size={20} className="text-bosque" />
+                Selecciona una fecha
+              </h3>
+              <div className="flex items-center gap-2">
+                <button onClick={prevMonth} className="p-1.5 rounded-full hover:bg-cream-100 text-bluegrey-500 transition-colors">
+                  <ChevronLeft size={18} />
+                </button>
+                <span className="font-semibold text-sm capitalize min-w-[100px] text-center">
+                  {format(currentMonth, 'MMMM yyyy', { locale: es })}
+                </span>
+                <button onClick={nextMonth} className="p-1.5 rounded-full hover:bg-cream-100 text-bluegrey-500 transition-colors">
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-7 gap-1 mb-2">
+              {['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do'].map(day => (
+                <div key={day} className="text-center text-xs font-semibold text-bluegrey-400 py-1">
+                  {day}
+                </div>
+              ))}
+            </div>
+            <div className="grid grid-cols-7 gap-1">
+              {calendarDays.map((date, index) => {
                 const isSelected = selectedDate && isSameDay(date, selectedDate);
+                const isPast = isBefore(date, today);
                 const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+                const isCurrentMonth = isSameMonth(date, currentMonth);
+                const isDisabled = isPast || isWeekend;
+
+                if (!isCurrentMonth) {
+                  return <div key={index} className="aspect-square" />;
+                }
+
                 return (
                   <button
                     key={date.toISOString()}
-                    onClick={() => setSelectedDate(date)}
-                    className={`flex flex-col items-center justify-center min-w-[70px] h-20 rounded-xl border transition-all snap-start ${
-                      isSelected 
-                        ? 'bg-bosque border-bosque text-white shadow-md transform scale-105' 
-                        : isWeekend ? 'bg-cream-100 border-cream-200 text-bluegrey-400 opacity-60' : 'bg-white border-cream-200 text-bluegrey-700 hover:border-suculenta'
+                    onClick={() => !isDisabled && setSelectedDate(date)}
+                    disabled={isDisabled}
+                    className={`aspect-square flex flex-col items-center justify-center rounded-xl text-sm transition-all ${
+                      isSelected
+                        ? 'bg-bosque text-white font-bold shadow-md transform scale-105'
+                        : isDisabled
+                        ? 'bg-transparent text-bluegrey-300 opacity-50 cursor-not-allowed'
+                        : 'bg-white border border-cream-200 text-bluegrey-700 hover:bg-menta hover:text-bosque hover:border-suculenta font-medium hover:scale-105'
                     }`}
-                    disabled={isWeekend}
                   >
-                    <span className="text-xs font-semibold uppercase">{format(date, 'eee', { locale: es })}</span>
-                    <span className="text-xl font-bold">{format(date, 'd')}</span>
+                    <span>{format(date, 'd')}</span>
                   </button>
-                )
+                );
               })}
             </div>
           </div>
