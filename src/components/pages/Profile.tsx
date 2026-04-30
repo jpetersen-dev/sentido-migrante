@@ -1,9 +1,13 @@
 "use client";
 
-import { useState } from 'react';
-import { FileText, Calendar, Link2, Download, LogOut, ChevronRight, HelpCircle, User } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { FileText, Calendar, Link2, Download, LogOut, ChevronRight, HelpCircle, User, Trash2 } from 'lucide-react';
 import { useSession, signOut, signIn } from 'next-auth/react';
 import { LogoSymbol } from '@/components/ui/LogoSymbol';
+
+const COUNTRIES = [
+  "Afganistán", "Albania", "Alemania", "Andorra", "Angola", "Antigua y Barbuda", "Arabia Saudita", "Argelia", "Argentina", "Armenia", "Australia", "Austria", "Azerbaiyán", "Bahamas", "Bangladés", "Barbados", "Baréin", "Bélgica", "Belice", "Benín", "Bielorrusia", "Birmania", "Bolivia", "Bosnia y Herzegovina", "Botsuana", "Brasil", "Brunéi", "Bulgaria", "Burkina Faso", "Burundi", "Bután", "Cabo Verde", "Camboya", "Camerún", "Canadá", "Catar", "Chad", "Chile", "China", "Chipre", "Ciudad del Vaticano", "Colombia", "Comoras", "Corea del Norte", "Corea del Sur", "Costa de Marfil", "Costa Rica", "Croacia", "Cuba", "Dinamarca", "Dominica", "Ecuador", "Egipto", "El Salvador", "Emiratos Árabes Unidos", "Eritrea", "Eslovaquia", "Eslovenia", "España", "Estados Unidos", "Estonia", "Etiopía", "Filipinas", "Finlandia", "Fiyi", "Francia", "Gabón", "Gambia", "Georgia", "Ghana", "Granada", "Grecia", "Guatemala", "Guyana", "Guinea", "Guinea ecuatorial", "Guinea-Bisáu", "Haití", "Honduras", "Hungría", "India", "Indonesia", "Irak", "Irán", "Irlanda", "Islandia", "Islas Marshall", "Islas Salomón", "Israel", "Italia", "Jamaica", "Japón", "Jordania", "Kazajistán", "Kenia", "Kirguistán", "Kiribati", "Kuwait", "Laos", "Lesoto", "Letonia", "Líbano", "Liberia", "Libia", "Liechtenstein", "Lituania", "Luxemburgo", "Madagascar", "Malasia", "Malaui", "Maldivas", "Malí", "Malta", "Marruecos", "Mauricio", "Mauritania", "México", "Micronesia", "Moldavia", "Mónaco", "Mongolia", "Montenegro", "Mozambique", "Namibia", "Nauru", "Nepal", "Nicaragua", "Níger", "Nigeria", "Noruega", "Nueva Zelanda", "Omán", "Países Bajos", "Pakistán", "Palaos", "Panamá", "Papúa Nueva Guinea", "Paraguay", "Perú", "Polonia", "Portugal", "Reino Unido", "República Centroafricana", "República Checa", "República de Macedonia", "República del Congo", "República Democrática del Congo", "República Dominicana", "República Sudafricana", "Ruanda", "Rumanía", "Rusia", "Samoa", "San Cristóbal y Nieves", "San Marino", "San Vicente y las Granadinas", "Santa Lucía", "Santo Tomé y Príncipe", "Senegal", "Serbia", "Seychelles", "Sierra Leona", "Singapur", "Siria", "Somalia", "Sri Lanka", "Suazilandia", "Sudán", "Sudán del Sur", "Suecia", "Suiza", "Surinam", "Tailandia", "Tanzania", "Tayikistán", "Timor Oriental", "Togo", "Tonga", "Trinidad y Tobago", "Túnez", "Turkmenistán", "Turquía", "Tuvalu", "Ucrania", "Uganda", "Uruguay", "Uzbekistán", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Yibuti", "Zambia", "Zimbabue"
+];
 
 export default function Profile() {
   const { data: session, status } = useSession();
@@ -13,6 +17,88 @@ export default function Profile() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [activeView, setActiveView] = useState<'overview' | 'personal-data'>('overview');
+
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    country: '',
+    timezone: '',
+    identityDocument: '',
+    address: ''
+  });
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [updateMsg, setUpdateMsg] = useState({ type: '', text: '' });
+
+  useEffect(() => {
+    if (session && (session as any).strapiToken) {
+      fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337'}/api/users/me`, {
+        headers: {
+          Authorization: `Bearer ${(session as any).strapiToken}`
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data) {
+          setFormData({
+            firstName: data.firstName || session.user.name?.split(' ')[0] || '',
+            lastName: data.lastName || session.user.name?.split(' ').slice(1).join(' ') || '',
+            phone: data.phone || '',
+            country: data.country || '',
+            timezone: data.timezone || '',
+            identityDocument: data.identityDocument || '',
+            address: data.address || ''
+          });
+        }
+      })
+      .catch(console.error);
+    }
+  }, [session]);
+
+  const handleUpdateProfile = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsUpdating(true);
+    setUpdateMsg({ type: '', text: '' });
+
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337'}/api/users/${session?.user?.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${(session as any).strapiToken}`
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (!res.ok) throw new Error("Error al actualizar");
+      setUpdateMsg({ type: 'success', text: 'Perfil actualizado correctamente' });
+    } catch (err: any) {
+      setUpdateMsg({ type: 'error', text: err.message });
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (confirm("¿Estás seguro de que deseas eliminar tu cuenta? Esta acción es irreversible y eliminará todo tu historial y datos personales.")) {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337'}/api/users/${session?.user?.id}`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${(session as any).strapiToken}`
+          }
+        });
+        if (res.ok) {
+          signOut({ callbackUrl: '/' });
+        } else {
+          alert("Hubo un error al intentar eliminar la cuenta.");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Ocurrió un error.");
+      }
+    }
+  };
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -161,15 +247,21 @@ export default function Profile() {
         <h1 className="text-3xl font-bold font-display tracking-tight text-bluegrey-900 mb-2">Datos Personales</h1>
         <p className="text-bluegrey-500 text-sm mb-8">Completa tu información para que podamos gestionar mejor tus citas y facturas.</p>
 
-        <form className="flex flex-col gap-5">
+        {updateMsg.text && (
+          <div className={`mb-6 p-4 rounded-xl text-sm font-semibold border ${updateMsg.type === 'success' ? 'bg-green-50 text-green-700 border-green-200' : 'bg-red-50 text-red-600 border-red-100'}`}>
+            {updateMsg.text}
+          </div>
+        )}
+
+        <form onSubmit={handleUpdateProfile} className="flex flex-col gap-5">
           <div className="flex flex-col sm:flex-row gap-5">
             <div className="flex flex-col gap-1.5 flex-1">
               <label className="text-sm font-semibold text-bluegrey-700 ml-1">Nombre(s)</label>
-              <input type="text" defaultValue={session.user.name?.split(' ')[0] || ''} className="w-full px-4 py-3.5 bg-white border border-cream-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-bosque/50 focus:border-bosque transition-all" />
+              <input type="text" value={formData.firstName} onChange={(e) => setFormData({...formData, firstName: e.target.value})} className="w-full px-4 py-3.5 bg-white border border-cream-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-bosque/50 focus:border-bosque transition-all" />
             </div>
             <div className="flex flex-col gap-1.5 flex-1">
               <label className="text-sm font-semibold text-bluegrey-700 ml-1">Apellidos</label>
-              <input type="text" defaultValue={session.user.name?.split(' ').slice(1).join(' ') || ''} className="w-full px-4 py-3.5 bg-white border border-cream-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-bosque/50 focus:border-bosque transition-all" />
+              <input type="text" value={formData.lastName} onChange={(e) => setFormData({...formData, lastName: e.target.value})} className="w-full px-4 py-3.5 bg-white border border-cream-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-bosque/50 focus:border-bosque transition-all" />
             </div>
           </div>
 
@@ -180,31 +272,31 @@ export default function Profile() {
 
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-semibold text-bluegrey-700 ml-1">Teléfono (WhatsApp)</label>
-            <input type="tel" placeholder="+54 9 11 1234 5678" className="w-full px-4 py-3.5 bg-white border border-cream-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-bosque/50 focus:border-bosque transition-all" />
+            <input type="tel" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} placeholder="+54 9 11 1234 5678" className="w-full px-4 py-3.5 bg-white border border-cream-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-bosque/50 focus:border-bosque transition-all" />
           </div>
 
           <div className="flex flex-col sm:flex-row gap-5">
             <div className="flex flex-col gap-1.5 flex-1">
               <label className="text-sm font-semibold text-bluegrey-700 ml-1">País de Residencia</label>
-              <select className="w-full px-4 py-3.5 bg-white border border-cream-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-bosque/50 focus:border-bosque transition-all appearance-none">
+              <select value={formData.country} onChange={(e) => setFormData({...formData, country: e.target.value})} className="w-full px-4 py-3.5 bg-white border border-cream-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-bosque/50 focus:border-bosque transition-all appearance-none">
                 <option value="">Selecciona tu país</option>
-                <option value="AR">Argentina</option>
-                <option value="CL">Chile</option>
-                <option value="CO">Colombia</option>
-                <option value="ES">España</option>
-                <option value="MX">México</option>
-                <option value="PE">Perú</option>
-                <option value="US">Estados Unidos</option>
-                <option value="OTHER">Otro</option>
+                {COUNTRIES.map((country, index) => (
+                  <option key={index} value={country}>{country}</option>
+                ))}
               </select>
             </div>
             <div className="flex flex-col gap-1.5 flex-1">
               <label className="text-sm font-semibold text-bluegrey-700 ml-1">Zona Horaria</label>
-              <select className="w-full px-4 py-3.5 bg-white border border-cream-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-bosque/50 focus:border-bosque transition-all appearance-none">
+              <select value={formData.timezone} onChange={(e) => setFormData({...formData, timezone: e.target.value})} className="w-full px-4 py-3.5 bg-white border border-cream-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-bosque/50 focus:border-bosque transition-all appearance-none">
+                <option value="">Selecciona zona horaria</option>
                 <option value="America/Argentina/Buenos_Aires">Buenos Aires (GMT-3)</option>
                 <option value="America/Santiago">Santiago (GMT-4)</option>
                 <option value="Europe/Madrid">Madrid (GMT+1)</option>
                 <option value="America/Mexico_City">Ciudad de México (GMT-6)</option>
+                <option value="America/Bogota">Bogotá (GMT-5)</option>
+                <option value="America/Lima">Lima (GMT-5)</option>
+                <option value="America/Caracas">Caracas (GMT-4)</option>
+                <option value="America/New_York">New York (EST/EDT)</option>
               </select>
             </div>
           </div>
@@ -213,20 +305,20 @@ export default function Profile() {
           
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-semibold text-bluegrey-700 ml-1">Documento de Identidad (DNI/Pasaporte)</label>
-            <input type="text" placeholder="Número de documento" className="w-full px-4 py-3.5 bg-white border border-cream-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-bosque/50 focus:border-bosque transition-all" />
+            <input type="text" value={formData.identityDocument} onChange={(e) => setFormData({...formData, identityDocument: e.target.value})} placeholder="Número de documento" className="w-full px-4 py-3.5 bg-white border border-cream-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-bosque/50 focus:border-bosque transition-all" />
           </div>
 
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-semibold text-bluegrey-700 ml-1">Dirección Completa</label>
-            <input type="text" placeholder="Calle, Número, Ciudad, Código Postal" className="w-full px-4 py-3.5 bg-white border border-cream-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-bosque/50 focus:border-bosque transition-all" />
+            <input type="text" value={formData.address} onChange={(e) => setFormData({...formData, address: e.target.value})} placeholder="Calle, Número, Ciudad, Código Postal" className="w-full px-4 py-3.5 bg-white border border-cream-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-bosque/50 focus:border-bosque transition-all" />
           </div>
 
           <button 
-            type="button"
-            onClick={() => setActiveView('overview')}
-            className="w-full mt-6 py-4 bg-bosque text-white font-bold rounded-2xl shadow-[0_4px_15px_rgba(20,184,166,0.2)] hover:bg-bosque-dark transition-all active:scale-[0.98]"
+            type="submit"
+            disabled={isUpdating}
+            className="w-full mt-6 py-4 bg-bosque text-white font-bold rounded-2xl shadow-[0_4px_15px_rgba(20,184,166,0.2)] hover:bg-bosque-dark transition-all active:scale-[0.98] disabled:opacity-70"
           >
-            Guardar Cambios
+            {isUpdating ? "Guardando..." : "Guardar Cambios"}
           </button>
         </form>
       </div>
@@ -317,11 +409,17 @@ export default function Profile() {
                 <span className="font-semibold text-bluegrey-900 flex-1 text-left text-[15px]">Soporte y Ayuda</span>
                 <ChevronRight size={18} className="text-bluegrey-300" />
               </button>
-              <button onClick={() => signOut({ callbackUrl: '/' })} className="flex items-center gap-4 p-5 w-full hover:bg-red-50 transition-colors text-red-600 group">
-                <div className="p-3 rounded-2xl bg-red-50 group-hover:bg-red-100 text-red-600 transition-colors shrink-0">
+              <button onClick={() => signOut({ callbackUrl: '/' })} className="flex items-center gap-4 p-5 w-full hover:bg-cream-50 transition-colors border-b border-cream-100 group">
+                <div className="p-3 rounded-2xl bg-cream-100 group-hover:bg-cream-200 text-bluegrey-700 transition-colors shrink-0">
                   <LogOut size={22} />
                 </div>
-                <span className="font-semibold flex-1 text-left text-[15px]">Cerrar Sesión</span>
+                <span className="font-semibold flex-1 text-left text-[15px] text-bluegrey-800">Cerrar Sesión</span>
+              </button>
+              <button onClick={handleDeleteAccount} className="flex items-center gap-4 p-5 w-full hover:bg-red-50 transition-colors text-red-600 group">
+                <div className="p-3 rounded-2xl bg-red-50 group-hover:bg-red-100 text-red-600 transition-colors shrink-0">
+                  <Trash2 size={22} />
+                </div>
+                <span className="font-semibold flex-1 text-left text-[15px]">Eliminar Cuenta</span>
               </button>
           </div>
         </div>
