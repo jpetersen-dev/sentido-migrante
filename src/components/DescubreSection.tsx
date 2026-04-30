@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowLeft, Plus, Minus, Mail, MessageCircle, ChevronRight, Globe } from 'lucide-react';
 import { useRouter, usePathname } from 'next/navigation';
+import { LogoSymbol } from '@/components/ui/LogoSymbol';
 
 export default function DescubreSection({ onOpenPro, teamData }: { onOpenPro: (index: number) => void, teamData?: any[] }) {
   // Use passed teamData or fallback to local static data
@@ -54,7 +55,7 @@ export default function DescubreSection({ onOpenPro, teamData }: { onOpenPro: (i
             <div className="relative h-64 w-full bg-bluegrey-200 rounded-[2rem] overflow-hidden shadow-md">
               <img src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=1200&auto=format&fit=crop" alt="MenteVital Espacio" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center p-8 text-center">
-                <Globe size={36} className="text-white mb-3" />
+                <LogoSymbol className="w-12 h-12 text-white mb-3 shrink-0" />
                 <h3 className="text-white text-2xl md:text-3xl font-bold font-display mb-2 uppercase">Sentido Migrante</h3>
                 <p className="text-white/90 font-light text-lg">Conoce más sobre nuestro espacio y filosofía</p>
               </div>
