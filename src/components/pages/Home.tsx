@@ -70,7 +70,7 @@ export default function Home({
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
             className="text-5xl md:text-6xl lg:text-7xl font-bold font-display leading-[1.05] tracking-tight mb-6 text-balance drop-shadow-sm text-bluegrey-900"
           >
-            {heroContent.titleMain} <br className="hidden sm:block"/><span className="text-olivo-dark">{heroContent.titleHighlight}</span>
+            {heroContent.titleMain} <br className="hidden sm:block"/><span className="text-transparent bg-clip-text bg-gradient-to-r from-bosque to-olivo-dark">{heroContent.titleHighlight}</span>
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
@@ -84,7 +84,7 @@ export default function Home({
           >
             <Link 
               href="/agendar" 
-              className="px-8 py-4 bg-olivo-dark hover:bg-bosque-dark text-white font-bold rounded-2xl flex items-center justify-center gap-2 transition-all shadow-[0_5px_15px_rgba(81,103,80,0.3)] hover:shadow-[0_8px_25px_rgba(81,103,80,0.5)] hover:-translate-y-0.5 active:scale-95"
+              className="px-8 py-4 bg-gradient-to-br from-olivo-dark to-bosque-dark hover:from-bosque hover:to-bosque-dark text-white font-bold rounded-2xl flex items-center justify-center gap-2 transition-all shadow-[0_5px_15px_rgba(81,103,80,0.3)] hover:shadow-[0_8px_25px_rgba(81,103,80,0.5)] hover:-translate-y-0.5 active:scale-95"
             >
               <CalendarIcon size={20} />
               <span>{heroContent.ctaText}</span>
@@ -173,7 +173,7 @@ export default function Home({
               className="text-lg md:text-xl text-bluegrey-700 leading-relaxed font-light"
             >
               En <strong className="font-bold text-bluegrey-900">Sentido Migrante</strong>, creemos que la psicoterapia profunda solo ocurre cuando no hay barreras. No solo hablamos tu idioma, compartimos tu raíz. Desde el Análisis Existencial y el Psicoanálisis, te acompañamos a habitar tu nueva realidad en Europa, no solo como un superviviente, sino con un{' '}
-              <strong className="font-bold text-bosque">propósito claro</strong>.
+              <strong className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-bosque to-olivo">propósito claro</strong>.
             </motion.p>
           </div>
         </div>
@@ -220,7 +220,7 @@ export default function Home({
                       <Clock size={16} />
                       <span>{srv.duration}</span>
                     </div>
-                    <button className="text-sm font-bold text-white bg-bosque hover:bg-bosque-dark px-4 py-2 rounded-xl transition-all flex items-center gap-1 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0">
+                    <button className="text-sm font-bold text-white bg-gradient-to-r from-bosque to-bosque-dark hover:from-bosque-dark hover:to-bosque-dark px-4 py-2 rounded-xl transition-all flex items-center gap-1 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0">
                       Agendar <MoveRight size={14}/>
                     </button>
                   </div>
@@ -326,14 +326,14 @@ export default function Home({
               <div className="flex items-center gap-5">
                 <div className="w-24 h-24 rounded-full overflow-hidden shrink-0 shadow-md">
                    <img src={teamData[selectedPro].img} alt="" className="w-full h-full object-cover"/>
-                </div>
-                <div className="flex flex-col">
-                  <h3 className="text-2xl font-bold text-bluegrey-900 font-display">
-                    {teamData[selectedPro].name}
-                  </h3>
-                  <span className="text-sm font-bold text-bosque uppercase tracking-widest">{teamData[selectedPro].role}</span>
-                </div>
-              </div>
+                 </div>
+                 <div className="flex flex-col">
+                   <h3 className="text-2xl font-bold text-bluegrey-900 font-display">
+                     {teamData[selectedPro].name}
+                   </h3>
+                   <span className="text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-bosque to-olivo uppercase tracking-widest">{teamData[selectedPro].role}</span>
+                 </div>
+               </div>
               <div className="h-px w-full bg-cream-200"></div>
               <p className="text-bluegrey-700 leading-relaxed font-medium">
                 {teamData[selectedPro].bio}
@@ -363,7 +363,7 @@ export default function Home({
            {/* Left side: Heading and avatars */}
            <div className="lg:w-1/3 flex flex-col gap-6 w-full">
              <h2 className="text-4xl md:text-5xl font-bold font-display tracking-tight text-bluegrey-900">
-               Historias de <span className="text-olivo">nuestros pacientes</span>
+               Historias de <span className="text-transparent bg-clip-text bg-gradient-to-r from-olivo to-bosque">nuestros pacientes</span>
              </h2>
              <p className="text-bluegrey-600 font-light text-lg">
                Personas que encontraron su espacio seguro estando lejos de casa.
@@ -428,7 +428,7 @@ export default function Home({
               <h2 className="text-3xl font-bold text-bluegrey-900 font-display">Recursos</h2>
               <p className="text-bluegrey-600 font-medium">Artículos y herramientas para ti</p>
             </div>
-            <Link href="/recursos" className="text-bosque font-bold text-sm hidden sm:block hover:underline">Ver todos</Link>
+            <Link href="/recursos" className="font-bold text-sm hidden sm:block hover:underline text-transparent bg-clip-text bg-gradient-to-r from-bosque to-olivo hover:from-bosque-dark hover:to-bosque">Ver todos</Link>
           </div>
 
           <div 
