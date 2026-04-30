@@ -29,6 +29,16 @@ export default function Home({
   const [selectedService, setSelectedService] = useState<number | null>(null);
   const [selectedPro, setSelectedPro] = useState<number | null>(null);
   
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+
+  useEffect(() => {
+    if (!testinomialsData || testinomialsData.length === 0) return;
+    const interval = setInterval(() => {
+      setActiveTestimonial((prev) => (prev + 1) % testinomialsData.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [testinomialsData]);
+  
   // Resources dots sync
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -255,31 +265,80 @@ export default function Home({
         )}
       </AnimatePresence>
 
-      {/* Testimonials */}
-      <section className="py-24 px-6 max-w-7xl mx-auto relative">
-        <div className="flex flex-col items-center text-center mb-16 gap-4">
-          <h2 className="text-3xl md:text-5xl font-bold font-display tracking-tight text-bluegrey-900">Lo que dicen nuestros pacientes</h2>
-          <p className="text-bluegrey-600 font-light text-lg max-w-2xl">Experiencias reales de quienes han dado el paso para cuidar su salud mental a la distancia.</p>
+      {/* Testimonials - Interactive Carousel */}
+      <section className="py-24 px-6 relative overflow-hidden bg-white">
+        {/* Animated Background Blobs */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+          <motion.div 
+            animate={{ x: [0, 50, 0], y: [0, 30, 0] }} 
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-[-10%] left-[-10%] w-[40%] h-[50%] bg-menta/50 rounded-full blur-[100px]" 
+          />
+          <motion.div 
+            animate={{ x: [0, -40, 0], y: [0, -50, 0] }} 
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute bottom-[-10%] right-[-5%] w-[35%] h-[40%] bg-suculenta/40 rounded-full blur-[80px]" 
+          />
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {testinomialsData.slice(0, 6).map((review, i) => (
-            <div key={i} className="bg-white p-8 rounded-3xl border border-cream-200 shadow-sm hover:shadow-md transition-shadow flex flex-col relative group">
-              <Quote className="absolute top-8 right-8 text-cream-200 w-12 h-12 -z-0 rotate-180 transition-transform duration-500 group-hover:scale-110 group-hover:text-cream-300" />
-              <div className="relative z-10 flex-1 flex flex-col">
-                <p className="text-bluegrey-800 font-light text-[15px] leading-relaxed mb-8 flex-1">"{review.text}"</p>
-                <div className="flex items-center gap-4 pt-6 border-t border-cream-100 mt-auto">
-                  <div className="w-10 h-10 rounded-full bg-bluegrey-50 border border-cream-200 flex items-center justify-center text-bluegrey-600 font-bold text-sm shrink-0">
-                    {review.author.charAt(0)}
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="font-bold text-bluegrey-900 text-sm">{review.author}</span>
-                    <span className="text-bluegrey-500 text-xs font-medium uppercase tracking-wider">{review.location}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
+
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20 max-w-6xl mx-auto relative z-10">
+           {/* Left side: Heading and avatars */}
+           <div className="lg:w-1/3 flex flex-col gap-6 w-full">
+             <h2 className="text-4xl md:text-5xl font-bold font-display tracking-tight text-bluegrey-900">
+               Historias de <span className="text-olivo">nuestros pacientes</span>
+             </h2>
+             <p className="text-bluegrey-600 font-light text-lg">
+               Personas que encontraron su espacio seguro estando lejos de casa.
+             </p>
+             
+             <div className="flex flex-wrap gap-3 mt-4">
+                {testinomialsData.map((t, i) => (
+                   <button 
+                     key={i}
+                     onClick={() => setActiveTestimonial(i)}
+                     className={`relative h-12 rounded-full px-4 transition-all duration-300 flex items-center justify-center font-bold text-sm overflow-hidden ${activeTestimonial === i ? 'bg-bosque text-white shadow-md' : 'bg-white/80 backdrop-blur-sm text-bluegrey-500 hover:bg-cream-100 hover:text-bluegrey-800 shadow-sm border border-cream-200'}`}
+                     style={{ width: activeTestimonial === i ? 'auto' : '48px', padding: activeTestimonial === i ? '0 1rem' : '0' }}
+                   >
+                     {activeTestimonial === i ? (
+                       <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="flex items-center gap-2 whitespace-nowrap">
+                         <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-xs">{t.author.charAt(0)}</div>
+                         <span>{t.author}</span>
+                       </motion.div>
+                     ) : (
+                       <span>{t.author.charAt(0)}</span>
+                     )}
+                   </button>
+                ))}
+             </div>
+           </div>
+
+           {/* Right side: Active Testimonial Card */}
+           <div className="lg:w-2/3 relative w-full h-[400px] md:h-[350px]">
+             <AnimatePresence mode="wait">
+               <motion.div
+                 key={activeTestimonial}
+                 initial={{ opacity: 0, scale: 0.95, x: 20 }}
+                 animate={{ opacity: 1, scale: 1, x: 0 }}
+                 exit={{ opacity: 0, scale: 0.95, x: -20 }}
+                 transition={{ duration: 0.5, type: "spring", bounce: 0.2 }}
+                 className="absolute inset-0 bg-white/70 backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col"
+               >
+                 <Quote className="text-olivo/10 w-24 h-24 absolute top-4 right-6 rotate-180" />
+                 <p className="text-xl md:text-2xl font-display font-medium text-bluegrey-800 leading-relaxed text-balance flex-1 relative z-10 italic">
+                   "{testinomialsData[activeTestimonial]?.text}"
+                 </p>
+                 <div className="flex items-center gap-4 mt-8 relative z-10 border-t border-cream-200/50 pt-6">
+                   <div className="w-12 h-12 rounded-full bg-menta/50 border border-menta flex items-center justify-center text-bosque-dark font-bold text-lg shrink-0">
+                     {testinomialsData[activeTestimonial]?.author.charAt(0)}
+                   </div>
+                   <div className="flex flex-col">
+                     <span className="font-bold text-bluegrey-900 text-lg">{testinomialsData[activeTestimonial]?.author}</span>
+                     <span className="text-bosque font-semibold text-xs uppercase tracking-widest">{testinomialsData[activeTestimonial]?.location}</span>
+                   </div>
+                 </div>
+               </motion.div>
+             </AnimatePresence>
+           </div>
         </div>
       </section>
 
