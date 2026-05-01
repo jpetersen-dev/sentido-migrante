@@ -439,19 +439,24 @@ export default function Home({
                   className={`absolute w-[95%] max-w-2xl p-4 md:p-8 rounded-[3rem] cursor-grab active:cursor-grabbing preserve-3d
                     ${isActive ? 'z-30' : 'z-10'}`}
                 >
-                  {/* Card Content with Glassmorphism + Texture + Varying Colors */}
-                  <div className={`relative w-full h-full p-8 md:p-12 rounded-[3rem] bg-white/30 backdrop-blur-3xl border border-white/60 shadow-[0_20px_50px_rgba(0,0,0,0.06)] overflow-hidden`}>
+                  {/* Card Content with Glassmorphism + Texture + Vibrant Colors */}
+                  <div className={`relative w-full h-full p-8 md:p-12 rounded-[3rem] bg-white/60 backdrop-blur-3xl border-2 shadow-[0_20px_50px_rgba(0,0,0,0.08)] overflow-hidden ${
+                    i % 4 === 0 ? 'border-suculenta/30' : 
+                    i % 4 === 1 ? 'border-menta/50' : 
+                    i % 4 === 2 ? 'border-olivo/30' : 
+                    'border-bluegrey-200/50'
+                  }`}>
                     <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
                     
-                    {/* Unique gradient per card */}
-                    <div className={`absolute inset-0 bg-gradient-to-br opacity-40 pointer-events-none ${
-                      i % 4 === 0 ? 'from-suculenta/40 to-transparent' : 
-                      i % 4 === 1 ? 'from-menta/60 to-transparent' : 
-                      i % 4 === 2 ? 'from-olivo/30 to-transparent' : 
-                      'from-bluegrey-300/40 to-transparent'
+                    {/* Unique gradient per card - More Vibrant */}
+                    <div className={`absolute inset-0 bg-gradient-to-br opacity-70 pointer-events-none ${
+                      i % 4 === 0 ? 'from-suculenta/30 to-transparent' : 
+                      i % 4 === 1 ? 'from-menta/50 to-transparent' : 
+                      i % 4 === 2 ? 'from-olivo/20 to-transparent' : 
+                      'from-bluegrey-200/30 to-transparent'
                     }`} />
                     
-                    <Quote className="text-bluegrey-900/5 w-24 h-24 absolute -top-4 -left-4 rotate-12" />
+                    <Quote className="text-black/5 w-24 h-24 absolute -top-4 -left-4 rotate-12" />
                     
                     <div className="relative z-10 h-full flex flex-col">
                       <p className="text-xl md:text-2xl font-display italic text-bluegrey-800 leading-relaxed mb-8 text-balance">
