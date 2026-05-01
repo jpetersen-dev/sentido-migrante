@@ -442,13 +442,15 @@ export default function Home({
                     ${isActive ? 'z-30' : 'z-10'}`}
                 >
                   {/* Card Content with Overlapping Transparency + Blend Mode */}
-                  <div className={`relative w-full h-full p-8 md:p-12 rounded-[3rem] backdrop-blur-xl border-2 shadow-[0_20px_50px_rgba(0,0,0,0.06)] overflow-hidden transition-colors duration-500 ${
+                  <div className={`relative w-full h-full p-8 md:p-12 rounded-[3rem] border-2 shadow-[0_20px_50px_rgba(0,0,0,0.06)] overflow-hidden transition-colors duration-500 will-change-transform transform-gpu ${
+                    isActive ? 'backdrop-blur-lg' : ''
+                  } ${
                     i % 4 === 0 ? 'bg-suculenta/70 border-suculenta/30 text-white' : 
                     i % 4 === 1 ? 'bg-menta/70 border-menta/30 text-bosque-dark' : 
                     i % 4 === 2 ? 'bg-olivo/70 border-olivo/30 text-white' : 
                     'bg-bluegrey-700/70 border-bluegrey-600/30 text-white'
                   }`}
-                  style={{ mixBlendMode: 'multiply' }}
+                  style={{ mixBlendMode: 'multiply', transform: 'translateZ(0)' }}
                   >
                     <div className="absolute inset-0 opacity-[0.1] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
                     
@@ -507,47 +509,38 @@ export default function Home({
 
       {/* Articles preview */}
       <section className="w-full py-32 bg-bosque-dark relative overflow-hidden">
-        {/* Warm Animated Glows */}
+        {/* Warm Animated Glows - Optimized for mobile */}
         <motion.div 
           animate={{ 
-            scale: [1, 1.4, 1],
-            opacity: [0.3, 0.6, 0.3],
-            x: [0, 80, 0],
-            y: [0, -50, 0]
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+            x: [0, 40, 0]
           }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[-10%] right-[-10%] w-[700px] h-[700px] bg-suculenta/30 rounded-full blur-[150px] -z-0" 
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+          className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-suculenta/20 rounded-full blur-[100px] -z-0 will-change-transform transform-gpu" 
         />
         <motion.div 
           animate={{ 
-            scale: [1, 1.5, 1],
-            opacity: [0.2, 0.5, 0.2],
-            x: [0, -60, 0],
-            y: [0, 60, 0]
+            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.4, 0.2],
+            x: [0, -30, 0]
           }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute bottom-[-20%] left-[-15%] w-[600px] h-[600px] bg-olivo/25 rounded-full blur-[130px] -z-0" 
+          transition={{ duration: 18, repeat: Infinity, ease: "linear", delay: 1 }}
+          className="absolute bottom-[-15%] left-[-10%] w-[500px] h-[500px] bg-olivo/15 rounded-full blur-[80px] -z-0 will-change-transform transform-gpu" 
         />
         <motion.div 
-          animate={{ 
-            scale: [0.7, 1.2, 0.7],
-            opacity: [0, 0.4, 0],
-            x: [0, 30, 0]
-          }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute top-[10%] left-[20%] w-[500px] h-[500px] bg-menta/20 rounded-full blur-[110px] -z-0" 
+          animate={{ opacity: [0, 0.3, 0] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "linear", delay: 2 }}
+          className="absolute top-[15%] left-[25%] w-[400px] h-[400px] bg-menta/15 rounded-full blur-[60px] -z-0 will-change-transform transform-gpu" 
         />
         <motion.div 
-          animate={{ 
-            scale: [1, 1.1, 1],
-            opacity: [0.1, 0.3, 0.1],
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-suculenta/15 rounded-full blur-[100px] -z-0" 
+          animate={{ opacity: [0.1, 0.2, 0.1] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute bottom-[10%] right-[10%] w-[350px] h-[350px] bg-suculenta/10 rounded-full blur-[70px] -z-0 will-change-transform transform-gpu" 
         />
-        {/* Warm accent points */}
-        <div className="absolute top-1/4 right-1/4 w-32 h-32 bg-suculenta/40 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/3 left-1/3 w-24 h-24 bg-olivo/30 rounded-full blur-2xl animate-pulse delay-700" />
+        {/* Warm accent points - Static for performance */}
+        <div className="absolute top-1/4 right-1/4 w-32 h-32 bg-suculenta/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/3 left-1/3 w-24 h-24 bg-olivo/15 rounded-full blur-2xl" />
         
         {/* Warm zone gradient */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-tr from-transparent via-suculenta/5 to-transparent pointer-events-none -z-0" />
@@ -632,14 +625,14 @@ export default function Home({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedResource(null)}
-              className="fixed inset-0 bg-bosque-dark/40 backdrop-blur-md z-[100]"
+              className="fixed inset-0 bg-bosque-dark/40 backdrop-blur-sm z-[100] transform-gpu"
             />
             <motion.div
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed bottom-0 left-0 right-0 z-[110] bg-white/70 backdrop-blur-[32px] border-t border-white/40 rounded-t-[40px] shadow-[0_-20px_50px_rgba(0,0,0,0.15)] flex flex-col max-h-[85vh] overflow-hidden"
+              className="fixed bottom-0 left-0 right-0 z-[110] bg-white/80 backdrop-blur-lg border-t border-white/40 rounded-t-[40px] shadow-[0_-20px_50px_rgba(0,0,0,0.15)] flex flex-col max-h-[85vh] overflow-hidden transform-gpu"
             >
               <div className="w-16 h-1.5 bg-bluegrey-200 rounded-full mx-auto my-6 shrink-0" />
               
