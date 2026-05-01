@@ -38,6 +38,7 @@ export default function Home({
   // Resources dots sync
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [selectedResource, setSelectedResource] = useState<number | null>(null);
 
   const handleScroll = () => {
     if (scrollRef.current) {
@@ -335,6 +336,62 @@ export default function Home({
         )}
       </AnimatePresence>
 
+      <AnimatePresence>
+        {selectedResource !== null && (
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center sm:p-4 bg-bluegrey-900/60 backdrop-blur-sm"
+            onClick={() => setSelectedResource(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 100 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="bg-white/95 backdrop-blur-2xl border border-white/60 rounded-t-[3rem] sm:rounded-[3rem] p-8 sm:p-10 max-w-xl w-full flex flex-col gap-8 relative shadow-[0_-20px_60px_-15px_rgba(0,0,0,0.2)]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="w-16 h-1.5 bg-cream-200 rounded-full mx-auto mb-2 opacity-50 sm:hidden" />
+              <button
+                className="absolute top-6 right-6 p-2 bg-cream-100/50 hover:bg-cream-100 rounded-full text-bluegrey-500 hover:text-bluegrey-900 transition-colors"
+                onClick={() => setSelectedResource(null)}
+              >
+                <X size={24} />
+              </button>
+
+              <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-3">
+                  <span className="text-xs font-bold uppercase tracking-[0.2em] text-bosque">{resourcesContent[selectedResource].category}</span>
+                  <h3 className="text-3xl md:text-4xl font-bold text-bluegrey-900 font-display leading-[1.1]">
+                    {resourcesContent[selectedResource].title}
+                  </h3>
+                </div>
+                
+                <div className="flex items-center gap-4 text-sm text-bluegrey-500 font-medium border-y border-cream-100 py-4">
+                  <div className="flex items-center gap-1.5">
+                    <Clock size={16} />
+                    <span>{resourcesContent[selectedResource].time} de lectura</span>
+                  </div>
+                  <div className="w-1 h-1 rounded-full bg-cream-300"></div>
+                  <span>Por Sentido Migrante</span>
+                </div>
+
+                <p className="text-bluegrey-600 leading-relaxed text-lg font-light">
+                  {resourcesContent[selectedResource].description || "Explora este recurso detallado diseñado para acompañar tu proceso migratorio con herramientas prácticas y reflexiones profundas."}
+                </p>
+
+                <Link 
+                  href={`/recursos/${selectedResource}`}
+                  className="mt-4 w-full py-5 bg-gradient-to-r from-bosque-dark to-suculenta hover:from-bosque hover:to-olivo text-white font-bold rounded-2xl text-center shadow-xl shadow-bosque-dark/10 active:scale-[0.98] transition-all text-lg"
+                >
+                  Leer artículo completo
+                </Link>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Photographic Transition / Divider */}
       <section 
         ref={windowRef}
@@ -398,16 +455,16 @@ export default function Home({
         <div className="absolute inset-0 bg-gradient-to-br from-menta/30 via-transparent to-suculenta/20 pointer-events-none -z-0" />
         
         <div className="max-w-6xl mx-auto relative z-10 text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold font-display tracking-tight text-bluegrey-900 mb-6">
-            Historias de <span className="text-transparent bg-clip-text bg-gradient-to-r from-suculenta to-bosque-dark">nuestros pacientes</span>
-          </h2>
-          <p className="text-bluegrey-600 font-light text-lg max-w-2xl mx-auto">
-            Testimonios reales de quienes encontraron su espacio seguro.
-          </p>
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-xs font-bold uppercase tracking-[0.3em] text-bosque mb-2">Voces que sanan</span>
+            <h2 className="text-4xl md:text-6xl font-bold text-bluegrey-900 font-display tracking-tight mb-4">Experiencias Compartidas</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-suculenta to-menta rounded-full mb-6"></div>
+            <p className="text-bluegrey-600 max-w-2xl text-lg font-light">Testimonios de quienes han encontrado su camino con nosotros.</p>
+          </div>
         </div>
 
-        <div className="relative w-full max-w-4xl mx-auto h-[450px] flex items-center justify-center perspective-1000">
-          <div className="relative w-full h-full flex items-center justify-center">
+        <div className="relative h-[600px] md:h-[500px] max-w-5xl mx-auto perspective-1000">
+          <div className="absolute inset-0 flex items-center justify-center">
             {testinomialsData.map((t, i) => {
               const isActive = i === activeTestimonial;
               const isPrev = i === (activeTestimonial - 1 + testinomialsData.length) % testinomialsData.length;
@@ -504,53 +561,102 @@ export default function Home({
 
 
       {/* Articles preview */}
-      <section className="w-full py-24 bg-bosque-dark relative overflow-hidden">
-        {/* Atmospheric Glows */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-suculenta/20 rounded-full blur-[120px] -z-0 translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-menta/10 rounded-full blur-[100px] -z-0 -translate-x-1/4 translate-y-1/4" />
+      <section className="w-full py-32 bg-bosque-dark relative overflow-hidden">
+        {/* Warm Animated Glows */}
+        <motion.div 
+          animate={{ 
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+            x: [0, 50, 0],
+            y: [0, -30, 0]
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-suculenta/30 rounded-full blur-[140px] -z-0" 
+        />
+        <motion.div 
+          animate={{ 
+            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.4, 0.2],
+            x: [0, -40, 0],
+            y: [0, 40, 0]
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          className="absolute bottom-[-15%] left-[-10%] w-[500px] h-[500px] bg-olivo/20 rounded-full blur-[120px] -z-0" 
+        />
+        <motion.div 
+          animate={{ 
+            scale: [0.8, 1.1, 0.8],
+            opacity: [0, 0.3, 0]
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          className="absolute top-[20%] left-[30%] w-[400px] h-[400px] bg-menta/15 rounded-full blur-[100px] -z-0" 
+        />
+        {/* Warm zone */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-br from-transparent via-suculenta/5 to-transparent pointer-events-none -z-0" />
         
         <div className="absolute inset-0 opacity-[0.05] pointer-events-none -z-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
-        <div className="px-6 max-w-6xl mx-auto">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex flex-col gap-1">
-              <h2 className="text-3xl font-bold text-white font-display">Recursos</h2>
-              <p className="text-suculenta font-medium">Artículos y herramientas para ti</p>
+        
+        <div className="px-6 max-w-6xl mx-auto relative z-10">
+          <div className="flex items-end justify-between mb-12">
+            <div className="flex flex-col gap-3">
+              <span className="text-xs font-bold uppercase tracking-[0.4em] text-suculenta">Biblioteca de Bienestar</span>
+              <h2 className="text-4xl md:text-5xl font-bold text-white font-display tracking-tight">Recursos para ti</h2>
             </div>
-            <Link href="/recursos" className="font-bold text-sm hidden sm:block text-suculenta hover:text-menta transition-colors">Ver todos</Link>
+            <Link href="/recursos" className="group flex items-center gap-2 text-sm font-bold text-suculenta hover:text-white transition-all pb-2 border-b border-suculenta/30 hover:border-white">
+              Ver todos <MoveRight size={16} className="transition-transform group-hover:translate-x-1" />
+            </Link>
           </div>
 
           <div
             ref={scrollRef}
             onScroll={handleScroll}
-            className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory no-scrollbar"
+            className="flex gap-6 overflow-x-auto pb-10 snap-x snap-mandatory no-scrollbar"
           >
             {resourcesContent.map((item, i) => (
-              <div key={i} className="min-w-[280px] max-w-[300px] shrink-0 bg-white rounded-[2rem] shadow-sm border border-cream-200 overflow-hidden snap-start hover:shadow-md transition-shadow cursor-pointer">
-                <div className="h-40 bg-bluegrey-200 relative">
-                  <div className={`absolute inset-0 ${item.color} opacity-40 mix-blend-multiply`}></div>
-                  <img src={`https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=600&auto=format&fit=crop&sig=${i}`} alt="Articulo" className="w-full h-full object-cover" />
-                </div>
-                <div className="p-5 flex flex-col gap-3">
-                  <span className="text-[0.65rem] font-bold uppercase tracking-widest self-start px-2 py-1 rounded-md bg-cream-100 text-bluegrey-600">{item.category}</span>
-                  <h4 className="font-bold text-bluegrey-900 leading-tight text-lg">{item.title}</h4>
-                  <div className="flex items-center gap-1 text-xs text-bluegrey-400 font-medium mt-1">
-                    <Clock size={12} />
-                    <span>{item.time} lectura</span>
+              <motion.div 
+                key={i} 
+                whileHover={{ y: -10 }}
+                onClick={() => setSelectedResource(i)}
+                className={`min-w-[300px] max-w-[320px] shrink-0 rounded-[2.5rem] shadow-xl border border-white/5 overflow-hidden snap-start cursor-pointer transition-all duration-500 group ${
+                  i % 4 === 0 ? 'bg-suculenta/10' : 
+                  i % 4 === 1 ? 'bg-menta/20' : 
+                  i % 4 === 2 ? 'bg-olivo/15' : 
+                  'bg-white/5'
+                }`}
+              >
+                <div className="h-48 relative overflow-hidden">
+                  <div className={`absolute inset-0 ${item.color} opacity-20 mix-blend-overlay group-hover:opacity-40 transition-opacity z-10`}></div>
+                  <img src={`https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=600&auto=format&fit=crop&sig=${i}`} alt="Articulo" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                  <div className="absolute top-4 left-4 z-20">
+                    <span className="text-[0.6rem] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-white/90 backdrop-blur-md text-bosque-dark shadow-sm">
+                      {item.category}
+                    </span>
                   </div>
                 </div>
-              </div>
+                <div className="p-7 flex flex-col gap-4">
+                  <h4 className="font-bold text-white leading-tight text-xl group-hover:text-suculenta transition-colors line-clamp-2">
+                    {item.title}
+                  </h4>
+                  <div className="flex items-center justify-between mt-2">
+                    <div className="flex items-center gap-2 text-xs text-white/50 font-medium">
+                      <Clock size={14} className="text-suculenta" />
+                      <span>{item.time}</span>
+                    </div>
+                    <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-suculenta group-hover:text-bosque-dark transition-all">
+                      <MoveRight size={14} />
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
             ))}
           </div>
 
-          {/* Pagination Dots */}
-          <div className="flex justify-center gap-2 mt-4">
-            {[0, 1, 2].map(idx => {
-              // Basic logic for 3 elements.
-              const isActive = Math.abs(scrollProgress - (idx / 2)) < 0.25;
-              return (
-                <div key={idx} className={`h-2 rounded-full transition-all ${isActive ? 'w-6 bg-bosque' : 'w-2 bg-cream-300'}`} />
-              )
-            })}
+          {/* Pagination Progress Bar */}
+          <div className="w-full max-w-xs mx-auto h-1 bg-white/10 rounded-full overflow-hidden mt-4">
+            <motion.div 
+              className="h-full bg-suculenta"
+              style={{ width: `${(scrollProgress * 100) || 0}%` }}
+            />
           </div>
         </div>
       </section>
