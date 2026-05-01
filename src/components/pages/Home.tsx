@@ -628,77 +628,72 @@ export default function Home({
                     {resourcesContent[selectedResource].title}
                   </h2>
 
-                  <div className="relative aspect-[16/9] w-full rounded-3xl overflow-hidden mb-10 shadow-2xl">
-                    <img 
-                      src={`https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=1200&auto=format&fit=crop&sig=${selectedResource}`} 
-                      className="w-full h-full object-cover" 
-                      alt=""
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                  </div>
-
-                  <div className="prose prose-bluegrey prose-lg max-w-none">
-                    <p className="text-xl text-bluegrey-700 leading-relaxed font-light mb-8 italic border-l-4 border-suculenta pl-6">
-                      {resourcesContent[selectedResource].description}
-                    </p>
-                    <p className="text-bluegrey-600 leading-relaxed mb-6">
-                      Este artículo explora las dimensiones de la salud mental en contextos migratorios, ofreciendo herramientas prácticas para la gestión emocional y el fortalecimiento de la resiliencia en entornos desafiantes.
-                    </p>
-                    {/* Placeholder for more content */}
-                    <div className="space-y-4">
-                      <div className="h-4 bg-bluegrey-50 rounded-full w-full opacity-50" />
-                      <div className="h-4 bg-bluegrey-50 rounded-full w-[90%] opacity-40" />
-                      <div className="h-4 bg-bluegrey-50 rounded-full w-[95%] opacity-30" />
-                    </div>
-                  </div>
-
-                  <div className="mt-12 pt-8 border-t border-bluegrey-100 flex flex-col sm:flex-row items-center justify-between gap-6">
-                  </h3>
-
-                  {/* Article Template / Content Area */}
-                  <div className="article-template space-y-6 text-bluegrey-700 leading-relaxed text-lg">
-                    {/* Rendered Content - Aquí es donde Strapi inyectaría el HTML o Markdown */}
-                    <div className="prose prose-lg prose-slate max-w-none">
-                      <p className="first-letter:text-5xl first-letter:font-bold first-letter:text-suculenta first-letter:mr-3 first-letter:float-left">
-                        {resourcesContent[selectedResource].description || "Cargando contenido..."}
-                      </p>
-                      
-                      {/* Simulación de plantilla con estilos */}
-                      <div className="my-10 p-8 bg-suculenta/5 border-l-4 border-suculenta rounded-r-2xl italic text-xl text-bosque-dark font-display quote-card relative overflow-hidden">
-                        <Quote className="absolute -top-2 -right-2 w-24 h-24 opacity-5 rotate-12" />
-                        "La salud mental en el proceso migratorio no es un lujo, es la brújula que nos permite encontrar nuestro nuevo norte."
+                  <div className="flex flex-col gap-8">
+                    <div className="flex items-center gap-4 text-bluegrey-400 text-sm font-medium">
+                      <div className="flex items-center gap-1.5">
+                        <Clock size={16} className="text-suculenta" />
+                        <span>{calculateReadingTime(resourcesContent[selectedResource].content || "")} de lectura</span>
                       </div>
+                      <div className="w-1 h-1 rounded-full bg-bluegrey-200" />
+                      <span className="uppercase tracking-widest text-[0.65rem]">{resourcesContent[selectedResource].category}</span>
+                    </div>
 
-                      <p>
-                        {resourcesContent[selectedResource].content || "El contenido detallado de este artículo se está sincronizando desde la biblioteca de bienestar. Pronto podrás leer la guía completa sobre este tema."}
-                      </p>
+                    <h3 className="text-3xl md:text-5xl font-bold text-bluegrey-900 leading-tight font-display">
+                      {resourcesContent[selectedResource].title}
+                    </h3>
 
-                      <div className="mt-12 p-6 rounded-2xl border border-dashed border-suculenta/30 bg-menta/5">
-                        <h4 className="font-bold text-bosque-dark mb-2 uppercase tracking-widest text-xs">Puntos clave:</h4>
-                        <ul className="list-disc list-inside space-y-2 text-sm">
-                          <li>Identificar disparadores emocionales</li>
-                          <li>Establecer rutinas de autocuidado adaptadas</li>
-                          <li>Buscar redes de apoyo en el idioma local</li>
-                        </ul>
+                    <div className="relative aspect-[16/9] w-full rounded-3xl overflow-hidden shadow-2xl">
+                      <img 
+                        src={`https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=1200&auto=format&fit=crop&sig=${selectedResource}`} 
+                        className="w-full h-full object-cover" 
+                        alt=""
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                    </div>
+
+                    {/* Article Template / Content Area */}
+                    <div className="article-template space-y-6 text-bluegrey-700 leading-relaxed text-lg">
+                      <div className="prose prose-lg prose-slate max-w-none">
+                        <p className="first-letter:text-5xl first-letter:font-bold first-letter:text-suculenta first-letter:mr-3 first-letter:float-left">
+                          {resourcesContent[selectedResource].description || "Cargando contenido..."}
+                        </p>
+                        
+                        {/* Simulación de plantilla con estilos */}
+                        <div className="my-10 p-8 bg-suculenta/5 border-l-4 border-suculenta rounded-r-2xl italic text-xl text-bosque-dark font-display quote-card relative overflow-hidden">
+                          <Quote className="absolute -top-2 -right-2 w-24 h-24 opacity-5 rotate-12" />
+                          "La salud mental en el proceso migratorio no es un lujo, es la brújula que nos permite encontrar nuestro nuevo norte."
+                        </div>
+
+                        <p>
+                          {resourcesContent[selectedResource].content || "El contenido detallado de este artículo se está sincronizando desde la biblioteca de bienestar. Pronto podrás leer la guía completa sobre este tema."}
+                        </p>
+
+                        <div className="mt-12 p-6 rounded-2xl border border-dashed border-suculenta/30 bg-menta/5">
+                          <h4 className="font-bold text-bosque-dark mb-2 uppercase tracking-widest text-xs">Puntos clave:</h4>
+                          <ul className="list-disc list-inside space-y-2 text-sm">
+                            <li>Identificar disparadores emocionales</li>
+                            <li>Establecer rutinas de autocuidado adaptadas</li>
+                            <li>Buscar redes de apoyo en el idioma local</li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="mt-16 pt-8 border-t border-bluegrey-100 flex items-center justify-between">
-                    <button 
-                      onClick={() => setSelectedResource(null)}
-                      className="text-bluegrey-400 hover:text-bosque-dark font-bold text-sm transition-colors"
-                    >
-                      Cerrar lectura
-                    </button>
-                    <Link 
-                      href={`/recursos/${selectedResource}`}
-                      className="px-8 py-4 bg-bosque-dark text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 active:scale-95"
-                    >
-                      Leer artículo completo
-                    </Link>
+                    <div className="mt-8 pt-8 border-t border-bluegrey-100 flex items-center justify-between">
+                      <button 
+                        onClick={() => setSelectedResource(null)}
+                        className="text-bluegrey-400 hover:text-bosque-dark font-bold text-sm transition-colors"
+                      >
+                        Cerrar lectura
+                      </button>
+                      <Link 
+                        href={`/recursos/${selectedResource}`}
+                        className="px-8 py-4 bg-bosque-dark text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 active:scale-95"
+                      >
+                        Leer artículo completo
+                      </Link>
+                    </div>
                   </div>
-                 </div>
                 </div>
               </div>
             </motion.div>
