@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import DescubreSection from '@/components/DescubreSection';
-import HeroParticles from '@/components/HeroParticles';
 
 // Map string names from Strapi to actual Lucide components
 const IconMap: Record<string, any> = {
@@ -57,12 +56,9 @@ export default function Home({
       {/* Hero Section */}
       <section className="relative w-full overflow-hidden rounded-b-3xl md:rounded-3xl mt-0 md:mt-6 bg-bluegrey-50 text-bluegrey-900 border-b md:border border-cream-200 shadow-inner">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1544027993-37dbfe43562a?q=80&w=2670&auto=format&fit=crop')] bg-cover bg-center opacity-70 mix-blend-multiply"></div>
-        <div className="absolute inset-0 bg-bluegrey-50/80" style={{ zIndex: 0 }}></div>
+        <div className="absolute inset-0 bg-bluegrey-50/80"></div>
 
-        {/* Particle canvas — behind text, above background */}
-        <HeroParticles />
-
-        <div className="relative px-6 pt-16 pb-16 md:py-24 flex flex-col items-start max-w-2xl" style={{ zIndex: 2 }}>
+        <div className="relative px-6 pt-16 pb-16 md:py-24 flex flex-col items-start max-w-2xl">
           <motion.span
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
             className="inline-block px-4 py-1.5 mb-6 text-[0.65rem] font-bold tracking-widest text-bosque-dark uppercase bg-menta rounded-full glass shadow-sm"
