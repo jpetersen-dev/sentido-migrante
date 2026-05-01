@@ -3,7 +3,7 @@
 import { Calendar as CalendarIcon, Clock, MoveRight, X, Quote, User, Users, Globe } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import DescubreSection from '@/components/DescubreSection';
 
 // Map string names from Strapi to actual Lucide components
@@ -42,6 +42,13 @@ export default function Home({
   // Resources dots sync
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+
+  const parallaxRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: parallaxProgress } = useScroll({
+    target: parallaxRef,
+    offset: ["start end", "end start"]
+  });
+  const y = useTransform(parallaxProgress, [0, 1], ["-20%", "20%"]);
 
   const handleScroll = () => {
     if (scrollRef.current) {
@@ -345,12 +352,24 @@ export default function Home({
 
       {/* Photographic Transition / Divider */}
       <section 
-        className="relative w-full h-[50vh] min-h-[400px] flex items-center justify-center bg-fixed bg-center bg-cover" 
-        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1448375240586-882707db8855?q=80&w=2000&auto=format&fit=crop')" }}
+        ref={parallaxRef}
+        className="relative h-[55vh] min-h-[450px] flex items-center justify-center overflow-hidden w-screen ml-[calc(50%-50vw)]" 
       >
-        <div className="absolute inset-0 bg-bosque-dark/70 mix-blend-multiply"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-bluegrey-900/60 via-transparent to-transparent"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-cream-100/30 via-transparent to-transparent"></div>
+        <motion.div 
+          style={{ y }}
+          className="absolute inset-0 w-full h-[140%] -top-[20%]"
+        >
+          <img 
+            src="https://images.unsplash.com/photo-1448375240586-882707db8855?q=80&w=2000&auto=format&fit=crop" 
+            alt="Bosque sereno"
+            className="w-full h-full object-cover"
+          />
+        </motion.div>
+        
+        {/* Overlays */}
+        <div className="absolute inset-0 bg-bosque-dark/60"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-bluegrey-900/80 via-bluegrey-900/20 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-cream-100/40 via-transparent to-transparent"></div>
         
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto flex flex-col items-center">
           <motion.div
