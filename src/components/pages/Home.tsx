@@ -608,90 +608,60 @@ export default function Home({
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed bottom-0 left-0 right-0 z-[110] bg-white/80 backdrop-blur-lg border-t border-white/40 rounded-t-[40px] shadow-[0_-20px_50px_rgba(0,0,0,0.15)] flex flex-col max-h-[85vh] overflow-hidden transform-gpu"
+              className="fixed bottom-0 left-0 right-0 z-[110] bg-white/90 backdrop-blur-xl border-t border-white/40 rounded-t-[40px] shadow-[0_-20px_50px_rgba(0,0,0,0.2)] flex flex-col h-auto max-h-[90vh] transform-gpu"
             >
-              <div className="w-16 h-1.5 bg-bluegrey-200 rounded-full mx-auto my-6 shrink-0" />
+              <div className="w-12 h-1 bg-bluegrey-200/50 rounded-full mx-auto my-4 shrink-0" />
               
-              <div className="px-8 pb-12 overflow-y-auto custom-scrollbar">
-                <div className="max-w-3xl mx-auto">
-                  <div className="flex items-center gap-3 mb-6">
-                    <span className="px-4 py-1.5 rounded-full bg-suculenta/20 text-suculenta text-[0.7rem] font-bold uppercase tracking-widest border border-suculenta/20">
-                      {resourcesContent[selectedResource].category}
-                    </span>
-                    <div className="flex items-center gap-2 text-xs text-bluegrey-400 font-bold">
-                      <Clock size={14} />
-                      <span>{resourcesContent[selectedResource].time} de lectura</span>
-                    </div>
-                  </div>
-
-                  <h2 className="text-3xl md:text-5xl font-bold text-bluegrey-900 font-display leading-[1.1] mb-8">
-                    {resourcesContent[selectedResource].title}
-                  </h2>
-
-                  <div className="flex flex-col gap-8">
-                    <div className="flex items-center gap-4 text-bluegrey-400 text-sm font-medium">
-                      <div className="flex items-center gap-1.5">
-                        <Clock size={16} className="text-suculenta" />
-                        <span>{calculateReadingTime(resourcesContent[selectedResource].content || "")} de lectura</span>
+              <div className="px-8 pb-10">
+                <div className="max-w-2xl mx-auto">
+                  <div className="flex flex-col gap-6">
+                    {/* Header: Categoría, Tiempo y Botón Principal */}
+                    <div className="flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-3">
+                        <span className="px-3 py-1 bg-suculenta/10 text-suculenta rounded-full text-[10px] font-bold uppercase tracking-widest">
+                          {resourcesContent[selectedResource].category}
+                        </span>
+                        <div className="flex items-center gap-1.5 text-xs text-bluegrey-400 font-medium">
+                          <Clock size={14} className="text-suculenta" />
+                          <span>{calculateReadingTime(resourcesContent[selectedResource].content || "")}</span>
+                        </div>
                       </div>
-                      <div className="w-1 h-1 rounded-full bg-bluegrey-200" />
-                      <span className="uppercase tracking-widest text-[0.65rem]">{resourcesContent[selectedResource].category}</span>
+
+                      <Link 
+                        href={`/articulo/${selectedResource}`}
+                        className="flex items-center gap-2 px-5 py-2.5 bg-bosque-dark text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5 active:scale-95 text-xs"
+                      >
+                        <span>Leer ahora</span>
+                        <MoveRight size={14} />
+                      </Link>
                     </div>
 
-                    <h3 className="text-3xl md:text-5xl font-bold text-bluegrey-900 leading-tight font-display">
+                    <h2 className="text-2xl md:text-3xl font-bold text-bluegrey-900 font-display leading-tight">
                       {resourcesContent[selectedResource].title}
-                    </h3>
+                    </h2>
 
-                    <div className="relative aspect-[16/9] w-full rounded-3xl overflow-hidden shadow-2xl">
+                    {/* Imagen Widescreen (Ultra reducida en altura) */}
+                    <div className="relative aspect-[21/7] w-full rounded-2xl overflow-hidden shadow-inner border border-white/20">
                       <img 
                         src={`https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=1200&auto=format&fit=crop&sig=${selectedResource}`} 
                         className="w-full h-full object-cover" 
                         alt=""
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
                     </div>
 
-                    {/* Article Template / Content Area */}
-                    <div className="article-template space-y-6 text-bluegrey-700 leading-relaxed text-lg">
-                      <div className="prose prose-lg prose-slate max-w-none">
-                        <p className="first-letter:text-5xl first-letter:font-bold first-letter:text-suculenta first-letter:mr-3 first-letter:float-left">
-                          {resourcesContent[selectedResource].description || "Cargando contenido..."}
-                        </p>
-                        
-                        {/* Simulación de plantilla con estilos */}
-                        <div className="my-10 p-8 bg-suculenta/5 border-l-4 border-suculenta rounded-r-2xl italic text-xl text-bosque-dark font-display quote-card relative overflow-hidden">
-                          <Quote className="absolute -top-2 -right-2 w-24 h-24 opacity-5 rotate-12" />
-                          "La salud mental en el proceso migratorio no es un lujo, es la brújula que nos permite encontrar nuestro nuevo norte."
-                        </div>
-
-                        <p>
-                          {resourcesContent[selectedResource].content || "El contenido detallado de este artículo se está sincronizando desde la biblioteca de bienestar. Pronto podrás leer la guía completa sobre este tema."}
-                        </p>
-
-                        <div className="mt-12 p-6 rounded-2xl border border-dashed border-suculenta/30 bg-menta/5">
-                          <h4 className="font-bold text-bosque-dark mb-2 uppercase tracking-widest text-xs">Puntos clave:</h4>
-                          <ul className="list-disc list-inside space-y-2 text-sm">
-                            <li>Identificar disparadores emocionales</li>
-                            <li>Establecer rutinas de autocuidado adaptadas</li>
-                            <li>Buscar redes de apoyo en el idioma local</li>
-                          </ul>
-                        </div>
-                      </div>
+                    {/* Preview Content Area - Resumen rápido */}
+                    <div className="article-preview text-bluegrey-600 leading-relaxed text-base italic border-l-2 border-suculenta/30 pl-4 py-1">
+                      {resourcesContent[selectedResource].description || "Descubre más sobre este recurso y cómo puede apoyarte en tu proceso."}
                     </div>
 
-                    <div className="mt-8 pt-8 border-t border-bluegrey-100 flex items-center justify-between">
+                    <div className="pt-2 flex items-center justify-center">
                       <button 
                         onClick={() => setSelectedResource(null)}
-                        className="text-bluegrey-400 hover:text-bosque-dark font-bold text-sm transition-colors"
+                        className="text-bluegrey-300 hover:text-bluegrey-600 font-bold text-[10px] uppercase tracking-tighter transition-colors"
                       >
-                        Cerrar lectura
+                        Cerrar vista previa
                       </button>
-                      <Link 
-                        href={`/recursos/${selectedResource}`}
-                        className="px-8 py-4 bg-bosque-dark text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 active:scale-95"
-                      >
-                        Leer artículo completo
-                      </Link>
                     </div>
                   </div>
                 </div>
