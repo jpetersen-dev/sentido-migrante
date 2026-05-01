@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar as CalendarIcon, Clock, MoveRight, X, Quote, User, Users, Globe } from 'lucide-react';
+import { Calendar as CalendarIcon, Clock, MoveRight, ArrowLeft, X, Quote, User, Users, Globe } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
@@ -27,7 +27,13 @@ export default function Home({
 }) {
   const [selectedService, setSelectedService] = useState<number | null>(null);
   const [selectedPro, setSelectedPro] = useState<number | null>(null);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const windowRef = useRef(null);
   const { scrollYProgress } = useScroll();
+  const { scrollYProgress: windowScroll } = useScroll({
+    target: windowRef,
+    offset: ["start end", "end start"]
+  });
 
   // Resources dots sync
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -331,14 +337,15 @@ export default function Home({
 
       {/* Photographic Transition / Divider */}
       <section 
-        className="relative h-[60vh] min-h-[450px] flex items-center justify-center w-screen ml-[calc(50%-50vw)] z-0" 
+        ref={windowRef}
+        className="relative h-[65vh] min-h-[450px] flex items-center justify-center w-screen ml-[calc(50%-50vw)] z-0" 
         style={{ clipPath: "inset(0)" }}
       >
         {/* Fixed Background for true Parallax */}
         <motion.div 
           style={{ 
-            scale: useTransform(scrollYProgress, [0, 1], [1, 1.15]),
-            opacity: useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.8, 1, 1, 0.8])
+            scale: useTransform(windowScroll, [0, 1], [1, 1.45]),
+            opacity: useTransform(windowScroll, [0, 0.2, 0.8, 1], [0.6, 1, 1, 0.6])
           }}
           className="fixed inset-0 w-screen h-screen z-0"
         >
@@ -386,73 +393,95 @@ export default function Home({
         </div>
       </section>
 
-      {/* Testimonials - Modern Staggered "River of Voices" */}
-      <section className="py-24 px-6 relative bg-cream-50 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-menta/20 via-transparent to-suculenta/10 pointer-events-none -z-0" />
+      {/* Testimonials - 3D Stack Carousel */}
+      <section className="py-32 px-6 relative bg-cream-50 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-menta/30 via-transparent to-suculenta/20 pointer-events-none -z-0" />
         
         <div className="max-w-6xl mx-auto relative z-10 text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold font-display tracking-tight text-bluegrey-900 mb-6">
             Historias de <span className="text-transparent bg-clip-text bg-gradient-to-r from-suculenta to-bosque-dark">nuestros pacientes</span>
           </h2>
           <p className="text-bluegrey-600 font-light text-lg max-w-2xl mx-auto">
-            Personas que encontraron su espacio seguro estando lejos de casa.
+            Testimonios reales de quienes encontraron su espacio seguro.
           </p>
         </div>
 
-        <div className="relative w-full max-w-7xl mx-auto h-[600px] md:h-[500px] overflow-hidden group">
-          <div className="flex flex-col md:flex-row gap-8 h-full justify-center">
-            {/* Column 1 - Faster */}
-            <motion.div 
-              style={{ y: useTransform(scrollYProgress, [0, 1], [0, -100]) }}
-              className="flex-1 flex flex-col gap-6"
-            >
-              {[testinomialsData[0], testinomialsData[2]].map((t, i) => (
-                <div key={i} className="bg-white/60 backdrop-blur-md p-8 rounded-[2rem] border border-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:bg-white hover:shadow-xl transition-all duration-500">
-                  <p className="text-bluegrey-800 font-display italic text-lg mb-6 leading-relaxed">"{t.text}"</p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-suculenta/20 flex items-center justify-center text-bosque text-xs font-bold">{t.author.charAt(0)}</div>
-                    <span className="font-bold text-bluegrey-900 text-sm">{t.author}</span>
-                  </div>
-                </div>
-              ))}
-            </motion.div>
+        <div className="relative w-full max-w-4xl mx-auto h-[450px] flex items-center justify-center perspective-1000">
+          <div className="relative w-full h-full flex items-center justify-center">
+            {testinomialsData.map((t, i) => {
+              const isActive = i === activeTestimonial;
+              const isPrev = i === (activeTestimonial - 1 + testinomialsData.length) % testinomialsData.length;
+              const isNext = i === (activeTestimonial + 1) % testinomialsData.length;
+              
+              if (!isActive && !isPrev && !isNext) return null;
 
-            {/* Column 2 - Normal (Centered and shifted) */}
-            <motion.div 
-              style={{ y: useTransform(scrollYProgress, [0, 1], [50, 50]) }}
-              className="flex-1 flex flex-col gap-6 mt-12 md:mt-0"
-            >
-              {[testinomialsData[1], { text: "Me ayudó a reconciliarme con mi identidad migrante y encontrar paz en mi nuevo hogar.", author: "Sofía L.", location: "Ginebra" }].map((t, i) => (
-                <div key={i} className="bg-white/60 backdrop-blur-md p-8 rounded-[2rem] border border-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:bg-white hover:shadow-xl transition-all duration-500">
-                  <p className="text-bluegrey-800 font-display italic text-lg mb-6 leading-relaxed">"{t.text}"</p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-menta/30 flex items-center justify-center text-bosque-dark text-xs font-bold">{t.author.charAt(0)}</div>
-                    <span className="font-bold text-bluegrey-900 text-sm">{t.author}</span>
+              return (
+                <motion.div
+                  key={i}
+                  initial={false}
+                  animate={{
+                    x: isActive ? 0 : isPrev ? -150 : 150,
+                    scale: isActive ? 1 : 0.85,
+                    opacity: isActive ? 1 : 0.4,
+                    rotateY: isActive ? 0 : isPrev ? 15 : -15,
+                    z: isActive ? 100 : 0,
+                  }}
+                  transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                  onClick={() => setActiveTestimonial(i)}
+                  className={`absolute w-[90%] max-w-2xl p-8 md:p-12 rounded-[3rem] cursor-pointer preserve-3d
+                    ${isActive ? 'z-30' : 'z-10'}`}
+                >
+                  {/* Card Content with Glassmorphism + Texture */}
+                  <div className="relative w-full h-full p-8 md:p-12 rounded-[3rem] bg-white/40 backdrop-blur-3xl border border-white/60 shadow-[0_20px_50px_rgba(0,0,0,0.08)] overflow-hidden">
+                    <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent pointer-events-none" />
+                    
+                    <Quote className="text-bosque/10 w-20 h-20 absolute -top-2 -left-2 rotate-12" />
+                    
+                    <div className="relative z-10 h-full flex flex-col">
+                      <p className="text-xl md:text-2xl font-display italic text-bluegrey-800 leading-relaxed mb-8 text-balance">
+                        "{t.text}"
+                      </p>
+                      
+                      <div className="flex items-center gap-4 mt-auto border-t border-white/20 pt-6">
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-suculenta to-menta flex items-center justify-center text-white font-bold shadow-sm">
+                          {t.author.charAt(0)}
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="font-bold text-bluegrey-900">{t.author}</span>
+                          <span className="text-xs font-semibold text-bosque uppercase tracking-widest">{t.location}</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </motion.div>
-
-            {/* Column 3 - Slower */}
-            <motion.div 
-              style={{ y: useTransform(scrollYProgress, [0, 1], [0, 100]) }}
-              className="flex-1 hidden lg:flex flex-col gap-6"
-            >
-              {[testinomialsData[2], testinomialsData[0]].map((t, i) => (
-                <div key={i} className="bg-white/60 backdrop-blur-md p-8 rounded-[2rem] border border-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:bg-white hover:shadow-xl transition-all duration-500">
-                  <p className="text-bluegrey-800 font-display italic text-lg mb-6 leading-relaxed">"{t.text}"</p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-olivo/20 flex items-center justify-center text-olivo text-xs font-bold">{t.author.charAt(0)}</div>
-                    <span className="font-bold text-bluegrey-900 text-sm">{t.author}</span>
-                  </div>
-                </div>
-              ))}
-            </motion.div>
+                </motion.div>
+              );
+            })}
           </div>
-          
-          {/* Fading Overlays */}
-          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-cream-50 to-transparent pointer-events-none" />
-          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-cream-50 to-transparent pointer-events-none" />
+
+          {/* Navigation Controls */}
+          <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 flex gap-4 z-40">
+            <button 
+              onClick={() => setActiveTestimonial((prev) => (prev - 1 + testinomialsData.length) % testinomialsData.length)}
+              className="w-12 h-12 rounded-full bg-white/80 backdrop-blur-md border border-white shadow-sm flex items-center justify-center text-bluegrey-600 hover:bg-white hover:text-bosque transition-all"
+            >
+              <ArrowLeft size={20} />
+            </button>
+            <div className="flex items-center gap-2 px-4">
+              {testinomialsData.map((_, i) => (
+                <div 
+                  key={i} 
+                  className={`h-2 rounded-full transition-all duration-300 ${i === activeTestimonial ? 'w-8 bg-bosque' : 'w-2 bg-cream-300'}`}
+                />
+              ))}
+            </div>
+            <button 
+              onClick={() => setActiveTestimonial((prev) => (prev + 1) % testinomialsData.length)}
+              className="w-12 h-12 rounded-full bg-white/80 backdrop-blur-md border border-white shadow-sm flex items-center justify-center text-bluegrey-600 hover:bg-white hover:text-bosque transition-all"
+            >
+              <MoveRight size={20} />
+            </button>
+          </div>
         </div>
       </section>
 
