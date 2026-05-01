@@ -3,7 +3,7 @@
 import { Calendar as CalendarIcon, Clock, MoveRight, X, Quote, User, Users, Globe } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import DescubreSection from '@/components/DescubreSection';
 
 // Map string names from Strapi to actual Lucide components
@@ -27,16 +27,7 @@ export default function Home({
 }) {
   const [selectedService, setSelectedService] = useState<number | null>(null);
   const [selectedPro, setSelectedPro] = useState<number | null>(null);
-
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
-
-  useEffect(() => {
-    if (!testinomialsData || testinomialsData.length === 0) return;
-    const interval = setInterval(() => {
-      setActiveTestimonial((prev) => (prev + 1) % testinomialsData.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [testinomialsData]);
+  const { scrollYProgress } = useScroll();
 
   // Resources dots sync
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -344,13 +335,19 @@ export default function Home({
         style={{ clipPath: "inset(0)" }}
       >
         {/* Fixed Background for true Parallax */}
-        <div className="fixed inset-0 w-screen h-screen z-0">
+        <motion.div 
+          style={{ 
+            scale: useTransform(scrollYProgress, [0, 1], [1, 1.15]),
+            opacity: useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.8, 1, 1, 0.8])
+          }}
+          className="fixed inset-0 w-screen h-screen z-0"
+        >
           <img 
             src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2000&auto=format&fit=crop" 
             alt="Naturaleza serena"
             className="w-full h-full object-cover"
           />
-        </div>
+        </motion.div>
         
         {/* Overlays */}
         <div className="absolute inset-0 bg-bosque-dark/40 z-10"></div>
@@ -389,68 +386,73 @@ export default function Home({
         </div>
       </section>
 
-      {/* Testimonials - Interactive Carousel */}
-      <section className="py-24 px-6 relative bg-cream-50">
-        <div className="absolute inset-0 bg-gradient-to-br from-menta/30 via-transparent to-suculenta/15 pointer-events-none -z-0" />
+      {/* Testimonials - Modern Staggered "River of Voices" */}
+      <section className="py-24 px-6 relative bg-cream-50 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-menta/20 via-transparent to-suculenta/10 pointer-events-none -z-0" />
+        
+        <div className="max-w-6xl mx-auto relative z-10 text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold font-display tracking-tight text-bluegrey-900 mb-6">
+            Historias de <span className="text-transparent bg-clip-text bg-gradient-to-r from-suculenta to-bosque-dark">nuestros pacientes</span>
+          </h2>
+          <p className="text-bluegrey-600 font-light text-lg max-w-2xl mx-auto">
+            Personas que encontraron su espacio seguro estando lejos de casa.
+          </p>
+        </div>
 
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20 max-w-6xl mx-auto relative z-10">
-          {/* Left side: Heading and avatars */}
-          <div className="lg:w-1/3 flex flex-col gap-6 w-full">
-            <h2 className="text-4xl md:text-5xl font-bold font-display tracking-tight text-bluegrey-900">
-              Historias de <span className="text-transparent bg-clip-text bg-gradient-to-r from-suculenta to-bosque-dark">nuestros pacientes</span>
-            </h2>
-            <p className="text-bluegrey-600 font-light text-lg">
-              Personas que encontraron su espacio seguro estando lejos de casa.
-            </p>
-
-            <div className="flex flex-wrap gap-3 mt-4">
-              {testinomialsData.map((t, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActiveTestimonial(i)}
-                  className={`relative h-12 rounded-full px-4 transition-all duration-300 flex items-center justify-center font-bold text-sm overflow-hidden ${activeTestimonial === i ? 'bg-bosque text-white shadow-md' : 'bg-white/80 backdrop-blur-sm text-bluegrey-500 hover:bg-cream-100 hover:text-bluegrey-800 shadow-sm border border-cream-200'}`}
-                  style={{ width: activeTestimonial === i ? 'auto' : '48px', padding: activeTestimonial === i ? '0 1rem' : '0' }}
-                >
-                  {activeTestimonial === i ? (
-                    <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="flex items-center gap-2 whitespace-nowrap">
-                      <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-xs">{t.author.charAt(0)}</div>
-                      <span>{t.author}</span>
-                    </motion.div>
-                  ) : (
-                    <span>{t.author.charAt(0)}</span>
-                  )}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Right side: Active Testimonial Card */}
-          <div className="lg:w-2/3 relative w-full h-[400px] md:h-[350px]">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTestimonial}
-                initial={{ opacity: 0, scale: 0.95, x: 20 }}
-                animate={{ opacity: 1, scale: 1, x: 0 }}
-                exit={{ opacity: 0, scale: 0.95, x: -20 }}
-                transition={{ duration: 0.5, type: "spring", bounce: 0.2 }}
-                className="absolute inset-0 bg-white/70 backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col"
-              >
-                <Quote className="text-olivo/10 w-24 h-24 absolute top-4 right-6 rotate-180" />
-                <p className="text-xl md:text-2xl font-display font-medium text-bluegrey-800 leading-relaxed text-balance flex-1 relative z-10 italic">
-                  "{testinomialsData[activeTestimonial]?.text}"
-                </p>
-                <div className="flex items-center gap-4 mt-8 relative z-10 border-t border-cream-200/50 pt-6">
-                  <div className="w-12 h-12 rounded-full bg-menta/50 border border-menta flex items-center justify-center text-bosque-dark font-bold text-lg shrink-0">
-                    {testinomialsData[activeTestimonial]?.author.charAt(0)}
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="font-bold text-bluegrey-900 text-lg">{testinomialsData[activeTestimonial]?.author}</span>
-                    <span className="text-bosque font-semibold text-xs uppercase tracking-widest">{testinomialsData[activeTestimonial]?.location}</span>
+        <div className="relative w-full max-w-7xl mx-auto h-[600px] md:h-[500px] overflow-hidden group">
+          <div className="flex flex-col md:flex-row gap-8 h-full justify-center">
+            {/* Column 1 - Faster */}
+            <motion.div 
+              style={{ y: useTransform(scrollYProgress, [0, 1], [0, -100]) }}
+              className="flex-1 flex flex-col gap-6"
+            >
+              {[testinomialsData[0], testinomialsData[2]].map((t, i) => (
+                <div key={i} className="bg-white/60 backdrop-blur-md p-8 rounded-[2rem] border border-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:bg-white hover:shadow-xl transition-all duration-500">
+                  <p className="text-bluegrey-800 font-display italic text-lg mb-6 leading-relaxed">"{t.text}"</p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-suculenta/20 flex items-center justify-center text-bosque text-xs font-bold">{t.author.charAt(0)}</div>
+                    <span className="font-bold text-bluegrey-900 text-sm">{t.author}</span>
                   </div>
                 </div>
-              </motion.div>
-            </AnimatePresence>
+              ))}
+            </motion.div>
+
+            {/* Column 2 - Normal (Centered and shifted) */}
+            <motion.div 
+              style={{ y: useTransform(scrollYProgress, [0, 1], [50, 50]) }}
+              className="flex-1 flex flex-col gap-6 mt-12 md:mt-0"
+            >
+              {[testinomialsData[1], { text: "Me ayudó a reconciliarme con mi identidad migrante y encontrar paz en mi nuevo hogar.", author: "Sofía L.", location: "Ginebra" }].map((t, i) => (
+                <div key={i} className="bg-white/60 backdrop-blur-md p-8 rounded-[2rem] border border-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:bg-white hover:shadow-xl transition-all duration-500">
+                  <p className="text-bluegrey-800 font-display italic text-lg mb-6 leading-relaxed">"{t.text}"</p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-menta/30 flex items-center justify-center text-bosque-dark text-xs font-bold">{t.author.charAt(0)}</div>
+                    <span className="font-bold text-bluegrey-900 text-sm">{t.author}</span>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+
+            {/* Column 3 - Slower */}
+            <motion.div 
+              style={{ y: useTransform(scrollYProgress, [0, 1], [0, 100]) }}
+              className="flex-1 hidden lg:flex flex-col gap-6"
+            >
+              {[testinomialsData[2], testinomialsData[0]].map((t, i) => (
+                <div key={i} className="bg-white/60 backdrop-blur-md p-8 rounded-[2rem] border border-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:bg-white hover:shadow-xl transition-all duration-500">
+                  <p className="text-bluegrey-800 font-display italic text-lg mb-6 leading-relaxed">"{t.text}"</p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-olivo/20 flex items-center justify-center text-olivo text-xs font-bold">{t.author.charAt(0)}</div>
+                    <span className="font-bold text-bluegrey-900 text-sm">{t.author}</span>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
           </div>
+          
+          {/* Fading Overlays */}
+          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-cream-50 to-transparent pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-cream-50 to-transparent pointer-events-none" />
         </div>
       </section>
 
