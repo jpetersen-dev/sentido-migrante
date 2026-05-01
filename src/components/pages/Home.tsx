@@ -420,34 +420,54 @@ export default function Home({
                   key={i}
                   initial={false}
                   animate={{
-                    x: isActive ? 0 : isPrev ? -150 : 150,
-                    scale: isActive ? 1 : 0.85,
-                    opacity: isActive ? 1 : 0.4,
-                    rotateY: isActive ? 0 : isPrev ? 15 : -15,
+                    x: isActive ? 0 : isPrev ? -180 : 180,
+                    scale: isActive ? 1 : 0.8,
+                    opacity: isActive ? 1 : 0.3,
+                    rotateY: isActive ? 0 : isPrev ? 25 : -25,
                     z: isActive ? 100 : 0,
                   }}
-                  transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                  onClick={() => setActiveTestimonial(i)}
-                  className={`absolute w-[90%] max-w-2xl p-8 md:p-12 rounded-[3rem] cursor-pointer preserve-3d
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  onDragEnd={(_, info) => {
+                    if (info.offset.x > 100) {
+                      setActiveTestimonial((prev) => (prev - 1 + testinomialsData.length) % testinomialsData.length);
+                    } else if (info.offset.x < -100) {
+                      setActiveTestimonial((prev) => (prev + 1) % testinomialsData.length);
+                    }
+                  }}
+                  transition={{ type: "spring", stiffness: 200, damping: 25 }}
+                  className={`absolute w-[95%] max-w-2xl p-4 md:p-8 rounded-[3rem] cursor-grab active:cursor-grabbing preserve-3d
                     ${isActive ? 'z-30' : 'z-10'}`}
                 >
-                  {/* Card Content with Glassmorphism + Texture */}
-                  <div className="relative w-full h-full p-8 md:p-12 rounded-[3rem] bg-white/40 backdrop-blur-3xl border border-white/60 shadow-[0_20px_50px_rgba(0,0,0,0.08)] overflow-hidden">
+                  {/* Card Content with Glassmorphism + Texture + Varying Colors */}
+                  <div className={`relative w-full h-full p-8 md:p-12 rounded-[3rem] bg-white/30 backdrop-blur-3xl border border-white/60 shadow-[0_20px_50px_rgba(0,0,0,0.06)] overflow-hidden`}>
                     <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent pointer-events-none" />
                     
-                    <Quote className="text-bosque/10 w-20 h-20 absolute -top-2 -left-2 rotate-12" />
+                    {/* Unique gradient per card */}
+                    <div className={`absolute inset-0 bg-gradient-to-br opacity-40 pointer-events-none ${
+                      i % 4 === 0 ? 'from-suculenta/40 to-transparent' : 
+                      i % 4 === 1 ? 'from-menta/60 to-transparent' : 
+                      i % 4 === 2 ? 'from-olivo/30 to-transparent' : 
+                      'from-bluegrey-300/40 to-transparent'
+                    }`} />
+                    
+                    <Quote className="text-bluegrey-900/5 w-24 h-24 absolute -top-4 -left-4 rotate-12" />
                     
                     <div className="relative z-10 h-full flex flex-col">
                       <p className="text-xl md:text-2xl font-display italic text-bluegrey-800 leading-relaxed mb-8 text-balance">
                         "{t.text}"
                       </p>
                       
-                      <div className="flex items-center gap-4 mt-auto border-t border-white/20 pt-6">
-                        <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-suculenta to-menta flex items-center justify-center text-white font-bold shadow-sm">
+                      <div className="flex items-center gap-4 mt-auto border-t border-black/5 pt-6">
+                        <div className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-bold shadow-sm ${
+                          i % 4 === 0 ? 'bg-suculenta' : 
+                          i % 4 === 1 ? 'bg-bosque' : 
+                          i % 4 === 2 ? 'bg-olivo' : 
+                          'bg-bluegrey-600'
+                        }`}>
                           {t.author.charAt(0)}
                         </div>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col text-left">
                           <span className="font-bold text-bluegrey-900">{t.author}</span>
                           <span className="text-xs font-semibold text-bosque uppercase tracking-widest">{t.location}</span>
                         </div>
@@ -459,28 +479,15 @@ export default function Home({
             })}
           </div>
 
-          {/* Navigation Controls */}
-          <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 flex gap-4 z-40">
-            <button 
-              onClick={() => setActiveTestimonial((prev) => (prev - 1 + testinomialsData.length) % testinomialsData.length)}
-              className="w-12 h-12 rounded-full bg-white/80 backdrop-blur-md border border-white shadow-sm flex items-center justify-center text-bluegrey-600 hover:bg-white hover:text-bosque transition-all"
-            >
-              <ArrowLeft size={20} />
-            </button>
-            <div className="flex items-center gap-2 px-4">
-              {testinomialsData.map((_, i) => (
-                <div 
-                  key={i} 
-                  className={`h-2 rounded-full transition-all duration-300 ${i === activeTestimonial ? 'w-8 bg-bosque' : 'w-2 bg-cream-300'}`}
-                />
-              ))}
-            </div>
-            <button 
-              onClick={() => setActiveTestimonial((prev) => (prev + 1) % testinomialsData.length)}
-              className="w-12 h-12 rounded-full bg-white/80 backdrop-blur-md border border-white shadow-sm flex items-center justify-center text-bluegrey-600 hover:bg-white hover:text-bosque transition-all"
-            >
-              <MoveRight size={20} />
-            </button>
+          {/* Navigation Progress (Dots only, no buttons) */}
+          <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-3 z-40">
+            {testinomialsData.map((_, i) => (
+              <button 
+                key={i} 
+                onClick={() => setActiveTestimonial(i)}
+                className={`h-2.5 rounded-full transition-all duration-500 shadow-sm ${i === activeTestimonial ? 'w-10 bg-bosque' : 'w-2.5 bg-white border border-cream-200'}`}
+              />
+            ))}
           </div>
         </div>
       </section>
