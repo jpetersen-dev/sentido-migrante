@@ -343,6 +343,47 @@ export default function Home({
         )}
       </AnimatePresence>
 
+      {/* Photographic Transition / Divider */}
+      <section 
+        className="relative w-full h-[50vh] min-h-[400px] flex items-center justify-center bg-fixed bg-center bg-cover" 
+        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1448375240586-882707db8855?q=80&w=2000&auto=format&fit=crop')" }}
+      >
+        <div className="absolute inset-0 bg-bosque-dark/70 mix-blend-multiply"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-bluegrey-900/60 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-cream-100/30 via-transparent to-transparent"></div>
+        
+        <div className="relative z-10 text-center px-6 max-w-4xl mx-auto flex flex-col items-center">
+          <motion.div
+            initial={{ scale: 0, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, type: "spring", bounce: 0.4 }}
+            className="w-16 h-16 rounded-full border border-white/30 bg-white/10 backdrop-blur-md flex items-center justify-center mb-8"
+          >
+            <div className="w-2 h-2 rounded-full bg-suculenta shadow-[0_0_15px_rgba(162,188,151,0.8)]"></div>
+          </motion.div>
+
+          <motion.h2 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8 }}
+            className="text-3xl md:text-5xl font-bold font-display text-white mb-6 drop-shadow-lg text-balance leading-tight"
+          >
+            Un espacio seguro para tu mente <br className="hidden md:block"/>y tu historia.
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-lg md:text-xl text-cream-50 font-light drop-shadow-md max-w-2xl text-balance"
+          >
+            Tómate un momento. Respira. Estás exactamente donde necesitas estar.
+          </motion.p>
+        </div>
+      </section>
+
       {/* Testimonials - Interactive Carousel */}
       <section className="py-24 px-6 relative overflow-hidden bg-white">
         {/* Animated Background Blobs */}
