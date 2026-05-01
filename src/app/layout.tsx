@@ -3,6 +3,7 @@ import Navbar from '../components/layout/Navbar';
 import BottomNav from '../components/layout/BottomNav';
 import Footer from '../components/layout/Footer';
 import SessionProvider from '../components/providers/SessionProvider';
+import SmoothScroll from '../components/providers/SmoothScroll';
 
 export const metadata = {
   title: 'Sentido Migrante',
@@ -14,12 +15,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="es">
       <body className="flex flex-col min-h-screen pb-16 md:pb-0">
         <SessionProvider>
-          <Navbar />
-          <main className="flex-1 w-full max-w-5xl mx-auto md:px-6">
-            {children}
-          </main>
-          <Footer />
-          <BottomNav />
+          <SmoothScroll>
+            <Navbar />
+            <main className="flex-1 w-full max-w-5xl mx-auto md:px-6">
+              {children}
+            </main>
+            <Footer />
+            <BottomNav />
+          </SmoothScroll>
         </SessionProvider>
       </body>
     </html>

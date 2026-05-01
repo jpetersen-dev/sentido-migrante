@@ -32,6 +32,14 @@
   --color-background: var(--color-cream-50);
 }
 
+/* Lenis Smooth Scroll */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
 @layer base {
   body {
     @apply bg-cream-50 text-bluegrey-900 font-sans antialiased;
