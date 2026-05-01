@@ -4,7 +4,6 @@ import BottomNav from '../components/layout/BottomNav';
 import Footer from '../components/layout/Footer';
 import SessionProvider from '../components/providers/SessionProvider';
 import SmoothScroll from '../components/providers/SmoothScroll';
-import PageCanvas from '../components/PageCanvas';
 
 export const metadata = {
   title: 'Sentido Migrante',
@@ -18,8 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SessionProvider>
           <SmoothScroll>
             <Navbar />
-            <main className="relative flex-1 w-full max-w-5xl mx-auto md:px-6">
-              <PageCanvas />
+            <main className="flex-1 w-full max-w-5xl mx-auto md:px-6">
               {children}
             </main>
             <Footer />

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import DescubreSection from '@/components/DescubreSection';
+import WaveDivider from '@/components/WaveDivider';
 
 // Map string names from Strapi to actual Lucide components
 const IconMap: Record<string, any> = {
@@ -102,10 +103,14 @@ export default function Home({
         </div>
       </section>
 
+      {/* Wave: Hero → Manifesto */}
+      <WaveDivider fromColor="#F5F5F4" toColor="#F9F7F3" />
+
       {/* Manifesto — Hall de recepción */}
-      <section className="relative w-full py-24 md:py-32">
-        {/* Glass card feel — page canvas visible through this */}
-        <div className="absolute inset-0 bg-cream-50/60 backdrop-blur-[1px] -z-10" />
+      <section className="relative w-full py-24 md:py-32 bg-[#F1F0EC]">
+        {/* Subtle texture and color depth */}
+        <div className="absolute inset-0 bg-gradient-to-br from-menta/30 via-transparent to-suculenta/20 -z-10 pointer-events-none" />
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none -z-10 bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
 
         <div className="max-w-5xl mx-auto px-6">
           {/* Decorative accent line */}
@@ -163,9 +168,19 @@ export default function Home({
         </div>
       </section>
 
+      {/* Window: Serenity Transition */}
+      <section className="relative h-[40vh] min-h-[300px] w-screen ml-[calc(50%-50vw)] overflow-hidden">
+        <div className="absolute inset-0 bg-fixed bg-center bg-cover" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=2000&auto=format&fit=crop')" }}></div>
+        <div className="absolute inset-0 bg-bosque-dark/20 backdrop-brightness-90"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#F1F0EC] via-transparent to-white"></div>
+      </section>
+
+      {/* Wave: Transition → Servicios */}
+      <WaveDivider fromColor="transparent" toColor="#ffffff" flip />
+
       {/* Services summary with dynamic modals */}
-      <section className="w-full py-24 border-y border-cream-200/70 relative">
-        <div className="absolute inset-0 bg-white/40 backdrop-blur-[2px] -z-10" />
+      <section className="w-full py-24 border-y border-cream-200/60 relative bg-white">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cream-50/60 to-transparent pointer-events-none -z-10" />
         <div className="px-6 max-w-6xl mx-auto">
           <div className="flex flex-col gap-2 mb-10">
             <h2 className="text-3xl md:text-5xl font-bold text-bluegrey-900 font-display tracking-tight">Nuestros Servicios</h2>
@@ -380,8 +395,8 @@ export default function Home({
       </section>
 
       {/* Testimonials - Interactive Carousel */}
-      <section className="py-24 px-6 relative">
-        <div className="absolute inset-0 bg-white/30 backdrop-blur-[1px] -z-10" />
+      <section className="py-24 px-6 relative bg-cream-50">
+        <div className="absolute inset-0 bg-gradient-to-br from-menta/30 via-transparent to-suculenta/15 pointer-events-none -z-0" />
 
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20 max-w-6xl mx-auto relative z-10">
           {/* Left side: Heading and avatars */}
@@ -444,15 +459,23 @@ export default function Home({
         </div>
       </section>
 
+      {/* Wave: Testimonios → Recursos */}
+      <WaveDivider fromColor="#F2EFE8" toColor="#3f513e" />
+
       {/* Articles preview */}
-      <section className="w-full bg-cream-50 py-20 border-t border-cream-200 mt-12">
+      <section className="w-full py-24 bg-bosque-dark relative overflow-hidden">
+        {/* Atmospheric Glows */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-suculenta/20 rounded-full blur-[120px] -z-0 translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-menta/10 rounded-full blur-[100px] -z-0 -translate-x-1/4 translate-y-1/4" />
+        
+        <div className="absolute inset-0 opacity-[0.05] pointer-events-none -z-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
         <div className="px-6 max-w-6xl mx-auto">
           <div className="flex items-center justify-between mb-8">
             <div className="flex flex-col gap-1">
-              <h2 className="text-3xl font-bold text-bluegrey-900 font-display">Recursos</h2>
-              <p className="text-bluegrey-600 font-medium">Artículos y herramientas para ti</p>
+              <h2 className="text-3xl font-bold text-white font-display">Recursos</h2>
+              <p className="text-suculenta font-medium">Artículos y herramientas para ti</p>
             </div>
-            <Link href="/recursos" className="font-bold text-sm hidden sm:block hover:underline text-transparent bg-clip-text bg-gradient-to-r from-bosque-dark to-suculenta hover:from-bosque hover:to-olivo">Ver todos</Link>
+            <Link href="/recursos" className="font-bold text-sm hidden sm:block text-suculenta hover:text-menta transition-colors">Ver todos</Link>
           </div>
 
           <div
@@ -490,6 +513,9 @@ export default function Home({
           </div>
         </div>
       </section>
+
+      {/* Wave: Recursos → Descubre */}
+      <WaveDivider fromColor="#3f513e" toColor="#FCFBF9" flip />
 
       {/* Descubre Section */}
       <DescubreSection onOpenPro={setSelectedPro} teamData={teamData} />

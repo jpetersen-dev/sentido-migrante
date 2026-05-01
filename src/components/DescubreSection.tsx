@@ -40,7 +40,29 @@ export default function DescubreSection({ onOpenPro, teamData }: { onOpenPro: (i
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
-    <section id="descubre" className="px-6 py-16 bg-cream-50 rounded-[3rem] mx-2 md:mx-0 border border-cream-200 scroll-mt-24 overflow-hidden relative min-h-[500px]">
+    <section id="descubre" className="px-6 py-20 bg-[#F9F7F3] rounded-[3.5rem] mx-2 md:mx-0 border border-cream-200 scroll-mt-24 overflow-hidden relative min-h-[600px] shadow-sm">
+      {/* Decorative organic elements */}
+      <motion.div 
+        animate={{ 
+          scale: [1, 1.1, 1],
+          rotate: [0, 5, 0],
+          x: [0, 10, 0]
+        }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-0 right-0 w-64 h-64 bg-suculenta/15 rounded-full blur-3xl -z-0 translate-x-1/2 -translate-y-1/2" 
+      />
+      <motion.div 
+        animate={{ 
+          scale: [1, 1.2, 1],
+          x: [0, -15, 0],
+          y: [0, 10, 0]
+        }}
+        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        className="absolute bottom-0 left-0 w-80 h-80 bg-menta/15 rounded-full blur-3xl -z-0 -translate-x-1/3 translate-y-1/3" 
+      />
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none -z-0 bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
+
+
       <AnimatePresence mode="wait">
         {activeTab === 'main' && (
           <motion.div 
