@@ -565,34 +565,47 @@ export default function Home({
         {/* Warm Animated Glows */}
         <motion.div 
           animate={{ 
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-            x: [0, 50, 0],
-            y: [0, -30, 0]
+            scale: [1, 1.4, 1],
+            opacity: [0.3, 0.6, 0.3],
+            x: [0, 80, 0],
+            y: [0, -50, 0]
           }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-suculenta/30 rounded-full blur-[140px] -z-0" 
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[-10%] right-[-10%] w-[700px] h-[700px] bg-suculenta/30 rounded-full blur-[150px] -z-0" 
         />
         <motion.div 
           animate={{ 
-            scale: [1, 1.3, 1],
-            opacity: [0.2, 0.4, 0.2],
-            x: [0, -40, 0],
-            y: [0, 40, 0]
+            scale: [1, 1.5, 1],
+            opacity: [0.2, 0.5, 0.2],
+            x: [0, -60, 0],
+            y: [0, 60, 0]
           }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute bottom-[-15%] left-[-10%] w-[500px] h-[500px] bg-olivo/20 rounded-full blur-[120px] -z-0" 
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          className="absolute bottom-[-20%] left-[-15%] w-[600px] h-[600px] bg-olivo/25 rounded-full blur-[130px] -z-0" 
         />
         <motion.div 
           animate={{ 
-            scale: [0.8, 1.1, 0.8],
-            opacity: [0, 0.3, 0]
+            scale: [0.7, 1.2, 0.7],
+            opacity: [0, 0.4, 0],
+            x: [0, 30, 0]
           }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute top-[20%] left-[30%] w-[400px] h-[400px] bg-menta/15 rounded-full blur-[100px] -z-0" 
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          className="absolute top-[10%] left-[20%] w-[500px] h-[500px] bg-menta/20 rounded-full blur-[110px] -z-0" 
         />
-        {/* Warm zone */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-br from-transparent via-suculenta/5 to-transparent pointer-events-none -z-0" />
+        <motion.div 
+          animate={{ 
+            scale: [1, 1.1, 1],
+            opacity: [0.1, 0.3, 0.1],
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-suculenta/15 rounded-full blur-[100px] -z-0" 
+        />
+        {/* Warm accent points */}
+        <div className="absolute top-1/4 right-1/4 w-32 h-32 bg-suculenta/40 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/3 left-1/3 w-24 h-24 bg-olivo/30 rounded-full blur-2xl animate-pulse delay-700" />
+        
+        {/* Warm zone gradient */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-tr from-transparent via-suculenta/5 to-transparent pointer-events-none -z-0" />
         
         <div className="absolute inset-0 opacity-[0.05] pointer-events-none -z-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
         
@@ -664,6 +677,88 @@ export default function Home({
 
       {/* Descubre Section */}
       <DescubreSection onOpenPro={setSelectedPro} teamData={teamData} />
+
+      {/* Resource Modal */}
+      <AnimatePresence>
+        {selectedResource !== null && (
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedResource(null)}
+              className="fixed inset-0 bg-bosque-dark/40 backdrop-blur-md z-[60]"
+            />
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
+              className="fixed bottom-0 left-0 right-0 z-[70] bg-white/70 backdrop-blur-[32px] border-t border-white/40 rounded-t-[40px] shadow-[0_-20px_50px_rgba(0,0,0,0.15)] flex flex-col max-h-[85vh] overflow-hidden"
+            >
+              <div className="w-16 h-1.5 bg-bluegrey-200 rounded-full mx-auto my-6 shrink-0" />
+              
+              <div className="px-8 pb-12 overflow-y-auto custom-scrollbar">
+                <div className="max-w-3xl mx-auto">
+                  <div className="flex items-center gap-3 mb-6">
+                    <span className="px-4 py-1.5 rounded-full bg-suculenta/20 text-suculenta text-[0.7rem] font-bold uppercase tracking-widest border border-suculenta/20">
+                      {resourcesContent[selectedResource].category}
+                    </span>
+                    <div className="flex items-center gap-2 text-xs text-bluegrey-400 font-bold">
+                      <Clock size={14} />
+                      <span>{resourcesContent[selectedResource].time} de lectura</span>
+                    </div>
+                  </div>
+
+                  <h2 className="text-3xl md:text-5xl font-bold text-bluegrey-900 font-display leading-[1.1] mb-8">
+                    {resourcesContent[selectedResource].title}
+                  </h2>
+
+                  <div className="relative aspect-[16/9] w-full rounded-3xl overflow-hidden mb-10 shadow-2xl">
+                    <img 
+                      src={`https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=1200&auto=format&fit=crop&sig=${selectedResource}`} 
+                      className="w-full h-full object-cover" 
+                      alt=""
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                  </div>
+
+                  <div className="prose prose-bluegrey prose-lg max-w-none">
+                    <p className="text-xl text-bluegrey-700 leading-relaxed font-light mb-8 italic border-l-4 border-suculenta pl-6">
+                      {resourcesContent[selectedResource].description}
+                    </p>
+                    <p className="text-bluegrey-600 leading-relaxed mb-6">
+                      Este artículo explora las dimensiones de la salud mental en contextos migratorios, ofreciendo herramientas prácticas para la gestión emocional y el fortalecimiento de la resiliencia en entornos desafiantes.
+                    </p>
+                    {/* Placeholder for more content */}
+                    <div className="space-y-4">
+                      <div className="h-4 bg-bluegrey-50 rounded-full w-full opacity-50" />
+                      <div className="h-4 bg-bluegrey-50 rounded-full w-[90%] opacity-40" />
+                      <div className="h-4 bg-bluegrey-50 rounded-full w-[95%] opacity-30" />
+                    </div>
+                  </div>
+
+                  <div className="mt-12 pt-8 border-t border-bluegrey-100 flex flex-col sm:flex-row items-center justify-between gap-6">
+                    <button 
+                      onClick={() => setSelectedResource(null)}
+                      className="text-bluegrey-400 font-bold hover:text-bluegrey-900 transition-colors flex items-center gap-2"
+                    >
+                      <ArrowLeft size={18} /> Volver
+                    </button>
+                    
+                    <Link 
+                      href={`/recursos/${selectedResource}`}
+                      className="w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-bosque-dark to-suculenta hover:from-suculenta hover:to-bosque-dark text-white font-bold rounded-2xl shadow-xl shadow-suculenta/20 transition-all hover:scale-[1.02] active:scale-95 text-center"
+                    >
+                      Leer artículo completo
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
