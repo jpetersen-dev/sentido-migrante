@@ -52,7 +52,7 @@ export default function Navbar() {
             <LogoSymbol className={`w-8 h-8 shrink-0 transition-colors ${isMenuOpen ? 'text-white' : 'text-olivo'}`} />
             <div className="flex flex-col">
               <span className={`font-display font-bold text-lg leading-tight uppercase transition-colors uppercase ${isMenuOpen ? 'text-white' : 'text-bluegrey-900'}`}>Sentido Migrante</span>
-              <span className={`text-[0.65rem] font-medium leading-tight transition-colors ${isMenuOpen ? 'text-suculenta' : 'text-bosque-dark'}`}>Psicoterapia humanista y vínculo cultural</span>
+              <span className={`text-[0.65rem] font-medium leading-tight transition-colors ${isMenuOpen ? 'text-suculenta' : 'text-bosque-dark'}`}>Psicoterapia y Vínculo Cultural</span>
             </div>
           </Link>
 
@@ -62,13 +62,13 @@ export default function Navbar() {
               <button className={`flex items-center gap-1 text-sm font-medium px-2 py-1 rounded-md transition-colors ${isMenuOpen ? 'text-white hover:text-suculenta' : 'text-bluegrey-600 hover:text-bosque'}`}>
                 {lang}
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
               <div className="absolute right-0 top-full mt-1 hidden group-hover:block w-24 bg-white/90 backdrop-blur-md rounded-lg shadow-lg overflow-hidden border border-white/50">
                 {languages.map((l) => (
-                  <button 
-                    key={l} 
+                  <button
+                    key={l}
                     onClick={() => setLang(l)}
                     className="w-full text-left px-3 py-2 text-sm text-bluegrey-700 hover:bg-menta hover:text-bosque-dark transition-colors"
                   >
@@ -91,15 +91,13 @@ export default function Navbar() {
                     <img
                       src={session.user.image}
                       alt={session.user.name || "Avatar"}
-                      className={`w-8 h-8 rounded-full object-cover border-2 transition-colors ${
-                        isMenuOpen ? 'border-white/50' : 'border-cream-200 group-hover:border-suculenta'
-                      }`}
+                      className={`w-8 h-8 rounded-full object-cover border-2 transition-colors ${isMenuOpen ? 'border-white/50' : 'border-cream-200 group-hover:border-suculenta'
+                        }`}
                       referrerPolicy="no-referrer"
                     />
                   ) : (
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors ${
-                      isMenuOpen ? 'bg-bluegrey-800 text-white' : 'bg-menta text-bosque-dark'
-                    }`}>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors ${isMenuOpen ? 'bg-bluegrey-800 text-white' : 'bg-menta text-bosque-dark'
+                      }`}>
                       {session.user.name?.charAt(0).toUpperCase() || "U"}
                     </div>
                   )}
@@ -142,11 +140,10 @@ export default function Navbar() {
             ) : (
               <button
                 onClick={() => signIn("google")}
-                className={`flex items-center gap-1.5 p-2 sm:px-3 sm:py-1.5 rounded-lg text-sm font-semibold transition-all ${
-                  isMenuOpen
+                className={`flex items-center gap-1.5 p-2 sm:px-3 sm:py-1.5 rounded-lg text-sm font-semibold transition-all ${isMenuOpen
                     ? 'text-white hover:text-suculenta sm:bg-white/10 sm:border sm:border-white/20'
                     : 'text-bluegrey-600 hover:text-bosque sm:bg-bosque sm:text-white sm:hover:bg-bosque-dark sm:shadow-sm'
-                }`}
+                  }`}
               >
                 <CircleUser size={24} className="sm:hidden" />
                 <CircleUser size={16} className="hidden sm:block" />
@@ -154,20 +151,20 @@ export default function Navbar() {
               </button>
             )}
 
-            <button 
+            <button
               className={`p-2 -mr-2 transition-colors ${isMenuOpen ? 'text-white hover:text-suculenta' : 'text-bluegrey-600 hover:text-bosque'}`}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
-         </div>
+        </div>
       </header>
 
       {/* Hamburger Drawer */}
       <AnimatePresence>
         {isMenuOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: '100%' }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
@@ -210,8 +207,8 @@ export default function Navbar() {
                     transition={{ delay: i * 0.1 }}
                     key={link.name}
                   >
-                    <Link 
-                      href={link.path} 
+                    <Link
+                      href={link.path}
                       className="flex items-center gap-4 hover:text-suculenta transition-colors py-4 border-b border-bluegrey-700/50 group"
                       onClick={() => setIsMenuOpen(false)}
                     >
@@ -253,7 +250,7 @@ export default function Navbar() {
                 <span className="text-sm font-medium text-bluegrey-300">Seleccionar idioma:</span>
                 <div className="flex flex-wrap gap-2">
                   {languages.map((l) => (
-                    <button 
+                    <button
                       key={l}
                       onClick={() => { setLang(l); setIsMenuOpen(false); }}
                       className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-colors ${lang === l ? 'bg-olivo text-white shadow-lg shadow-olivo/20' : 'bg-bluegrey-800 text-bluegrey-300 hover:bg-bluegrey-700'}`}
