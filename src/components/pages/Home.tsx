@@ -509,11 +509,13 @@ export default function Home({
 
       {/* Articles preview */}
       <section className="w-full py-32 bg-bosque-dark relative overflow-hidden">
-        {/* Sophisticated Gradient Background - Optimized for ultra-smooth performance */}
-        <div className="absolute inset-0 bg-gradient-to-br from-bosque-dark via-bosque-dark to-bluegrey-900 -z-10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_-10%,rgba(162,188,151,0.15),transparent_50%),radial-gradient(circle_at_10%_80%,rgba(181,114,138,0.1),transparent_50%),radial-gradient(circle_at_50%_50%,rgba(170,186,174,0.05),transparent_70%)] pointer-events-none" />
+        {/* Sophisticated Gradient Background - Enhanced intensity */}
+        <div className="absolute inset-0 bg-gradient-to-br from-bosque-dark via-bosque-dark to-[#1a2e1d] -z-10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_-20%,rgba(162,188,151,0.25),transparent_60%),radial-gradient(circle_at_0%_100%,rgba(181,114,138,0.15),transparent_60%),radial-gradient(circle_at_50%_50%,rgba(170,186,174,0.08),transparent_80%)] pointer-events-none" />
         
-        <div className="absolute inset-0 opacity-[0.05] pointer-events-none -z-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
+        {/* Map/Collage Texture Overlay */}
+        <div className="absolute inset-0 opacity-[0.08] pointer-events-none -z-10 bg-[url('https://www.transparenttextures.com/patterns/old-map.png')] mix-blend-overlay" />
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none -z-10 bg-[url('https://www.transparenttextures.com/patterns/notebook.png')] mix-blend-screen" />
         
         <div className="px-6 max-w-6xl mx-auto relative z-10">
           <div className="flex items-end justify-between mb-12">
@@ -534,14 +536,9 @@ export default function Home({
             {resourcesContent.map((item, i) => (
               <motion.div 
                 key={i} 
-                whileHover={{ y: -10 }}
+                whileHover={{ y: -10, scale: 1.02 }}
                 onClick={() => setSelectedResource(i)}
-                className={`min-w-[300px] max-w-[320px] shrink-0 rounded-[2.5rem] shadow-xl border border-white/5 overflow-hidden snap-start cursor-pointer transition-all duration-500 group ${
-                  i % 4 === 0 ? 'bg-suculenta/10' : 
-                  i % 4 === 1 ? 'bg-menta/20' : 
-                  i % 4 === 2 ? 'bg-olivo/15' : 
-                  'bg-white/5'
-                }`}
+                className="min-w-[300px] max-w-[320px] shrink-0 rounded-[2.5rem] shadow-2xl border border-white/10 overflow-hidden snap-start cursor-pointer transition-all duration-500 group bg-slate-400/10 backdrop-blur-md transform-gpu"
               >
                 <div className="h-48 relative overflow-hidden">
                   <div className={`absolute inset-0 ${item.color} opacity-20 mix-blend-overlay group-hover:opacity-40 transition-opacity z-10`}></div>
