@@ -40,7 +40,7 @@ export default function DescubreSection({ onOpenPro, teamData }: { onOpenPro: (i
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
-    <section id="descubre" className="px-6 py-20 bg-[#F9F7F3] rounded-[3.5rem] mx-2 md:mx-0 border border-cream-200 scroll-mt-24 overflow-hidden relative min-h-[600px] shadow-sm">
+    <section id="descubre" className="px-6 py-20 bg-[#F2EFE8] rounded-[3.5rem] mx-2 md:mx-0 border border-cream-200 scroll-mt-24 overflow-hidden relative min-h-[600px] shadow-sm">
       {/* Decorative organic elements */}
       <motion.div 
         animate={{ 
@@ -84,19 +84,19 @@ export default function DescubreSection({ onOpenPro, teamData }: { onOpenPro: (i
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
-              <button onClick={() => { setActiveTab('quienes'); window.location.hash = 'quienes-somos'; }} className="flex items-center justify-between bg-white px-6 py-5 rounded-2xl shadow-sm border border-cream-200 hover:shadow-md transition-all group">
+              <button onClick={() => { setActiveTab('quienes'); window.location.hash = 'quienes-somos'; }} className="flex items-center justify-between bg-white px-6 py-5 rounded-2xl shadow-[0_4px_15px_rgba(0,0,0,0.04)] border border-white/60 hover:shadow-lg hover:-translate-y-0.5 transition-all group">
                 <span className="font-semibold text-bluegrey-900">¿Quiénes somos?</span>
                 <ChevronRight className="text-bosque group-hover:translate-x-1 transition-transform" size={20} />
               </button>
-              <button onClick={() => router.push('/recursos')} className="flex items-center justify-between bg-white px-6 py-5 rounded-2xl shadow-sm border border-cream-200 hover:shadow-md transition-all group">
+              <button onClick={() => router.push('/recursos')} className="flex items-center justify-between bg-white px-6 py-5 rounded-2xl shadow-[0_4px_15px_rgba(0,0,0,0.04)] border border-white/60 hover:shadow-lg hover:-translate-y-0.5 transition-all group">
                 <span className="font-semibold text-bluegrey-900">Artículos y recursos</span>
                 <ChevronRight className="text-bosque group-hover:translate-x-1 transition-transform" size={20} />
               </button>
-              <button onClick={() => { setActiveTab('faq'); window.location.hash = 'faq'; }} className="flex items-center justify-between bg-white px-6 py-5 rounded-2xl shadow-sm border border-cream-200 hover:shadow-md transition-all group">
+              <button onClick={() => { setActiveTab('faq'); window.location.hash = 'faq'; }} className="flex items-center justify-between bg-white px-6 py-5 rounded-2xl shadow-[0_4px_15px_rgba(0,0,0,0.04)] border border-white/60 hover:shadow-lg hover:-translate-y-0.5 transition-all group">
                 <span className="font-semibold text-bluegrey-900">Preguntas frecuentes</span>
                 <ChevronRight className="text-bosque group-hover:translate-x-1 transition-transform" size={20} />
               </button>
-              <button onClick={() => { setActiveTab('contacto'); window.location.hash = 'contacto'; }} className="flex items-center justify-between bg-white px-6 py-5 rounded-2xl shadow-sm border border-cream-200 hover:shadow-md transition-all group">
+              <button onClick={() => { setActiveTab('contacto'); window.location.hash = 'contacto'; }} className="flex items-center justify-between bg-white px-6 py-5 rounded-2xl shadow-[0_4px_15px_rgba(0,0,0,0.04)] border border-white/60 hover:shadow-lg hover:-translate-y-0.5 transition-all group">
                 <span className="font-semibold text-bluegrey-900">Contacto y ubicación</span>
                 <ChevronRight className="text-bosque group-hover:translate-x-1 transition-transform" size={20} />
               </button>
@@ -132,7 +132,7 @@ export default function DescubreSection({ onOpenPro, teamData }: { onOpenPro: (i
                 <div 
                   onClick={() => onOpenPro(i)}
                   key={i} 
-                  className="flex-1 bg-white p-4 rounded-[2rem] shadow-sm border border-cream-200 flex flex-col items-center gap-4 cursor-pointer hover:shadow-lg transition-transform hover:-translate-y-1"
+                  className="flex-1 bg-white p-4 rounded-[2rem] shadow-[0_4px_15px_rgba(0,0,0,0.04)] border border-white/60 flex flex-col items-center gap-4 cursor-pointer hover:shadow-lg transition-transform hover:-translate-y-1"
                 >
                   <div className="w-full h-48 rounded-3xl bg-bluegrey-100 overflow-hidden">
                     <img src={member.img} alt={member.name} className="w-full h-full object-cover" />
