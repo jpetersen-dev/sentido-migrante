@@ -344,24 +344,24 @@ export default function Home({
 
       {/* Photographic Transition / Divider */}
       <section 
-        className="relative h-[60vh] min-h-[450px] flex items-center justify-center w-screen ml-[calc(50%-50vw)]" 
+        className="relative h-[60vh] min-h-[450px] flex items-center justify-center w-screen ml-[calc(50%-50vw)] z-0" 
         style={{ clipPath: "inset(0)" }}
       >
         {/* Fixed Background for true Parallax */}
-        <div className="fixed inset-0 w-screen h-[100dvh] -z-10">
+        <div className="fixed inset-0 w-screen h-screen z-0">
           <img 
-            src="https://images.unsplash.com/photo-1542273917363-3b1817f69a56?q=80&w=2000&auto=format&fit=crop" 
+            src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2000&auto=format&fit=crop" 
             alt="Naturaleza serena"
             className="w-full h-full object-cover"
           />
         </div>
         
         {/* Overlays */}
-        <div className="absolute inset-0 bg-bosque-dark/50 z-0"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-bluegrey-900/90 via-bluegrey-900/30 to-transparent z-0"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-cream-100/50 via-transparent to-transparent z-0"></div>
+        <div className="absolute inset-0 bg-bosque-dark/40 z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-bluegrey-900/90 via-bluegrey-900/30 to-transparent z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-cream-100/50 via-transparent to-transparent z-10"></div>
         
-        <div className="relative z-10 text-center px-6 max-w-4xl mx-auto flex flex-col items-center">
+        <div className="relative z-20 text-center px-6 max-w-4xl mx-auto flex flex-col items-center">
           <motion.div
             initial={{ scale: 0, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
