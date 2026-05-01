@@ -336,61 +336,6 @@ export default function Home({
         )}
       </AnimatePresence>
 
-      <AnimatePresence>
-        {selectedResource !== null && (
-          <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center sm:p-4 bg-bluegrey-900/60 backdrop-blur-sm"
-            onClick={() => setSelectedResource(null)}
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 100 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 100 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="bg-white/95 backdrop-blur-2xl border border-white/60 rounded-t-[3rem] sm:rounded-[3rem] p-8 sm:p-10 max-w-xl w-full flex flex-col gap-8 relative shadow-[0_-20px_60px_-15px_rgba(0,0,0,0.2)]"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="w-16 h-1.5 bg-cream-200 rounded-full mx-auto mb-2 opacity-50 sm:hidden" />
-              <button
-                className="absolute top-6 right-6 p-2 bg-cream-100/50 hover:bg-cream-100 rounded-full text-bluegrey-500 hover:text-bluegrey-900 transition-colors"
-                onClick={() => setSelectedResource(null)}
-              >
-                <X size={24} />
-              </button>
-
-              <div className="flex flex-col gap-6">
-                <div className="flex flex-col gap-3">
-                  <span className="text-xs font-bold uppercase tracking-[0.2em] text-bosque">{resourcesContent[selectedResource].category}</span>
-                  <h3 className="text-3xl md:text-4xl font-bold text-bluegrey-900 font-display leading-[1.1]">
-                    {resourcesContent[selectedResource].title}
-                  </h3>
-                </div>
-                
-                <div className="flex items-center gap-4 text-sm text-bluegrey-500 font-medium border-y border-cream-100 py-4">
-                  <div className="flex items-center gap-1.5">
-                    <Clock size={16} />
-                    <span>{resourcesContent[selectedResource].time} de lectura</span>
-                  </div>
-                  <div className="w-1 h-1 rounded-full bg-cream-300"></div>
-                  <span>Por Sentido Migrante</span>
-                </div>
-
-                <p className="text-bluegrey-600 leading-relaxed text-lg font-light">
-                  {resourcesContent[selectedResource].description || "Explora este recurso detallado diseñado para acompañar tu proceso migratorio con herramientas prácticas y reflexiones profundas."}
-                </p>
-
-                <Link 
-                  href={`/recursos/${selectedResource}`}
-                  className="mt-4 w-full py-5 bg-gradient-to-r from-bosque-dark to-suculenta hover:from-bosque hover:to-olivo text-white font-bold rounded-2xl text-center shadow-xl shadow-bosque-dark/10 active:scale-[0.98] transition-all text-lg"
-                >
-                  Leer artículo completo
-                </Link>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Photographic Transition / Divider */}
       <section 
@@ -687,14 +632,14 @@ export default function Home({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedResource(null)}
-              className="fixed inset-0 bg-bosque-dark/40 backdrop-blur-md z-[60]"
+              className="fixed inset-0 bg-bosque-dark/40 backdrop-blur-md z-[100]"
             />
             <motion.div
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed bottom-0 left-0 right-0 z-[70] bg-white/70 backdrop-blur-[32px] border-t border-white/40 rounded-t-[40px] shadow-[0_-20px_50px_rgba(0,0,0,0.15)] flex flex-col max-h-[85vh] overflow-hidden"
+              className="fixed bottom-0 left-0 right-0 z-[110] bg-white/70 backdrop-blur-[32px] border-t border-white/40 rounded-t-[40px] shadow-[0_-20px_50px_rgba(0,0,0,0.15)] flex flex-col max-h-[85vh] overflow-hidden"
             >
               <div className="w-16 h-1.5 bg-bluegrey-200 rounded-full mx-auto my-6 shrink-0" />
               
