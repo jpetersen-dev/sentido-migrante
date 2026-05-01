@@ -103,24 +103,9 @@ export default function Home({
       </section>
 
       {/* Manifesto — Hall de recepción */}
-      <section className="relative w-full py-24 md:py-32 overflow-hidden">
-        {/* Subtle warm gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-cream-50 via-cream-100 to-cream-50 -z-10" />
-
-        {/* Decorative floating shapes */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden -z-[5]">
-          <motion.div
-            animate={{ rotate: [0, 360] }}
-            transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
-            className="absolute -top-20 -right-20 w-[400px] h-[400px] rounded-full border border-suculenta/20"
-          />
-          <motion.div
-            animate={{ rotate: [360, 0] }}
-            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-            className="absolute -bottom-32 -left-32 w-[500px] h-[500px] rounded-full border border-menta/30"
-          />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-suculenta/[0.04] rounded-full blur-[80px]" />
-        </div>
+      <section className="relative w-full py-24 md:py-32">
+        {/* Glass card feel — page canvas visible through this */}
+        <div className="absolute inset-0 bg-cream-50/60 backdrop-blur-[1px] -z-10" />
 
         <div className="max-w-5xl mx-auto px-6">
           {/* Decorative accent line */}
@@ -179,7 +164,8 @@ export default function Home({
       </section>
 
       {/* Services summary with dynamic modals */}
-      <section className="w-full bg-cream-100 py-24 border-y border-cream-200">
+      <section className="w-full py-24 border-y border-cream-200/70 relative">
+        <div className="absolute inset-0 bg-white/40 backdrop-blur-[2px] -z-10" />
         <div className="px-6 max-w-6xl mx-auto">
           <div className="flex flex-col gap-2 mb-10">
             <h2 className="text-3xl md:text-5xl font-bold text-bluegrey-900 font-display tracking-tight">Nuestros Servicios</h2>
@@ -394,20 +380,8 @@ export default function Home({
       </section>
 
       {/* Testimonials - Interactive Carousel */}
-      <section className="py-24 px-6 relative overflow-hidden bg-white">
-        {/* Animated Background Blobs */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
-          <motion.div
-            animate={{ x: [0, 50, 0], y: [0, 30, 0] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[-10%] left-[-10%] w-[40%] h-[50%] bg-menta/50 rounded-full blur-[100px]"
-          />
-          <motion.div
-            animate={{ x: [0, -40, 0], y: [0, -50, 0] }}
-            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute bottom-[-10%] right-[-5%] w-[35%] h-[40%] bg-suculenta/40 rounded-full blur-[80px]"
-          />
-        </div>
+      <section className="py-24 px-6 relative">
+        <div className="absolute inset-0 bg-white/30 backdrop-blur-[1px] -z-10" />
 
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20 max-w-6xl mx-auto relative z-10">
           {/* Left side: Heading and avatars */}
