@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import DescubreSection from '@/components/DescubreSection';
-import WaveDivider from '@/components/WaveDivider';
 
 // Map string names from Strapi to actual Lucide components
 const IconMap: Record<string, any> = {
@@ -103,8 +102,6 @@ export default function Home({
         </div>
       </section>
 
-      {/* Wave: Hero → Manifesto */}
-      <WaveDivider fromColor="#F5F5F4" toColor="#F9F7F3" />
 
       {/* Manifesto — Hall de recepción */}
       <section className="relative w-full py-24 md:py-32 bg-[#F1F0EC]">
@@ -175,8 +172,6 @@ export default function Home({
         <div className="absolute inset-0 bg-gradient-to-b from-[#F1F0EC] via-transparent to-white"></div>
       </section>
 
-      {/* Wave: Transition → Servicios */}
-      <WaveDivider fromColor="transparent" toColor="#ffffff" flip />
 
       {/* Services summary with dynamic modals */}
       <section className="w-full py-24 border-y border-cream-200/60 relative bg-white">
@@ -459,8 +454,6 @@ export default function Home({
         </div>
       </section>
 
-      {/* Wave: Testimonios → Recursos */}
-      <WaveDivider fromColor="#F2EFE8" toColor="#3f513e" />
 
       {/* Articles preview */}
       <section className="w-full py-24 bg-bosque-dark relative overflow-hidden">
@@ -514,8 +507,6 @@ export default function Home({
         </div>
       </section>
 
-      {/* Wave: Recursos → Descubre */}
-      <WaveDivider fromColor="#3f513e" toColor="#FCFBF9" flip />
 
       {/* Descubre Section */}
       <DescubreSection onOpenPro={setSelectedPro} teamData={teamData} />
