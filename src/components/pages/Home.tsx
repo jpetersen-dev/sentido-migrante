@@ -439,21 +439,23 @@ export default function Home({
                   className={`absolute w-[95%] max-w-2xl p-4 md:p-8 rounded-[3rem] cursor-grab active:cursor-grabbing preserve-3d
                     ${isActive ? 'z-30' : 'z-10'}`}
                 >
-                  {/* Card Content with High Saturation + Texture + Glass */}
-                  <div className={`relative w-full h-full p-8 md:p-12 rounded-[3rem] backdrop-blur-2xl border-2 shadow-[0_25px_60px_rgba(0,0,0,0.12)] overflow-hidden ${
-                    i % 4 === 0 ? 'bg-suculenta/95 border-suculenta text-white' : 
-                    i % 4 === 1 ? 'bg-menta/95 border-menta text-bosque-dark' : 
-                    i % 4 === 2 ? 'bg-olivo/95 border-olivo text-white' : 
-                    'bg-bluegrey-800/95 border-bluegrey-700 text-white'
-                  }`}>
+                  {/* Card Content with Overlapping Transparency + Blend Mode */}
+                  <div className={`relative w-full h-full p-8 md:p-12 rounded-[3rem] backdrop-blur-xl border-2 shadow-[0_20px_50px_rgba(0,0,0,0.06)] overflow-hidden transition-colors duration-500 ${
+                    i % 4 === 0 ? 'bg-suculenta/70 border-suculenta/30 text-white' : 
+                    i % 4 === 1 ? 'bg-menta/70 border-menta/30 text-bosque-dark' : 
+                    i % 4 === 2 ? 'bg-olivo/70 border-olivo/30 text-white' : 
+                    'bg-bluegrey-700/70 border-bluegrey-600/30 text-white'
+                  }`}
+                  style={{ mixBlendMode: 'multiply' }}
+                  >
                     <div className="absolute inset-0 opacity-[0.1] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
                     
                     {/* Vivid Gradient Overlay */}
-                    <div className={`absolute inset-0 bg-gradient-to-br opacity-50 pointer-events-none ${
-                      i % 4 === 0 ? 'from-white/20 to-transparent' : 
-                      i % 4 === 1 ? 'from-bosque/10 to-transparent' : 
-                      i % 4 === 2 ? 'from-white/20 to-transparent' : 
-                      'from-white/10 to-transparent'
+                    <div className={`absolute inset-0 bg-gradient-to-br opacity-40 pointer-events-none ${
+                      i % 4 === 0 ? 'from-white/40 to-transparent' : 
+                      i % 4 === 1 ? 'from-bosque/20 to-transparent' : 
+                      i % 4 === 2 ? 'from-white/40 to-transparent' : 
+                      'from-white/20 to-transparent'
                     }`} />
                     
                     <Quote className={`w-24 h-24 absolute -top-4 -left-4 rotate-12 opacity-10 ${
