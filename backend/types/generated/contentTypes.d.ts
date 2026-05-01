@@ -430,6 +430,36 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiGlobalSettingGlobalSetting extends Struct.SingleTypeSchema {
+  collectionName: 'global_settings';
+  info: {
+    displayName: 'GlobalSettings';
+    pluralName: 'global-settings';
+    singularName: 'global-setting';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::global-setting.global-setting'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    sectionTexture: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiHeroContentHeroContent extends Struct.SingleTypeSchema {
   collectionName: 'hero_contents';
   info: {
@@ -1094,6 +1124,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::global-setting.global-setting': ApiGlobalSettingGlobalSetting;
       'api::hero-content.hero-content': ApiHeroContentHeroContent;
       'api::resource.resource': ApiResourceResource;
       'api::service.service': ApiServiceService;

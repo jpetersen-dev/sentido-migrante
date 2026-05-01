@@ -40,6 +40,15 @@ export default function Home({
   const [scrollProgress, setScrollProgress] = useState(0);
   const [selectedResource, setSelectedResource] = useState<number | null>(null);
 
+  // Helper para calcular tiempo de lectura automáticamente
+  const calculateReadingTime = (text: string) => {
+    if (!text) return "2 min";
+    const wordsPerMinute = 225;
+    const words = text.trim().split(/\s+/).length;
+    const minutes = Math.ceil(words / wordsPerMinute);
+    return `${minutes} min`;
+  };
+
   const handleScroll = () => {
     if (scrollRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
@@ -558,7 +567,7 @@ export default function Home({
                   <div className="flex items-center justify-between mt-2">
                     <div className="flex items-center gap-2 text-xs text-white/50 font-medium">
                       <Clock size={14} className="text-suculenta" />
-                      <span>{item.time}</span>
+                      <span>{calculateReadingTime(item.content || item.title)} de lectura</span>
                     </div>
                     <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-suculenta group-hover:text-bosque-dark transition-all">
                       <MoveRight size={14} />
@@ -644,20 +653,52 @@ export default function Home({
                   </div>
 
                   <div className="mt-12 pt-8 border-t border-bluegrey-100 flex flex-col sm:flex-row items-center justify-between gap-6">
+                  </h3>
+
+                  {/* Article Template / Content Area */}
+                  <div className="article-template space-y-6 text-bluegrey-700 leading-relaxed text-lg">
+                    {/* Rendered Content - Aquí es donde Strapi inyectaría el HTML o Markdown */}
+                    <div className="prose prose-lg prose-slate max-w-none">
+                      <p className="first-letter:text-5xl first-letter:font-bold first-letter:text-suculenta first-letter:mr-3 first-letter:float-left">
+                        {resourcesContent[selectedResource].description || "Cargando contenido..."}
+                      </p>
+                      
+                      {/* Simulación de plantilla con estilos */}
+                      <div className="my-10 p-8 bg-suculenta/5 border-l-4 border-suculenta rounded-r-2xl italic text-xl text-bosque-dark font-display quote-card relative overflow-hidden">
+                        <Quote className="absolute -top-2 -right-2 w-24 h-24 opacity-5 rotate-12" />
+                        "La salud mental en el proceso migratorio no es un lujo, es la brújula que nos permite encontrar nuestro nuevo norte."
+                      </div>
+
+                      <p>
+                        {resourcesContent[selectedResource].content || "El contenido detallado de este artículo se está sincronizando desde la biblioteca de bienestar. Pronto podrás leer la guía completa sobre este tema."}
+                      </p>
+
+                      <div className="mt-12 p-6 rounded-2xl border border-dashed border-suculenta/30 bg-menta/5">
+                        <h4 className="font-bold text-bosque-dark mb-2 uppercase tracking-widest text-xs">Puntos clave:</h4>
+                        <ul className="list-disc list-inside space-y-2 text-sm">
+                          <li>Identificar disparadores emocionales</li>
+                          <li>Establecer rutinas de autocuidado adaptadas</li>
+                          <li>Buscar redes de apoyo en el idioma local</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-16 pt-8 border-t border-bluegrey-100 flex items-center justify-between">
                     <button 
                       onClick={() => setSelectedResource(null)}
-                      className="text-bluegrey-400 font-bold hover:text-bluegrey-900 transition-colors flex items-center gap-2"
+                      className="text-bluegrey-400 hover:text-bosque-dark font-bold text-sm transition-colors"
                     >
-                      <ArrowLeft size={18} /> Volver
+                      Cerrar lectura
                     </button>
-                    
                     <Link 
                       href={`/recursos/${selectedResource}`}
-                      className="w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-bosque-dark to-suculenta hover:from-suculenta hover:to-bosque-dark text-white font-bold rounded-2xl shadow-xl shadow-suculenta/20 transition-all hover:scale-[1.02] active:scale-95 text-center"
+                      className="px-8 py-4 bg-bosque-dark text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 active:scale-95"
                     >
                       Leer artículo completo
                     </Link>
                   </div>
+                 </div>
                 </div>
               </div>
             </motion.div>
