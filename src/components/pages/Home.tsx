@@ -508,16 +508,18 @@ export default function Home({
 
 
       {/* Articles preview */}
-      <section className="w-full py-32 bg-bosque-dark relative overflow-hidden">
-        {/* Sophisticated Gradient Background - Enhanced intensity */}
+      <section className="w-full py-32 relative overflow-hidden">
+        {/* Sophisticated Gradient Background - Unified with the section */}
+        <div className="absolute inset-0 bg-[#1a2e1d] -z-20" />
         <div className="absolute inset-0 bg-gradient-to-br from-bosque-dark via-bosque-dark to-[#1a2e1d] -z-10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_-20%,rgba(162,188,151,0.25),transparent_60%),radial-gradient(circle_at_0%_100%,rgba(181,114,138,0.15),transparent_60%),radial-gradient(circle_at_50%_50%,rgba(170,186,174,0.08),transparent_80%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_-20%,rgba(162,188,151,0.3),transparent_60%),radial-gradient(circle_at_0%_100%,rgba(181,114,138,0.2),transparent_60%),radial-gradient(circle_at_50%_50%,rgba(170,186,174,0.1),transparent_80%)] pointer-events-none" />
         
-        {/* Map/Collage Texture Overlay */}
-        <div className="absolute inset-0 opacity-[0.08] pointer-events-none -z-10 bg-[url('https://www.transparenttextures.com/patterns/old-map.png')] mix-blend-overlay" />
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none -z-10 bg-[url('https://www.transparenttextures.com/patterns/notebook.png')] mix-blend-screen" />
+        {/* Map/Collage Texture Overlay - Using a local asset path for you to swap */}
+        {/* INSTRUCCIÓN: Guarda tu imagen en 'public/assets/images/textura-mapa.png' y se verá aquí */}
+        <div className="absolute inset-0 opacity-[0.12] pointer-events-none -z-10 bg-[url('/assets/images/textura-mapa.png')] bg-cover mix-blend-overlay bg-fixed" />
+        <div className="absolute inset-0 opacity-[0.05] pointer-events-none -z-10 bg-[url('https://www.transparenttextures.com/patterns/notebook.png')] mix-blend-screen" />
         
-        <div className="px-6 max-w-6xl mx-auto relative z-10">
+        <div className="px-6 max-w-6xl mx-auto relative z-10 bg-transparent">
           <div className="flex items-end justify-between mb-12">
             <div className="flex flex-col gap-3">
               <span className="text-xs font-bold uppercase tracking-[0.4em] text-suculenta">Biblioteca de Bienestar</span>
