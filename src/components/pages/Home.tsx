@@ -509,41 +509,9 @@ export default function Home({
 
       {/* Articles preview */}
       <section className="w-full py-32 bg-bosque-dark relative overflow-hidden">
-        {/* Warm Animated Glows - Optimized for mobile */}
-        <motion.div 
-          animate={{ 
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-            x: [0, 40, 0]
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-suculenta/20 rounded-full blur-[100px] -z-0 will-change-transform transform-gpu" 
-        />
-        <motion.div 
-          animate={{ 
-            scale: [1, 1.3, 1],
-            opacity: [0.2, 0.4, 0.2],
-            x: [0, -30, 0]
-          }}
-          transition={{ duration: 18, repeat: Infinity, ease: "linear", delay: 1 }}
-          className="absolute bottom-[-15%] left-[-10%] w-[500px] h-[500px] bg-olivo/15 rounded-full blur-[80px] -z-0 will-change-transform transform-gpu" 
-        />
-        <motion.div 
-          animate={{ opacity: [0, 0.3, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "linear", delay: 2 }}
-          className="absolute top-[15%] left-[25%] w-[400px] h-[400px] bg-menta/15 rounded-full blur-[60px] -z-0 will-change-transform transform-gpu" 
-        />
-        <motion.div 
-          animate={{ opacity: [0.1, 0.2, 0.1] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-[10%] right-[10%] w-[350px] h-[350px] bg-suculenta/10 rounded-full blur-[70px] -z-0 will-change-transform transform-gpu" 
-        />
-        {/* Warm accent points - Static for performance */}
-        <div className="absolute top-1/4 right-1/4 w-32 h-32 bg-suculenta/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/3 left-1/3 w-24 h-24 bg-olivo/15 rounded-full blur-2xl" />
-        
-        {/* Warm zone gradient */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-tr from-transparent via-suculenta/5 to-transparent pointer-events-none -z-0" />
+        {/* Sophisticated Gradient Background - Optimized for ultra-smooth performance */}
+        <div className="absolute inset-0 bg-gradient-to-br from-bosque-dark via-bosque-dark to-bluegrey-900 -z-10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_-10%,rgba(162,188,151,0.15),transparent_50%),radial-gradient(circle_at_10%_80%,rgba(181,114,138,0.1),transparent_50%),radial-gradient(circle_at_50%_50%,rgba(170,186,174,0.05),transparent_70%)] pointer-events-none" />
         
         <div className="absolute inset-0 opacity-[0.05] pointer-events-none -z-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
         
