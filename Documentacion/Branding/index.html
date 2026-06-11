@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual de Marca — Sentido Migrante</title>
+  
+  <!-- Font Integration -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400,300&display=swap" rel="stylesheet">
+
+  <style>
+    /* CSS variables corresponding to the Tailwind theme defined in globals.css */
+    :root {
+      /* Colors */
+      --color-cream-50: #FCFBF9;
+      --color-cream-100: #F9F7F3;
+      --color-cream-200: #F2EFE8;
+      --color-bosque: #516750;
+      --color-bosque-dark: #3f513e;
+      --color-menta: #DAEDDF;
+      --color-suculenta: #A2BC97;
+      --color-olivo: #647453;
+      --color-olivo-dark: #586749;
+
+      --color-bg: var(--color-cream-50);
+      
+      --color-bluegrey-50: #FAFAF9;
+      --color-bluegrey-100: #F5F5F4;
+      --color-bluegrey-200: #E7E5E4;
+      --color-bluegrey-300: #D6D3D1;
+      --color-bluegrey-400: #A8A29E;
+      --color-bluegrey-500: #78716C;
+      --color-bluegrey-600: #57534E;
+      --color-bluegrey-700: #44403C;
+      --color-bluegrey-800: #292524;
+      --color-bluegrey-900: #1C1917;
+
+      --color-rosa-50: #F7EEEE;
+      --color-rosa-600: #BB8084;
+      --color-rosa-800: #665051;
+
+      /* Typography */
+      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-display: "Satoshi", "Inter", sans-serif;
+
+      --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Reset & Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--color-cream-50);
+      color: var(--color-bluegrey-800);
+      font-family: var(--font-sans);
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: row;
+    }
+
+    /* Layout structure */
+    aside {
+      width: 280px;
+      background-color: var(--color-bluegrey-900);
+      color: var(--color-cream-50);
+      padding: 2.5rem 1.5rem;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      border-right: 1px solid var(--color-bluegrey-800);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 100;
+    }
+
+    main {
+      margin-left: 280px;
+      flex-grow: 1;
+      padding: 3rem 4rem 5rem 4rem;
+      max-width: 1400px;
+    }
+
+    /* Sidebar styles */
+    .brand-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-suculenta);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .brand-subtitle {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-bluegrey-400);
+      margin-top: -1.75rem;
+      margin-bottom: 3rem;
+      display: block;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .nav-item a {
+      color: var(--color-bluegrey-300);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transition: var(--transition-base);
+    }
+
+    .nav-item a:hover, .nav-item.active a {
+      background-color: var(--color-bosque);
+      color: #fff;
+    }
+
+    .nav-item.active a {
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(81, 103, 80, 0.2);
+    }
+
+    .sidebar-footer {
+      font-size: 0.75rem;
+      color: var(--color-bluegrey-500);
+      border-top: 1px solid var(--color-bluegrey-800);
+      padding-top: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .sidebar-footer button {
+      background: none;
+      border: 1px solid var(--color-bluegrey-700);
+      color: var(--color-cream-50);
+      font-size: 0.8rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 1rem;
+      transition: var(--transition-base);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .sidebar-footer button:hover {
+      background-color: var(--color-bluegrey-800);
+      border-color: var(--color-bluegrey-600);
+    }
+
+    /* Content Styling */
+    section {
+      margin-bottom: 5rem;
+      scroll-margin-top: 3rem;
+    }
+
+    h1.sec-title {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--color-bluegrey-900);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    p.sec-description {
+      font-size: 1.125rem;
+      font-weight: 300;
+      color: var(--color-bluegrey-600);
+      line-height: 1.6;
+      max-width: 800px;
+      margin-bottom: 3rem;
+    }
+
+    .sec-divider {
+      height: 1px;
+      background-color: var(--color-cream-200);
+      margin-bottom: 5rem;
+    }
+
+    /* Color Grid Styles */
+    .color-category {
+      margin-bottom: 3.5rem;
+    }
+
+    .color-category-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-bluegrey-800);
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--color-bosque);
+      padding-left: 0.75rem;
+    }
+
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .color-card {
+      background: #fff;
+      border-radius: 1.25rem;
+      border: 1px solid var(--color-cream-200);
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
+      transition: var(--transition-base);
+    }
+
+    .color-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+    }
+
+    .color-preview {
+      height: 120px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .color-preview::after {
+      content: 'Copiar HEX';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: var(--transition-base);
+    }
+
+    .color-preview:hover::after {
+      opacity: 1;
+    }
+
+    .color-info {
+      padding: 1.25rem;
+    }
+
+    .color-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-bluegrey-900);
+      margin-bottom: 0.25rem;
+    }
+
+    .color-token {
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: var(--color-bluegrey-400);
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .color-hex {
+      font-family: monospace;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-bluegrey-700);
+      background: var(--color-cream-100);
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      display: inline-block;
+    }
+
+    /* Typo Styles */
+    .typo-specimen {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      background: #fff;
+      border: 1px solid var(--color-cream-200);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .typo-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--color-cream-200);
+      padding-bottom: 1.5rem;
+    }
+
+    .typo-family-name {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--color-bluegrey-900);
+    }
+
+    .typo-family-description {
+      font-size: 0.9rem;
+      color: var(--color-bluegrey-500);
+    }
+
+    .typo-showcase {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .typo-row {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      align-items: baseline;
+      padding: 0.5rem 0;
+    }
+
+    .typo-meta {
+      font-size: 0.8rem;
+      color: var(--color-bluegrey-400);
+      font-family: monospace;
+    }
+
+    .typo-preview-text {
+      line-height: 1.4;
+    }
+
+    .font-satoshi {
+      font-family: var(--font-display);
+    }
+
+    .font-inter {
+      font-family: var(--font-sans);
+    }
+
+    /* Logo System Styles */
+    .logo-showcase {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .logo-card {
+      background: #fff;
+      border: 1px solid var(--color-cream-200);
+      border-radius: 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-container {
+      height: 240px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .logo-container.bg-light {
+      background-color: var(--color-cream-50);
+    }
+
+    .logo-container.bg-dark {
+      background-color: var(--color-bluegrey-900);
+    }
+
+    .logo-container.bg-monochrome {
+      background-color: #fff;
+      border-bottom: 1px dashed var(--color-cream-200);
+    }
+
+    .logo-card-info {
+      padding: 1.5rem;
+      border-top: 1px solid var(--color-cream-200);
+      background: #fff;
+    }
+
+    .logo-card-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-bluegrey-900);
+      margin-bottom: 0.5rem;
+    }
+
+    .logo-card-desc {
+      font-size: 0.85rem;
+      color: var(--color-bluegrey-500);
+      line-height: 1.4;
+    }
+
+    /* UI Previews and Context widgets */
+    .preview-canvas {
+      border: 1px solid var(--color-cream-200);
+      border-radius: 2rem;
+      background: #fff;
+      padding: 3rem;
+      margin-bottom: 3rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    }
+
+    .preview-controls {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      justify-content: flex-end;
+    }
+
+    .btn-toggle {
+      background: var(--color-cream-100);
+      border: 1px solid var(--color-cream-200);
+      padding: 0.5rem 1rem;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-bluegrey-600);
+      transition: var(--transition-base);
+    }
+
+    .btn-toggle:hover, .btn-toggle.active {
+      background: var(--color-bosque);
+      color: #fff;
+      border-color: var(--color-bosque);
+    }
+
+    /* Mockup elements */
+    .mock-navbar {
+      border-radius: 1rem;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+      transition: var(--transition-base);
+      margin-bottom: 2rem;
+    }
+
+    .mock-navbar.light {
+      background: #fff;
+      border: 1px solid var(--color-cream-200);
+    }
+
+    .mock-navbar.dark {
+      background: var(--color-bluegrey-900);
+      border: 1px solid var(--color-bluegrey-800);
+    }
+
+    .mock-nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .mock-nav-link {
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .mock-navbar.light .mock-nav-link { color: var(--color-bluegrey-600); }
+    .mock-navbar.dark .mock-nav-link { color: var(--color-bluegrey-300); }
+
+    .mock-navbar.light .mock-nav-link:hover { color: var(--color-bosque); }
+    .mock-navbar.dark .mock-nav-link:hover { color: var(--color-suculenta); }
+
+    .mock-btn {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.6rem 1.2rem;
+      border-radius: 0.75rem;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition-base);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .mock-btn.primary {
+      background: var(--color-bosque);
+      color: #fff;
+    }
+
+    .mock-btn.primary:hover {
+      background: var(--color-bosque-dark);
+      transform: translateY(-1px);
+    }
+
+    .mock-btn.secondary {
+      background: #fff;
+      border: 1px solid var(--color-cream-200);
+      color: var(--color-bluegrey-800);
+    }
+
+    .mock-btn.secondary:hover {
+      background: var(--color-cream-100);
+      border-color: var(--color-suculenta);
+    }
+
+    .mock-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.8rem;
+      border-radius: 9999px;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    .mock-badge.mint {
+      background: var(--color-menta);
+      color: var(--color-bosque-dark);
+    }
+
+    /* Mock Cards grid */
+    .mock-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .mock-card {
+      border-radius: 1.5rem;
+      padding: 1.75rem;
+      transition: var(--transition-base);
+    }
+
+    .mock-card.light {
+      background: #fff;
+      border: 1px solid var(--color-cream-200);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.01);
+    }
+
+    .mock-card.dark {
+      background: var(--color-bluegrey-800);
+      border: 1px solid var(--color-bluegrey-700);
+      color: var(--color-cream-50);
+    }
+
+    .mock-card-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--color-olivo);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    
+    .mock-card.dark .mock-card-tag {
+      color: var(--color-suculenta);
+    }
+
+    .mock-card-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .mock-card.light .mock-card-title { color: var(--color-bluegrey-900); }
+    .mock-card.dark .mock-card-title { color: #fff; }
+
+    .mock-card-desc {
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+
+    .mock-card.light .mock-card-desc { color: var(--color-bluegrey-600); }
+    .mock-card.dark .mock-card-desc { color: var(--color-bluegrey-300); }
+
+    /* SVG logo styles specific to our inline SVGs */
+    .sm-isotype {
+      width: 80px;
+      height: 80px;
+    }
+
+    .sm-logo-main {
+      width: 100%;
+      max-width: 480px;
+      height: auto;
+    }
+
+    .sm-logo-alt {
+      width: 100%;
+      max-width: 280px;
+      height: auto;
+    }
+
+    /* Notification box for copy to clipboard */
+    #copy-toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--color-bluegrey-900);
+      color: var(--color-cream-50);
+      padding: 1rem 1.5rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      z-index: 999;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transform: translateY(150%);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    #copy-toast.show {
+      transform: translateY(0);
+    }
+
+    /* Print styles */
+    @media print {
+      body {
+        background: #fff;
+        color: #000;
+      }
+      aside {
+        display: none;
+      }
+      main {
+        margin-left: 0;
+        padding: 0;
+      }
+      .preview-controls, .sidebar-footer, #copy-toast {
+        display: none !important;
+      }
+      .preview-canvas, .color-card, .logo-card, .typo-specimen {
+        page-break-inside: avoid;
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+      }
+      section {
+        page-break-after: always;
+      }
+    }
+  </style>
+<body>
+
+  <!-- Reusable Real Isotype Definition -->
+  <svg style="display: none;">
+    <symbol id="real-isotype" viewBox="0 0 810 810">
+      <g transform="matrix(0.04461982,0,0,-0.04481878,-46.059213,858.66606)" fill="currentColor" stroke="none">
+        <path d="M 9691,19149 C 7715,19059 5850,18324 4285,17019 3621,16465 3008,15784 2529,15065 1753,13901 1253,12516 1091,11080 968,10002 1037,9005 1309,7915 1543,6980 1916,6111 2437,5290 2946,4489 3591,3762 4312,3174 c 550,-448 1090,-802 1678,-1098 424,-214 667,-319 1075,-466 1606,-578 3462,-683 5124,-290 1447,342 2797,1037 3921,2019 288,251 641,605 899,903 706,813 1293,1823 1656,2849 261,736 430,1520 501,2324 26,284 26,1024 1,1315 -74,856 -219,1558 -482,2329 -239,700 -616,1458 -1023,2056 -434,639 -976,1253 -1557,1766 -554,488 -1276,975 -1956,1319 -695,351 -1444,614 -2204,775 -701,148 -1488,209 -2254,174 z m 667,-370 c 395,-67 808,-205 1208,-403 361,-179 1173,-655 1689,-990 136,-88 152,-96 197,-96 111,0 184,88 163,198 -5,26 -20,50 -54,82 -111,105 -1351,849 -1806,1083 -27,14 -45,26 -40,26 17,1 244,-48 365,-79 681,-173 1413,-614 2010,-1210 315,-314 556,-614 965,-1200 437,-625 760,-1017 1153,-1402 270,-264 452,-418 867,-735 671,-513 966,-799 1163,-1130 l 52,-87 -92,-24 c -51,-13 -106,-27 -123,-31 -24,-6 -38,-2 -68,20 -68,49 -129,64 -257,64 -140,-1 -230,-23 -375,-95 -235,-116 -408,-310 -565,-635 -76,-159 -133,-305 -248,-645 -89,-262 -144,-416 -192,-535 -44,-112 -122,-275 -130,-275 -4,0 -20,19 -35,43 -95,144 -246,329 -380,466 -330,337 -611,515 -1026,649 -165,53 -310,85 -569,122 -401,58 -670,130 -1055,282 -324,128 -739,354 -985,536 -143,106 -191,147 -409,347 -513,471 -702,637 -962,845 -490,392 -1042,771 -1413,970 l -99,53 70,68 c 79,75 210,146 323,176 80,21 277,23 365,4 117,-25 302,-93 450,-165 187,-90 356,-191 599,-359 429,-295 702,-447 1058,-588 291,-114 503,-181 561,-176 114,10 179,125 128,229 -14,30 -123,146 -348,369 -303,300 -532,509 -773,700 -530,421 -1096,742 -1635,925 -514,176 -882,218 -1705,195 -310,-9 -455,-9 -537,-2 -397,39 -638,154 -740,354 -27,54 -55,145 -48,157 2,4 47,10 99,13 52,4 290,31 528,61 556,71 693,87 1148,135 820,87 933,84 1320,-41 267,-86 604,-225 871,-359 322,-160 851,-450 1159,-634 118,-71 151,-81 208,-66 50,14 108,76 118,126 9,48 -11,111 -44,145 -60,58 -805,475 -1232,689 -435,217 -753,348 -1054,436 -225,65 -298,77 -502,82 -276,8 -553,-13 -1264,-97 -140,-17 -372,-43 -515,-60 -143,-16 -341,-39 -440,-50 -185,-22 -326,-23 -395,-1 -137,42 -258,187 -222,266 14,30 85,66 182,93 240,67 1446,289 1955,361 668,95 888,113 1065,87 395,-58 1025,-304 1675,-654 198,-107 687,-389 905,-522 240,-147 246,-150 300,-150 77,0 141,56 156,138 9,44 -19,114 -59,149 -73,64 -925,559 -1257,731 -362,187 -849,400 -1147,501 -420,142 -669,166 -1168,110 -292,-33 -904,-122 -1054,-154 -41,-8 -76,-14 -78,-11 -8,8 191,119 358,200 287,139 585,247 879,321 348,87 524,99 788,54 z m -1953,-152 c -192,-102 -397,-240 -623,-421 -73,-58 -145,-112 -161,-120 -16,-9 -162,-43 -326,-76 -164,-34 -334,-73 -379,-87 -182,-57 -307,-147 -363,-262 -25,-50 -28,-66 -27,-156 1,-84 5,-112 28,-170 33,-86 82,-162 155,-238 l 55,-58 -18,-34 c -94,-173 -427,-369 -1401,-820 -1098,-509 -1803,-944 -2384,-1469 -168,-151 -405,-396 -532,-550 -133,-159 -136,-162 -99,-86 99,199 333,599 475,809 702,1047 1602,1921 2666,2593 717,452 1467,787 2286,1023 241,69 669,171 728,174 11,0 -25,-23 -80,-52 z m 5985,-925 c 504,-287 1087,-702 1516,-1082 187,-166 514,-490 688,-680 600,-660 1113,-1434 1490,-2253 l 46,-99 -110,106 c -148,141 -303,274 -485,414 -653,504 -937,748 -1242,1069 -366,383 -638,725 -1048,1317 -200,289 -475,644 -660,851 -54,61 -194,206 -312,324 l -214,213 108,-57 c 59,-32 160,-87 223,-123 z M 6855,16528 c 48,-78 160,-196 241,-254 188,-134 452,-212 789,-232 79,-5 260,-5 415,0 344,12 819,4 1010,-17 479,-52 958,-221 1491,-526 388,-222 885,-600 1249,-949 l 75,-71 -90,47 c -169,88 -280,157 -640,399 -198,132 -409,271 -470,307 -338,203 -665,323 -945,348 -247,21 -528,-51 -714,-184 -172,-122 -326,-342 -326,-463 0,-67 21,-114 66,-148 19,-15 103,-63 187,-107 175,-93 517,-297 517,-308 0,-4 -30,-52 -66,-105 -83,-122 -163,-282 -248,-500 -197,-503 -248,-626 -332,-797 -240,-485 -435,-760 -781,-1098 -177,-174 -264,-246 -1068,-888 -564,-450 -674,-543 -931,-782 -229,-215 -453,-462 -601,-665 l -22,-30 -30,35 c -17,19 -51,76 -76,125 -71,142 -90,295 -60,468 27,156 85,289 202,467 124,188 231,309 638,720 417,421 472,484 624,713 111,165 307,506 323,559 22,74 -20,154 -97,184 -39,14 -52,15 -87,5 -85,-26 -619,-342 -908,-539 -782,-530 -1665,-1340 -2024,-1855 -204,-294 -431,-722 -549,-1039 -180,-482 -374,-963 -443,-1100 -204,-402 -483,-603 -743,-534 -29,8 -55,17 -58,20 -3,3 17,56 44,118 78,176 119,307 233,753 104,403 284,1018 405,1381 165,494 238,640 480,964 313,419 669,821 1211,1370 314,318 322,329 309,416 -16,109 -146,172 -238,115 -43,-26 -509,-499 -732,-741 -446,-486 -745,-849 -943,-1145 -174,-260 -243,-409 -380,-820 -139,-416 -318,-1027 -447,-1526 -88,-336 -134,-477 -206,-617 -69,-137 -114,-201 -170,-241 -77,-56 -191,-60 -238,-9 -59,63 -24,374 124,1113 161,805 427,1833 566,2190 148,380 753,1125 1640,2020 383,386 390,396 375,479 -8,41 -46,90 -87,111 -37,19 -102,19 -144,0 -42,-21 -770,-754 -997,-1005 -519,-575 -902,-1076 -1033,-1355 -72,-152 -112,-267 -205,-583 -125,-426 -361,-1380 -440,-1775 -7,-32 -13,-57 -15,-55 -8,8 -67,383 -86,539 -27,228 -35,554 -20,740 55,655 315,1375 719,1994 325,498 692,927 1383,1616 218,218 404,410 413,427 66,127 -72,275 -204,219 -42,-17 -646,-610 -896,-878 -307,-329 -552,-618 -754,-889 -115,-155 -309,-446 -374,-563 -27,-48 -50,-86 -52,-84 -6,5 97,297 156,442 71,176 228,498 330,675 426,743 999,1356 1730,1853 487,330 976,594 1856,1000 484,224 717,348 1039,556 44,28 83,51 86,51 3,0 23,-28 44,-62 z m 3384,-2525 c 398,-298 699,-552 1196,-1007 279,-255 344,-313 480,-420 503,-400 1309,-763 1985,-895 58,-11 210,-37 338,-56 358,-55 540,-108 762,-221 348,-177 673,-487 955,-909 90,-134 105,-176 84,-227 -18,-45 -176,-280 -250,-374 -254,-321 -704,-765 -1124,-1109 -139,-114 -447,-347 -610,-462 -106,-74 -272,-183 -281,-183 -7,0 94,129 170,215 39,44 195,208 347,365 337,349 424,442 504,545 230,295 336,542 366,849 18,188 -14,396 -86,554 -58,126 -225,318 -344,394 -86,54 -156,34 -223,-65 -122,-181 -383,-483 -632,-732 -292,-292 -431,-410 -1041,-890 -572,-449 -710,-565 -949,-788 -139,-131 -338,-352 -454,-505 -183,-242 -370,-590 -515,-957 -47,-121 -120,-305 -161,-410 -87,-223 -142,-345 -154,-345 -14,0 -228,140 -382,250 -329,236 -793,593 -1178,908 -241,196 -339,270 -532,397 -496,328 -1044,555 -1640,679 -215,45 -364,67 -680,101 -436,46 -663,103 -918,231 -237,117 -429,255 -622,446 -169,166 -390,447 -390,494 0,50 115,244 251,424 286,378 1011,1057 1595,1492 145,108 523,362 529,356 6,-5 -146,-192 -253,-312 -53,-59 -193,-201 -311,-315 -333,-320 -491,-501 -647,-736 -73,-110 -153,-262 -194,-365 -63,-158 -94,-413 -71,-582 34,-252 109,-408 276,-573 105,-104 191,-155 260,-155 67,0 101,23 160,106 160,228 339,436 556,649 268,263 444,412 1244,1050 665,530 853,693 1041,906 414,467 673,937 986,1783 50,137 135,324 179,396 55,90 121,180 132,180 6,0 116,-80 246,-177 z m 7604,-1474 c 21,-6 37,-13 35,-17 -97,-184 -127,-285 -284,-967 -272,-1179 -370,-1524 -518,-1830 -120,-248 -249,-437 -532,-775 -269,-322 -435,-505 -893,-983 -157,-164 -294,-312 -303,-330 -24,-43 -23,-114 2,-155 23,-38 71,-69 118,-78 72,-14 97,4 308,219 658,670 1245,1356 1468,1716 216,349 347,748 586,1786 208,903 253,1075 317,1197 66,127 209,238 287,224 117,-22 132,-161 66,-614 -105,-719 -312,-1818 -435,-2309 -141,-561 -253,-757 -839,-1468 -298,-362 -532,-618 -1098,-1201 -157,-162 -168,-181 -153,-261 9,-48 68,-107 120,-122 83,-23 95,-14 375,272 618,632 1005,1072 1360,1547 329,439 430,651 550,1145 82,338 232,1068 300,1465 17,102 34,192 37,200 7,20 37,-112 73,-325 97,-568 84,-1153 -35,-1626 -167,-658 -509,-1236 -1237,-2084 -225,-263 -438,-494 -743,-808 -280,-288 -325,-346 -325,-416 1,-103 134,-195 216,-148 33,19 581,583 766,788 531,589 792,914 1050,1304 66,99 122,182 124,185 7,7 -82,-249 -131,-375 -141,-363 -356,-767 -568,-1065 -363,-510 -901,-1053 -1404,-1419 -319,-231 -754,-474 -1491,-831 -576,-279 -1033,-510 -1156,-584 -61,-36 -113,-63 -116,-59 -4,5 -27,38 -53,74 -127,181 -342,315 -628,389 -208,53 -392,72 -914,90 -750,27 -1056,82 -1570,285 -398,156 -933,469 -1380,806 -383,289 -725,560 -725,576 0,2 3,2 8,0 4,-3 79,-35 167,-72 181,-76 402,-191 615,-321 80,-48 215,-130 300,-182 177,-108 510,-274 651,-326 258,-95 404,-121 634,-113 192,6 283,26 430,96 128,61 237,143 351,263 113,121 155,195 162,289 4,60 2,73 -21,111 -22,39 -36,49 -124,88 -281,125 -709,364 -738,410 -4,6 18,68 48,138 30,70 94,231 142,357 140,370 203,521 281,679 290,584 594,914 1493,1621 769,605 935,746 1272,1084 223,223 329,344 464,525 l 59,79 33,-39 c 179,-206 187,-562 22,-888 -97,-191 -233,-355 -623,-755 -468,-479 -590,-636 -864,-1105 -45,-76 -89,-158 -98,-182 -47,-124 52,-247 173,-214 118,34 865,503 1197,752 638,481 1286,1104 1629,1567 143,192 218,318 343,576 164,339 188,399 403,1020 60,171 131,369 159,440 125,316 284,527 472,624 125,66 240,86 333,60 z M 4251,9325 c 188,-221 426,-423 681,-579 344,-211 613,-295 1133,-356 560,-66 642,-79 900,-145 501,-127 934,-311 1319,-562 181,-118 326,-229 852,-649 509,-407 742,-580 1094,-815 365,-242 883,-552 1103,-660 37,-18 67,-36 67,-40 0,-12 -111,-108 -173,-149 -34,-23 -100,-53 -154,-70 -388,-124 -812,11 -1612,513 -239,150 -520,298 -736,387 -263,108 -860,300 -934,300 -36,0 -89,-36 -118,-79 -29,-42 -31,-113 -5,-156 16,-26 291,-295 512,-502 188,-175 683,-562 1025,-800 659,-459 1204,-728 1770,-873 302,-77 558,-111 985,-130 135,-6 348,-15 475,-21 367,-16 529,-43 705,-118 162,-69 275,-167 332,-286 31,-66 37,-135 14,-158 -11,-10 -57,-16 -178,-21 -176,-7 -556,-34 -923,-66 -1215,-105 -1629,-88 -2067,83 -307,121 -936,429 -1528,747 -195,106 -380,207 -410,225 -100,60 -170,56 -233,-14 -60,-66 -58,-158 5,-218 83,-79 1054,-589 1678,-881 442,-207 618,-264 946,-309 104,-14 199,-17 499,-17 401,1 569,10 1280,71 348,30 478,37 680,37 284,0 279,1 363,-84 65,-66 114,-158 110,-207 -4,-51 -34,-66 -188,-97 -440,-89 -1705,-271 -2235,-322 -221,-21 -619,-24 -755,-6 -236,33 -563,129 -850,250 -306,129 -1196,593 -1770,922 -80,46 -164,94 -188,108 -109,62 -242,-16 -242,-142 0,-104 13,-113 588,-428 939,-513 1325,-705 1702,-846 625,-234 1074,-257 2155,-112 121,16 243,32 270,36 l 50,6 -60,-37 c -409,-255 -908,-449 -1310,-510 -528,-80 -1142,49 -1878,396 -507,239 -1346,703 -1841,1018 -124,78 -266,9 -266,-131 0,-51 24,-95 72,-131 42,-32 351,-220 583,-355 570,-331 1260,-686 1620,-834 l 120,-49 -60,6 c -168,16 -477,58 -530,71 -78,19 -420,139 -605,211 -583,227 -1190,591 -1666,998 -341,291 -644,620 -1113,1210 -432,543 -506,634 -684,834 -286,322 -666,695 -977,957 -135,115 -484,398 -771,626 -272,217 -318,257 -527,462 -213,209 -333,359 -411,514 -27,54 -29,62 -14,62 10,0 63,13 118,29 l 100,28 50,-20 c 292,-119 593,-82 836,102 162,123 340,352 453,584 62,127 162,376 316,782 111,295 184,479 229,578 l 31,69 57,-74 c 31,-40 91,-113 134,-163 z M 2620,6163 c 135,-109 319,-259 410,-334 91,-74 215,-175 275,-224 317,-258 672,-593 980,-925 184,-198 276,-308 500,-590 661,-837 981,-1199 1341,-1514 178,-157 403,-333 557,-437 55,-38 97,-69 93,-69 -37,0 -716,328 -948,458 -1426,800 -2594,1969 -3373,3377 -78,141 -345,675 -345,690 0,3 60,-48 133,-114 72,-66 242,-209 377,-318 z m 15177,-210 c -259,-460 -412,-699 -658,-1029 -1161,-1564 -2869,-2716 -4784,-3227 -247,-66 -256,-67 -156,-12 249,135 464,282 643,435 78,67 91,72 258,100 278,45 530,94 610,117 197,57 299,157 331,326 25,138 -54,331 -199,489 -42,45 -52,61 -43,72 6,7 18,45 27,84 19,85 44,111 180,192 116,69 831,429 1289,649 946,456 1330,699 1910,1210 149,132 438,420 525,524 58,69 79,91 67,70 z" />
+        <path d="m 8968.4409,11721.943 c -2.8105,-8.19 -3.5122,-33.785 -2.1075,-58.496 l 2.1075,-43.921 47.7634,-15.293 c 59.0024,-20.02 80.075,-39.517 105.3626,-100.219 33.0135,-80.014 39.3347,-145.944 50.5725,-514.622 10.5362,-359.522 17.5604,-444.664 50.5738,-580.459 80.0751,-333.968 297.1204,-546.3797 642.0039,-626.1399 47.7643,-11.6361 120.1128,-23.6111 160.8519,-28.7471 l 73.752,-7.422 2.106,-393.2412 c 2.81,-511.2151 -3.511,-576.9671 -61.81,-653.8876 -37.228,-50.693 -66.0251,-62.1826 -161.5531,-69.0897 l -66.7299,-4.5623 v -50.2946 -50.2947 l 470.61,-6.517 470.612,-6.5169 v 50.2933 50.2961 l -70.24,6.4587 c -91.315,8.5799 -126.435,23.6986 -162.256,69.9159 -21.775,27.7353 -33.716,53.5051 -45.659,101.222 -16.154,63.3204 -16.154,72.4652 -18.963,508.6943 l -2.109,444.4487 79.372,4.389 c 95.527,5.078 218.451,30.8091 304.145,61.6282 316.087,115.4143 474.833,336.3418 527.511,733.3968 4.919,40.167 12.643,196.428 16.858,347.254 10.536,421.417 17.56,496.304 54.788,583.575 24.585,58.184 46.36,77.087 104.66,95.481 l 47.763,13.971 v 54.866 53.952 l -49.168,3.425 c -68.835,5.524 -188.247,-12.024 -244.44,-35.937 -134.16,-57.58 -224.069,-233.738 -257.784,-503.948 -4.213,-32.86 -11.941,-169.921 -17.561,-306.098 -10.535,-255.897 -21.07,-363.657 -45.656,-479.45 -51.278,-235.219 -186.14,-386.9754 -390.541,-439.0125 -46.359,-11.246 -94.122,-20.644 -106.063,-20.479 l -23.18,0.322 v 702.2945 c 0,468.196 2.81,720.544 7.727,756.14 11.237,81.23 36.525,137.575 73.752,168.151 35.822,28.768 62.514,35.713 153.829,42.679 l 63.215,4.611 v 50.295 50.293 l -470.612,6.517 -470.61,6.517 -4.2142,-41.09 c -2.8094,-22.822 -2.8094,-43.855 0,-48.466 2.8095,-3.698 39.3361,-11.518 82.1818,-16.685 121.5164,-17.229 169.9834,-57.219 198.0774,-164.599 10.537,-39.469 11.942,-126.36 14.048,-777.477 l 2.107,-734.3265 -23.179,0.321 c -12.642,0.175 -60.406,10.895 -106.0601,23.4141 -198.0801,55.781 -322.4073,194.6684 -385.6254,431.4724 -23.8817,89.947 -40.7391,252.036 -47.7633,461.541 -8.429,247.018 -17.5605,350.478 -39.3347,462.342 -22.4771,114.616 -59.7056,212.064 -108.8747,281.328 -73.7527,102.525 -153.8277,141.127 -320.2992,152.576 -85.6947,5.758 -100.4446,5.049 -103.9567,-6.79 z" />
+      </g>
+    </symbol>
+  </svg>
+
+  <!-- Navigation Sidebar -->
+  <aside>
+    <div>
+      <div class="brand-title">
+        <svg viewBox="0 0 810 810" width="24" height="24" fill="currentColor">
+          <use href="#real-isotype" />
+        </svg>
+        <span>Sentido Migrante</span>
+      </div>
+
+      <span class="brand-subtitle">Manual de Identidad</span>
+      
+      <nav>
+        <ul class="nav-list">
+          <li class="nav-item active"><a href="#introduccion">Introducción</a></li>
+          <li class="nav-item"><a href="#colores">Paleta de Colores</a></li>
+          <li class="nav-item"><a href="#tipografia">Tipografía</a></li>
+          <li class="nav-item"><a href="#logotipo">Sistema de Logotipo</a></li>
+          <li class="nav-item"><a href="#aplicacion">Reglas de Aplicación</a></li>
+          <li class="nav-item"><a href="#contexto">Previsualizaciones</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="sidebar-footer">
+      <p>© 2026 Sentido Migrante</p>
+      <button onclick="window.print()">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+        </svg>
+        Guardar como PDF / Imprimir
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main>
+    
+    <!-- Introduction Section -->
+    <section id="introduccion">
+      <h1 class="sec-title">Identidad de Marca</h1>
+      <p class="sec-description">
+        Sentido Migrante es una clínica de psicoterapia y acompañamiento terapéutico especialmente diseñada para hispanohablantes en Europa. Nuestra marca respira calidez, naturaleza, seguridad y arraigo. La paleta de colores inspirada en bosques, olivos y tonos tierra nos conecta con nuestras raíces y con el proceso orgánico de curación y crecimiento.
+      </p>
+      <div class="sec-divider"></div>
+    </section>
+
+    <!-- Colors Section -->
+    <section id="colores">
+      <h1 class="sec-title">Paleta de Colores</h1>
+      <p class="sec-description">
+        Haz clic en cualquier previsualización de color para copiar su código HEX directamente en el portapapeles.
+      </p>
+
+      <!-- Dominante -->
+      <div class="color-category">
+        <h2 class="color-category-title">Color Dominante (Primary)</h2>
+        <div class="color-grid">
+          <div class="color-card">
+            <div class="color-preview" style="background-color: var(--color-bosque);" onclick="copyColor('#516750')"></div>
+            <div class="color-info">
+              <div class="color-name">Verde Bosque</div>
+              <span class="color-token">--color-bosque</span>
+              <span class="color-hex">#516750</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-preview" style="background-color: var(--color-bosque-dark);" onclick="copyColor('#3f513e')"></div>
+            <div class="color-info">
+              <div class="color-name">Verde Bosque Oscuro</div>
+              <span class="color-token">--color-bosque-dark</span>
+              <span class="color-hex">#3f513e</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Secundarios -->
+      <div class="color-category">
+        <h2 class="color-category-title">Colores Secundarios</h2>
+        <div class="color-grid">
+          <div class="color-card">
+            <div class="color-preview" style="background-color: var(--color-menta);" onclick="copyColor('#DAEDDF')"></div>
+            <div class="color-info">
+              <div class="color-name">Verde Menta</div>
+              <span class="color-token">--color-menta</span>
+              <span class="color-hex">#DAEDDF</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-preview" style="background-color: var(--color-suculenta);" onclick="copyColor('#A2BC97')"></div>
+            <div class="color-info">
+              <div class="color-name">Verde Suculenta</div>
+              <span class="color-token">--color-suculenta</span>
+              <span class="color-hex">#A2BC97</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-preview" style="background-color: var(--color-olivo);" onclick="copyColor('#647453')"></div>
+            <div class="color-info">
+              <div class="color-name">Verde Olivo</div>
+              <span class="color-token">--color-olivo</span>
+              <span class="color-hex">#647453</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Acento -->
+      <div class="color-category">
+        <h2 class="color-category-title">Color de Acento / Contraste</h2>
+        <div class="color-grid">
+          <div class="color-card">
+            <div class="color-preview" style="background-color: var(--color-rosa-600);" onclick="copyColor('#BB8084')"></div>
+            <div class="color-info">
+              <div class="color-name">Rosa Viejo</div>
+              <span class="color-token">--color-rosa-600</span>
+              <span class="color-hex">#BB8084</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-preview" style="background-color: var(--color-rosa-800);" onclick="copyColor('#665051')"></div>
+            <div class="color-info">
+              <div class="color-name">Rosa Profundo</div>
+              <span class="color-token">--color-rosa-800</span>
+              <span class="color-hex">#665051</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fondos y Neutros -->
+      <div class="color-category">
+        <h2 class="color-category-title">Fondos y Neutros</h2>
+        <div class="color-grid">
+          <div class="color-card">
+            <div class="color-preview" style="background-color: var(--color-cream-50); border-bottom: 1px solid var(--color-cream-200);" onclick="copyColor('#FCFBF9')"></div>
+            <div class="color-info">
+              <div class="color-name">Crema Claro</div>
+              <span class="color-token">--color-cream-50</span>
+              <span class="color-hex">#FCFBF9</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-preview" style="background-color: var(--color-cream-100);" onclick="copyColor('#F9F7F3')"></div>
+            <div class="color-info">
+              <div class="color-name">Crema Medio</div>
+              <span class="color-token">--color-cream-100</span>
+              <span class="color-hex">#F9F7F3</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-preview" style="background-color: var(--color-cream-200);" onclick="copyColor('#F2EFE8')"></div>
+            <div class="color-info">
+              <div class="color-name">Crema Oscuro / Arena</div>
+              <span class="color-token">--color-cream-200</span>
+              <span class="color-hex">#F2EFE8</span>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-preview" style="background-color: var(--color-bluegrey-900);" onclick="copyColor('#1C1917')"></div>
+            <div class="color-info">
+              <div class="color-name">Gris Azulado Profundo</div>
+              <span class="color-token">--color-bluegrey-900</span>
+              <span class="color-hex">#1C1917</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sec-divider"></div>
+    </section>
+
+    <!-- Typography Section -->
+    <section id="tipografia">
+      <h1 class="sec-title">Familia Tipográfica</h1>
+      <p class="sec-description">
+        Utilizamos una combinación de Satoshi para títulos expresivos y elegantes con Inter para un cuerpo de texto legible y neutral.
+      </p>
+
+      <!-- Display Specimen -->
+      <div class="typo-specimen">
+        <div class="typo-header">
+          <div class="typo-family-name">Satoshi</div>
+          <div class="typo-family-description">Principal / Títulos & Display</div>
+        </div>
+        <div class="typo-showcase">
+          <div class="typo-row">
+            <div class="typo-meta">900 Ultra Bold</div>
+            <div class="typo-preview-text font-satoshi" style="font-size: 2.5rem; font-weight: 900; letter-spacing: -0.03em;">
+              Sanar en el idioma de tus emociones.
+            </div>
+          </div>
+          <div class="typo-row">
+            <div class="typo-meta">700 Bold</div>
+            <div class="typo-preview-text font-satoshi" style="font-size: 1.85rem; font-weight: 700; letter-spacing: -0.02em;">
+              Salud mental sin fronteras.
+            </div>
+          </div>
+          <div class="typo-row">
+            <div class="typo-meta">500 Medium</div>
+            <div class="typo-preview-text font-satoshi" style="font-size: 1.35rem; font-weight: 500;">
+              Clínica de psicoterapia para expatriados.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sans Specimen -->
+      <div class="typo-specimen">
+        <div class="typo-header">
+          <div class="typo-family-name">Inter</div>
+          <div class="typo-family-description">Secundaria / Cuerpo, Listas & Párrafos</div>
+        </div>
+        <div class="typo-showcase">
+          <div class="typo-row">
+            <div class="typo-meta">600 Semi Bold</div>
+            <div class="typo-preview-text font-inter" style="font-size: 1.1rem; font-weight: 600;">
+              Lunes a Viernes: 08:00 - 20:00 (CET)
+            </div>
+          </div>
+          <div class="typo-row">
+            <div class="typo-meta">400 Regular</div>
+            <div class="typo-preview-text font-inter" style="font-size: 1rem; font-weight: 400; color: var(--color-bluegrey-600); line-height: 1.6;">
+              Migrar es mucho más que cambiar de coordenadas; es una reconfiguración radical de quién eres. En Sentido Migrante, creemos que la psicoterapia profunda solo ocurre cuando no hay barreras. No solo hablamos tu idioma, compartimos tu raíz.
+            </div>
+          </div>
+          <div class="typo-row">
+            <div class="typo-meta">300 Light</div>
+            <div class="typo-preview-text font-inter" style="font-size: 0.9rem; font-weight: 300; color: var(--color-bluegrey-500); line-height: 1.6;">
+              Tómate un momento. Respira. Estás exactamente donde necesitas estar.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sec-divider"></div>
+    </section>
+
+    <!-- Logo System Section -->
+    <section id="logotipo">
+      <h1 class="sec-title">Sistema de Logotipo</h1>
+      <p class="sec-description">
+        El sistema gráfico de logotipo de Sentido Migrante combina una síntesis simbólica inspirada en el vínculo cultural y la sanación con tipografía limpia y minimalista.
+      </p>
+
+      <div class="logo-showcase">
+        <!-- Logo Principal -->
+        <div class="logo-card">
+          <div class="logo-container bg-light">
+            <div class="sm-logo-main" style="display: flex; align-items: center; gap: 0.75rem;">
+              <!-- Isotype Inline SVG from LogoSymbol -->
+              <svg viewBox="0 0 810 810" width="50" height="50" style="color: var(--color-olivo);">
+                <use href="#real-isotype" />
+              </svg>
+              <div style="display: flex; flex-direction: column;">
+                <span class="font-display" style="font-weight: 700; font-size: 1.6rem; letter-spacing: 0.05em; color: var(--color-bluegrey-900); text-transform: uppercase; line-height: 1;">Sentido Migrante</span>
+                <span class="font-sans" style="font-weight: 500; font-size: 0.65rem; color: var(--color-bosque-dark); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0.2rem;">Psicoterapia y Vínculo Cultural</span>
+              </div>
+            </div>
+          </div>
+          <div class="logo-card-info">
+            <div class="logo-card-title">Logotipo Principal (Horizontal)</div>
+            <div class="logo-card-desc">Combinación oficial recomendada para uso general en encabezados de páginas web y cabeceras de papelería.</div>
+          </div>
+        </div>
+
+        <!-- Versión Alternativa -->
+        <div class="logo-card">
+          <div class="logo-container bg-light">
+            <div class="sm-logo-alt" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.75rem;">
+              <svg viewBox="0 0 810 810" width="60" height="60" style="color: var(--color-olivo);">
+                <use href="#real-isotype" />
+              </svg>
+              <div style="display: flex; flex-direction: column;">
+                <span class="font-display" style="font-weight: 700; font-size: 1.4rem; letter-spacing: 0.05em; color: var(--color-bluegrey-900); text-transform: uppercase;">Sentido Migrante</span>
+                <span class="font-sans" style="font-weight: 500; font-size: 0.6rem; color: var(--color-bosque-dark); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.1rem;">Psicoterapia y Vínculo Cultural</span>
+              </div>
+            </div>
+          </div>
+          <div class="logo-card-info">
+            <div class="logo-card-title">Versión Alternativa (Vertical / Apilado)</div>
+            <div class="logo-card-desc">Ideal para composiciones verticales, tarjetas de presentación, pies de página o espacios de diseño compactos.</div>
+          </div>
+        </div>
+
+        <!-- Isotipo / Monograma -->
+        <div class="logo-card">
+          <div class="logo-container bg-light">
+            <svg viewBox="0 0 810 810" class="sm-isotype" style="color: var(--color-olivo);">
+              <use href="#real-isotype" />
+            </svg>
+          </div>
+          <div class="logo-card-info">
+            <div class="logo-card-title">Isotipo / Monograma</div>
+            <div class="logo-card-desc">El símbolo de la marca de forma individual. Recomendado para avatares en redes sociales, favicon web o iconos de aplicaciones.</div>
+          </div>
+        </div>
+      </div>
+      <div class="sec-divider"></div>
+    </section>
+
+    <!-- Application Rules Section -->
+    <section id="aplicacion">
+      <h1 class="sec-title">Reglas de Aplicación Básicas</h1>
+      <p class="sec-description">
+        Muestra la correcta adaptación del logotipo sobre fondos claros, oscuros y su versión en blanco y negro puro.
+      </p>
+
+      <div class="logo-showcase">
+        <!-- Fondo Claro -->
+        <div class="logo-card">
+          <div class="logo-container bg-light">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <svg viewBox="0 0 810 810" width="36" height="36" style="color: var(--color-olivo);">
+                <use href="#real-isotype" />
+              </svg>
+              <div style="display: flex; flex-direction: column;">
+                <span class="font-display" style="font-weight: 700; font-size: 1.15rem; color: var(--color-bluegrey-900); text-transform: uppercase;">Sentido Migrante</span>
+                <span class="font-sans" style="font-weight: 500; font-size: 0.5rem; color: var(--color-bosque-dark); text-transform: uppercase; letter-spacing: 0.05em;">Psicoterapia y Vínculo Cultural</span>
+              </div>
+            </div>
+          </div>
+          <div class="logo-card-info">
+            <div class="logo-card-title">Aplicación sobre Fondo Claro</div>
+            <div class="logo-card-desc">Símbolo en Verde Olivo y texto en Gris Profundo. Ideal para el fondo de crema claro de la web.</div>
+          </div>
+        </div>
+
+        <!-- Fondo Oscuro -->
+        <div class="logo-card">
+          <div class="logo-container bg-dark">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <svg viewBox="0 0 810 810" width="36" height="36" style="color: var(--color-suculenta);">
+                <use href="#real-isotype" />
+              </svg>
+              <div style="display: flex; flex-direction: column;">
+                <span class="font-display" style="font-weight: 700; font-size: 1.15rem; color: #fff; text-transform: uppercase;">Sentido Migrante</span>
+                <span class="font-sans" style="font-weight: 500; font-size: 0.5rem; color: var(--color-menta); text-transform: uppercase; letter-spacing: 0.05em;">Psicoterapia y Vínculo Cultural</span>
+              </div>
+            </div>
+          </div>
+          <div class="logo-card-info">
+            <div class="logo-card-title">Aplicación sobre Fondo Oscuro</div>
+            <div class="logo-card-desc">Símbolo en Verde Suculenta y texto en Blanco Puro. Usado en el pie de página o layouts de color invertido.</div>
+          </div>
+        </div>
+
+        <!-- Monocromático -->
+        <div class="logo-card">
+          <div class="logo-container bg-monochrome">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <svg viewBox="0 0 810 810" width="36" height="36" style="color: #000;">
+                <use href="#real-isotype" />
+              </svg>
+              <div style="display: flex; flex-direction: column;">
+                <span class="font-display" style="font-weight: 700; font-size: 1.15rem; color: #000; text-transform: uppercase;">Sentido Migrante</span>
+                <span class="font-sans" style="font-weight: 500; font-size: 0.5rem; color: #000; text-transform: uppercase; letter-spacing: 0.05em;">Psicoterapia y Vínculo Cultural</span>
+              </div>
+            </div>
+          </div>
+          <div class="logo-card-info">
+            <div class="logo-card-title">Blanco y Negro Puro</div>
+            <div class="logo-card-desc">Adecuado para impresiones en un solo canal de color, periódicos, boletas o faxes.</div>
+          </div>
+        </div>
+      </div>
+      <div class="sec-divider"></div>
+    </section>
+
+    <!-- Context & Previews Section -->
+    <section id="contexto">
+      <h1 class="sec-title">Visualización en Contexto</h1>
+      <p class="sec-description">
+        Muestra la interacción real de la paleta y la tipografía en componentes web funcionales. Usa los botones superiores para probar la adaptabilidad a entornos claros y oscuros.
+      </p>
+
+      <!-- Preview Canvas -->
+      <div class="preview-canvas">
+        <div class="preview-controls">
+          <button class="btn-toggle active" onclick="toggleTheme('light')">Entorno Claro</button>
+          <button class="btn-toggle" onclick="toggleTheme('dark')">Entorno Oscuro</button>
+        </div>
+
+        <div id="context-wrapper">
+          <!-- Mock Navbar -->
+          <div class="mock-navbar light" id="mock-nav">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <svg viewBox="0 0 810 810" width="28" height="28" style="color: var(--color-olivo);" id="mock-nav-logo">
+                <use href="#real-isotype" />
+              </svg>
+              <span class="font-display" style="font-weight: 700; font-size: 1rem; text-transform: uppercase;">Sentido Migrante</span>
+            </div>
+            <div class="mock-nav-links">
+              <a href="#" class="mock-nav-link">Inicio</a>
+              <a href="#" class="mock-nav-link">Servicios</a>
+              <a href="#" class="mock-nav-link">Recursos</a>
+            </div>
+            <button class="mock-btn primary">Agendar</button>
+          </div>
+
+          <!-- Hero Fragment Preview -->
+          <div style="margin-top: 3.5rem; max-width: 680px;">
+            <span class="mock-badge mint">Biblioteca de Bienestar</span>
+            <h1 class="font-satoshi" id="mock-hero-title" style="font-size: 3.25rem; font-weight: 700; line-height: 1.1; margin-bottom: 1.25rem; letter-spacing: -0.02em; color: var(--color-bluegrey-900);">
+              Sánate en el idioma donde viven <span style="color: var(--color-bosque);">tus emociones.</span>
+            </h1>
+            <p class="font-inter" id="mock-hero-desc" style="font-size: 1.05rem; font-weight: 300; line-height: 1.6; color: var(--color-bluegrey-600); margin-bottom: 2rem;">
+              En Sentido Migrante te acompañamos a habitar tu nueva realidad en Europa, no solo como un superviviente, sino con un propósito claro y contención cultural.
+            </p>
+            <div style="display: flex; gap: 1rem;">
+              <button class="mock-btn primary">Iniciar Terapia</button>
+              <button class="mock-btn secondary">Explorar Recursos</button>
+            </div>
+          </div>
+
+          <!-- Service Grid Preview -->
+          <div class="mock-grid">
+            <!-- Card 1 -->
+            <div class="mock-card light">
+              <span class="mock-card-tag">Individual</span>
+              <h3 class="mock-card-title">Análisis Existencial</h3>
+              <p class="mock-card-desc">Un enfoque psicoterapéutico centrado en ayudarte a encontrar sentido, libertad y responsabilidad en tu vida cotidiana lejos de casa.</p>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="font-inter" style="font-size: 0.85rem; font-weight: 600;">50 Minutos</span>
+                <span class="font-display" style="font-weight: 700; color: var(--color-bosque);">120 CHF</span>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="mock-card dark">
+              <span class="mock-card-tag">Sistémica</span>
+              <h3 class="mock-card-title">Terapia de Pareja</h3>
+              <p class="mock-card-desc">Apoyo especializado para resolver choques culturales, mejorar la comunicación y fortalecer el vínculo en parejas binacionales.</p>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="font-inter" style="font-size: 0.85rem; font-weight: 600; color: var(--color-bluegrey-300);">60 Minutos</span>
+                <span class="font-display" style="font-weight: 700; color: var(--color-suculenta);">150 CHF</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="sec-divider"></div>
+    </section>
+
+  </main>
+
+  <!-- Notification Toast -->
+  <div id="copy-toast">Color copiado en el portapapeles</div>
+
+  <!-- Interactive Logic -->
+  <script>
+    // Copy HEX function
+    function copyColor(hexValue) {
+      navigator.clipboard.writeText(hexValue).then(() => {
+        const toast = document.getElementById('copy-toast');
+        toast.textContent = `HEX ${hexValue} copiado correctamente`;
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 2500);
+      });
+    }
+
+    // Toggle Preview Theme
+    function toggleTheme(theme) {
+      // Manage buttons state
+      const buttons = document.querySelectorAll('.btn-toggle');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const nav = document.getElementById('mock-nav');
+      const navLogo = document.getElementById('mock-nav-logo');
+      const heroTitle = document.getElementById('mock-hero-title');
+      const heroDesc = document.getElementById('mock-hero-desc');
+      const card = document.querySelector('.mock-grid .mock-card.light');
+      const canvas = document.querySelector('.preview-canvas');
+
+      if (theme === 'dark') {
+        canvas.style.backgroundColor = 'var(--color-bluegrey-900)';
+        canvas.style.borderColor = 'var(--color-bluegrey-800)';
+        
+        // Navbar dark
+        nav.className = 'mock-navbar dark';
+        navLogo.style.color = 'var(--color-suculenta)';
+        nav.style.color = '#fff';
+        
+        // Hero texts
+        heroTitle.style.color = '#fff';
+        heroDesc.style.color = 'var(--color-bluegrey-300)';
+        
+        // Card light to dark preview
+        card.style.backgroundColor = 'var(--color-bluegrey-800)';
+        card.style.borderColor = 'var(--color-bluegrey-700)';
+        card.style.color = 'var(--color-cream-50)';
+        card.querySelector('.mock-card-title').style.color = '#fff';
+        card.querySelector('.mock-card-desc').style.color = 'var(--color-bluegrey-300)';
+        card.querySelector('.mock-card-tag').style.color = 'var(--color-suculenta)';
+      } else {
+        canvas.style.backgroundColor = '#fff';
+        canvas.style.borderColor = 'var(--color-cream-200)';
+
+        // Navbar light
+        nav.className = 'mock-navbar light';
+        navLogo.style.color = 'var(--color-olivo)';
+        nav.style.color = 'var(--color-bluegrey-800)';
+        
+        // Hero texts
+        heroTitle.style.color = 'var(--color-bluegrey-900)';
+        heroDesc.style.color = 'var(--color-bluegrey-600)';
+
+        // Card dark to light preview
+        card.style.backgroundColor = '#fff';
+        card.style.borderColor = 'var(--color-cream-200)';
+        card.style.color = 'var(--color-bluegrey-800)';
+        card.querySelector('.mock-card-title').style.color = 'var(--color-bluegrey-900)';
+        card.querySelector('.mock-card-desc').style.color = 'var(--color-bluegrey-600)';
+        card.querySelector('.mock-card-tag').style.color = 'var(--color-olivo)';
+      }
+    }
+
+    // Dynamic Navigation Highlighting
+    window.addEventListener('DOMContentLoaded', () => {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          const id = entry.target.getAttribute('id');
+          if (entry.intersectionRatio > 0.3) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+              item.classList.remove('active');
+              if (item.querySelector('a').getAttribute('href') === `#${id}`) {
+                item.classList.add('active');
+              }
+            });
+          }
+        });
+      }, { threshold: [0.1, 0.3, 0.5] });
+
+      // Track all sections
+      document.querySelectorAll('section').forEach(section => {
+        observer.observe(section);
+      });
+    });
+  </script>
+
+</body>
+</html>

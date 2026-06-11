@@ -4,6 +4,7 @@ import { ArrowLeft, Clock, Share2, Bookmark, Quote, MoveRight, Instagram, Facebo
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { resourcesContent } from '@/data/content';
+import StrapiRichText from '@/components/StrapiRichText';
 
 export default function Article({ id }: { id?: string }) {
   const router = useRouter();
@@ -13,14 +14,35 @@ export default function Article({ id }: { id?: string }) {
   const data = resourcesContent[resourceIndex] || resourcesContent[0];
 
   // Helper para calcular tiempo de lectura (Duplicado aquí para simplicidad, idealmente en utils)
-  const calculateReadingTime = (text: string) => {
-    if (!text) return "3 min";
-    const wordsPerMinute = 225;
-    const words = text.trim().split(/\s+/).length;
-    return `${Math.ceil(words / wordsPerMinute)} min`;
+  const calculateReadingTime = (content: string | any[] | undefined, fallbackText: string) => {
+    const calculateTime = (text: string) => {
+      if (!text) return "3 min";
+      const wordsPerMinute = 225;
+      const words = text.trim().split(/\s+/).length;
+      return `${Math.ceil(words / wordsPerMinute)} min`;
+    };
+
+    if (!content) {
+      return calculateTime(fallbackText);
+    }
+    if (typeof content === 'string') {
+      return calculateTime(content);
+    }
+    if (Array.isArray(content)) {
+      const allText = content
+        .map((block: any) => {
+          if (block.children && Array.isArray(block.children)) {
+            return block.children.map((child: any) => child.text || '').join(' ');
+          }
+          return '';
+        })
+        .join(' ');
+      return calculateTime(allText);
+    }
+    return "3 min";
   };
 
-  const readingTime = calculateReadingTime(data.content || data.title);
+  const readingTime = calculateReadingTime(data.content, data.title);
 
   return (
     <div className="flex flex-col w-full pb-20 bg-[#FDFCFB] min-h-screen">
@@ -95,43 +117,47 @@ export default function Article({ id }: { id?: string }) {
           </div>
         </div>
 
-        {/* Rich Text Area */}
-        <article className="prose prose-lg prose-slate max-w-none prose-headings:font-display prose-headings:font-bold prose-headings:text-bluegrey-900 prose-p:text-bluegrey-700 prose-p:leading-relaxed prose-strong:text-bluegrey-900">
-          <p className="first-letter:text-7xl first-letter:font-bold first-letter:text-suculenta first-letter:mr-3 first-letter:float-left first-letter:leading-[0.8]">
-            {data.description || "El proceso de adaptación en un nuevo país es una montaña rusa de emociones. Desde la euforia inicial hasta el inevitable choque cultural, cada paso requiere una profunda gestión de nuestras expectativas y necesidades emocionales."}
-          </p>
-
-          <p>
-            {data.content || "En este artículo exploramos cómo construir una red de apoyo sólida desde cero, la importancia de validar nuestras propias emociones y cuándo es el momento adecuado para buscar acompañamiento profesional especializado en nuestra lengua materna."}
-          </p>
-
-          <div className="my-14 p-10 bg-suculenta/5 border-l-4 border-suculenta rounded-r-3xl italic text-2xl text-bosque-dark font-display quote-card relative overflow-hidden group shadow-sm">
-            <Quote className="absolute -top-4 -right-4 w-32 h-32 opacity-5 rotate-12 transition-transform group-hover:scale-110" />
-            "No estamos 'allá' ni estamos 'aquí'. Estamos en el camino, y ese camino es nuestro nuevo hogar. Aprender a habitarlo con paz es la clave del bienestar."
-          </div>
-
-          <h3>Estrategias de Adaptación Activa</h3>
-          <p>
-            Muchos migrantes cometen el error de esperar a "estar listos" para integrarse. La realidad es que la integración es un músculo que se entrena con pequeñas acciones cotidianas. 
-          </p>
-          
-          <ul>
-            <li><strong>Rutinas Ancla:</strong> Mantén pequeños hábitos de tu país de origen para dar seguridad a tu sistema nervioso.</li>
-            <li><strong>Exposición Gradual:</strong> No intentes entender todo el primer día. Celebra las pequeñas victorias idiomáticas.</li>
-            <li><strong>Espacios de Validación:</strong> Conecta con personas que estén pasando por lo mismo. Sentirte entendido es una medicina poderosa.</li>
-          </ul>
-
-          <div className="mt-16 p-8 rounded-[32px] bg-bosque-dark text-white shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-suculenta/20 blur-[60px] rounded-full" />
-            <h4 className="text-xl font-bold mb-4 flex items-center gap-2">
-              <span className="w-8 h-8 rounded-lg bg-suculenta/20 flex items-center justify-center text-suculenta text-xs italic font-display">i</span>
-              Nota del Especialista
-            </h4>
-            <p className="text-cream-100/80 text-base leading-relaxed">
-              Recuerda que el duelo migratorio es un proceso cíclico. Es normal sentir nostalgia en fechas señaladas. Lo importante es no permitir que esa nostalgia se convierta en un ancla que te impida avanzar.
+        {/* Rich Text Area - Aquí conectamos con Strapi */}
+        {data.content && Array.isArray(data.content) ? (
+          <StrapiRichText content={data.content} />
+        ) : (
+          <article className="prose prose-lg prose-slate max-w-none prose-headings:font-display prose-headings:font-bold prose-headings:text-bluegrey-900 prose-p:text-bluegrey-700 prose-p:leading-relaxed prose-strong:text-bluegrey-900">
+            <p className="first-letter:text-7xl first-letter:font-bold first-letter:text-suculenta first-letter:mr-3 first-letter:float-left first-letter:leading-[0.8]">
+              {data.description || "El proceso de adaptación en un nuevo país es una montaña rusa de emociones. Desde la euforia inicial hasta el inevitable choque cultural, cada paso requiere una profunda gestión de nuestras expectativas y necesidades emocionales."}
             </p>
-          </div>
-        </article>
+
+            <p>
+              {data.content || "En este artículo exploramos cómo construir una red de apoyo sólida desde cero, la importancia de validar nuestras propias emociones y cuándo es el momento adecuado para buscar acompañamiento profesional especializado en nuestra lengua materna."}
+            </p>
+
+            <div className="my-14 p-10 bg-suculenta/5 border-l-4 border-suculenta rounded-r-3xl italic text-2xl text-bosque-dark font-display quote-card relative overflow-hidden group shadow-sm">
+              <Quote className="absolute -top-4 -right-4 w-32 h-32 opacity-5 rotate-12 transition-transform group-hover:scale-110" />
+              "No estamos 'allá' ni estamos 'aquí'. Estamos en el camino, y ese camino es nuestro nuevo hogar. Aprender a habitarlo con paz es la clave del bienestar."
+            </div>
+
+            <h3>Estrategias de Adaptación Activa</h3>
+            <p>
+              Muchos migrantes cometen el error de esperar a "estar listos" para integrarse. La realidad es que la integración es un músculo que se entrena con pequeñas acciones cotidianas. 
+            </p>
+            
+            <ul>
+              <li><strong>Rutinas Ancla:</strong> Mantén pequeños hábitos de tu país de origen para dar seguridad a tu sistema nervioso.</li>
+              <li><strong>Exposición Gradual:</strong> No intentes entender todo el primer día. Celebra las pequeñas victorias idiomáticas.</li>
+              <li><strong>Espacios de Validación:</strong> Conecta con personas que estén pasando por lo mismo. Sentirte entendido es una medicina poderosa.</li>
+            </ul>
+
+            <div className="mt-16 p-8 rounded-[32px] bg-bosque-dark text-white shadow-xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-suculenta/20 blur-[60px] rounded-full" />
+              <h4 className="text-xl font-bold mb-4 flex items-center gap-2">
+                <span className="w-8 h-8 rounded-lg bg-suculenta/20 flex items-center justify-center text-suculenta text-xs italic font-display">i</span>
+                Nota del Especialista
+              </h4>
+              <p className="text-cream-100/80 text-base leading-relaxed">
+                Recuerda que el duelo migratorio es un proceso cíclico. Es normal sentir nostalgia en fechas señaladas. Lo importante es no permitir que esa nostalgia se convierta en un ancla que te impida avanzar.
+              </p>
+            </div>
+          </article>
+        )}
 
         {/* Engagement / Footer */}
         <footer className="mt-24 pt-12 border-t border-cream-200">

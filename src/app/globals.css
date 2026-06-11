@@ -26,8 +26,9 @@
   --color-bluegrey-700: #44403C;
   --color-bluegrey-800: #292524;
   --color-bluegrey-900: #1C1917;
-  --color-grape-600: #7E22CE;
-  --color-grape-800: #581C87;
+  --color-rosa-50: #F7EEEE;
+  --color-rosa-600: #BB8084;
+  --color-rosa-800: #665051;
   
   --color-background: var(--color-cream-50);
 }

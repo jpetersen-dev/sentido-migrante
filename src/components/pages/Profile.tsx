@@ -406,7 +406,7 @@ export default function Profile() {
             {[
               { id: 'personal-data', icon: User, label: "Datos Personales", color: "text-bluegrey-700", bg: "bg-bluegrey-50" },
               { id: 'history', icon: Calendar, label: "Historial de Citas", color: "text-bosque", bg: "bg-menta" },
-              { id: 'plan', icon: FileText, label: "Plan Terapéutico", color: "text-grape-600", bg: "bg-purple-50" },
+              { id: 'plan', icon: FileText, label: "Plan Terapéutico", color: "text-rosa-600", bg: "bg-rosa-50" },
               { id: 'invoices', icon: Download, label: "Facturas y Recibos", color: "text-bluegrey-600", bg: "bg-cream-100" },
             ].map((item, i, arr) => {
               const Icon = item.icon;

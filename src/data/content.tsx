@@ -68,9 +68,18 @@ export const heroContent = {
   ctaText: "Agendar Sesión",
   ctaSecondaryText: "Descubre"
 };
+export interface Resource {
+  title: string;
+  category: string;
+  time: string;
+  color: string;
+  description?: string;
+  content?: string | any[];
+}
 
-export const resourcesContent = [
+export const resourcesContent: Resource[] = [
   { title: "El duelo oculto de emigrar", category: "Psicología", time: "5 min", color: "bg-olivo text-white" },
   { title: "Límites saludables en parejas biculturales", category: "Relaciones", time: "8 min", color: "bg-bluegrey-800 text-white" },
   { title: "Guía práctica para manejar la ansiedad invernal", category: "Bienestar", time: "4 min", color: "bg-menta text-bosque-dark" }
 ];
+

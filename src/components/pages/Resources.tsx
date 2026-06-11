@@ -44,7 +44,7 @@ export default function Resources({ resourcesContent = [] }: { resourcesContent?
             </div>
             <div className="p-6 flex flex-col flex-1 gap-3">
                <div className="flex justify-between items-start">
-                  <span className="text-[0.65rem] font-bold text-grape-600 uppercase tracking-widest bg-grape-50 px-2 py-1 rounded-md">{item.category}</span>
+                  <span className="text-[0.65rem] font-bold text-rosa-600 uppercase tracking-widest bg-rosa-50 px-2 py-1 rounded-md">{item.category}</span>
                   <div className="flex items-center gap-1 text-xs text-bluegrey-400 font-medium bg-cream-50 px-2 py-1 rounded-md">
                      <Clock size={12} />
                      <span>{item.time}</span>
