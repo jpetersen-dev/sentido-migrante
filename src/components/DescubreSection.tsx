@@ -9,8 +9,18 @@ import { LogoSymbol } from '@/components/ui/LogoSymbol';
 export default function DescubreSection({ onOpenPro, teamData }: { onOpenPro: (index: number) => void, teamData?: any[] }) {
   // Use passed teamData or fallback to local static data
   const team = teamData || [
-    { name: "Lic. Martín Suárez", role: "Psicólogo Clínico", bio: "Especialista en desarrollo personal y procesos de transición. Enfoque cognitivo constructivista con más de 10 años de experiencia acompañando a hispanohablantes en Suiza.", img: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=300&auto=format&fit=crop" },
-    { name: "Lic. Elena Rojas", role: "Psicoterapeuta Sistémica", bio: "Experta en terapia de pareja y relacional. Ayuda a navegar el choque cultural en parejas binacionales y familias migrantes con un enfoque empático y estructurado.", img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=300&auto=format&fit=crop" }
+    { 
+      name: "Ps. Jonathan Petersen Zañartu", 
+      role: "Psicólogo Clínico y Psicoterapeuta", 
+      bio: "Psicólogo Clínico con diplomado en Infancia y Adolescencia. Especializado en acompañar a adultos y jóvenes en problemáticas de estrés, ansiedad, crisis de pánico y depresión. Su práctica sostiene una orientación psicoanalítica práctica e integradora, libre de dogmatismos, que incorpora elementos humanistas, sistémicos y herramientas como el mindfulness para redescubrir y potenciar los recursos internos en una relación clínica horizontal y cercana.", 
+      img: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=300&auto=format&fit=crop" 
+    },
+    { 
+      name: "Ps. Camila Malebrán F.", 
+      role: "Psicóloga Clínica y Psicoterapeuta", 
+      bio: "Psicóloga Clínica y Psicoterapeuta con un enfoque centrado en la persona y sus recursos. Especializada en el acompañamiento y apoyo en la búsqueda de sentido, trabaja potenciando las propias capacidades y herramientas para ayudar a la persona a alcanzar un vivenciar libre, mental y emocionalmente, y un trato autorresponsable consigo misma y con el mundo.", 
+      img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=300&auto=format&fit=crop" 
+    }
   ];
 
   const faqs = [

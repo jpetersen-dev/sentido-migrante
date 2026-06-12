@@ -1,7 +1,4 @@
 import './globals.css';
-import Navbar from '../components/layout/Navbar';
-import BottomNav from '../components/layout/BottomNav';
-import Footer from '../components/layout/Footer';
 import SessionProvider from '../components/providers/SessionProvider';
 import SmoothScroll from '../components/providers/SmoothScroll';
 
@@ -16,12 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="flex flex-col min-h-screen pb-16 md:pb-0">
         <SessionProvider>
           <SmoothScroll>
-            <Navbar />
-            <main className="flex-1 w-full max-w-5xl mx-auto md:px-6">
-              {children}
-            </main>
-            <Footer />
-            <BottomNav />
+            {children}
           </SmoothScroll>
         </SessionProvider>
       </body>

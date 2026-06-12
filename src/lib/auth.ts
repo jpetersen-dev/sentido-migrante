@@ -3,6 +3,9 @@ import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || "http://127.0.0.1:1337";
+const useSecureCookies = process.env.NODE_ENV === "production";
+const cookiePrefix = useSecureCookies ? "__Secure-" : "";
+const cookieDomain = process.env.NEXT_PUBLIC_COOKIE_DOMAIN || ".sentidomigrante.local";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -47,6 +50,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
     }),
   ],
+  cookies: {
+    sessionToken: {
+      name: `${cookiePrefix}next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: useSecureCookies,
+        domain: cookieDomain,
+      },
+    },
+  },
   callbacks: {
     /**
      * signIn callback: Se ejecuta al iniciar sesión.

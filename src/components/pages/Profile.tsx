@@ -385,7 +385,7 @@ export default function Profile() {
 
             <div className="mb-10">
                <h3 className="text-4xl font-display font-bold mb-2 leading-none text-white drop-shadow-sm">Mañana, 15:30</h3>
-               <p className="text-menta font-light text-lg">Psicoterapia Individual con Lic. Martín</p>
+               <p className="text-menta font-light text-lg font-sans">Acompañamiento Psicológico</p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 mt-auto">

@@ -1,54 +1,63 @@
-import { User, Users, Globe } from 'lucide-react';
-
 export const servicesData = [
   { 
-    id: "individual",
-    title: "Psicoterapia Individual", 
-    desc: "Acompañamiento personalizado para ansiedad, depresión y desarrollo personal.", 
-    fullDesc: "En nuestras sesiones individuales exploramos a fondo tus preocupaciones en un entorno seguro y libre de juicios. Utilizamos herramientas basadas en evidencia para ayudarte a gestionar el estrés, sanar el pasado y construir tu futuro.", 
-    icon: User, 
+    id: "identidad",
+    title: "Restauración de Identidad", 
+    desc: "Acompañamiento para profesionales y técnicos que enfrentan la pérdida de estatus laboral e identidad al migrar.", 
+    fullDesc: "Diseñado especialmente para ingenieros, médicos, científicos y creativos en el extranjero. Te ayudamos a procesar la disonancia entre tu éxito laboral anterior y tu realidad actual, validando tu valor profesional y reconstruyendo un sentido de vida sólido en tu nuevo entorno.", 
+    icon: 'User', 
     color: "bg-menta text-bosque-dark", 
     image: "https://images.unsplash.com/photo-1573497620053-ea5300f94f21?q=80&w=800&auto=format&fit=crop", 
-    price: "CHF 150", 
+    price: "60 CHF / 60 EUR", 
     duration: "50 min" 
   },
   { 
-    id: "couple",
-    title: "Terapia de Pareja", 
-    desc: "Estrategias de comunicación y resolución de conflictos para fortalecer el vínculo.", 
-    fullDesc: "Aprenda a comunicarse efectivamente, a comprender las necesidades del otro y a recuperar la intimidad. Ya sea para superar una crisis o para fortalecer un buen vínculo, nuestra terapia proporciona un espacio neutro y constructivo.", 
-    icon: Users, 
+    id: "tribu",
+    title: "Tribu en el Exilio", 
+    desc: "Soporte y contención para la \"Generación Sándwich\" que cría sin redes de apoyo y a la distancia.", 
+    fullDesc: "Un espacio dedicado a madres, padres y cuidadores que enfrentan el desafío de criar hijos biculturales en el extranjero, mientras sostienen el cuidado emocional de sus familias de origen. Aliviamos la culpa transnacional y el agotamiento por falta de tribu.", 
+    icon: 'Users', 
     color: "bg-suculenta text-bosque-dark", 
     image: "https://images.unsplash.com/photo-1516584282367-ac5f3f0bc835?q=80&w=800&auto=format&fit=crop", 
-    price: "CHF 180", 
-    duration: "60 min" 
+    price: "60 CHF / 60 EUR", 
+    duration: "50 min" 
   },
   { 
-    id: "migrants",
-    title: "Psicoterapia Migrantes", 
-    desc: "Apoyo en duelo migratorio, adaptación y choque cultural en Europa.", 
-    fullDesc: "Migrar conlleva un inmenso desafío emocional. Tratamos la soledad, la nostalgia, la identidad dividida y las barreras de integración. Te ayudamos a transformar la experiencia migratoria en una oportunidad de crecimiento vital sin perder tus raíces.", 
-    icon: Globe, 
+    id: "soberania",
+    title: "Soberanía Lingüística", 
+    desc: "Psicoterapia enfocada en sanar y habitar las emociones profundas desde tu lengua materna.", 
+    fullDesc: "El cerebro emocional sana profundamente en el idioma de tu infancia. Esta vertical valida tu identidad y tus afectos, superando el distanciamiento emocional y el desgaste cognitivo de tener que expresarte y traducir tu dolor en un segundo idioma.", 
+    icon: 'Globe', 
     color: "bg-menta text-olivo-dark", 
     image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop", 
-    price: "CHF 150", 
+    price: "60 CHF / 60 EUR", 
+    duration: "50 min" 
+  },
+  { 
+    id: "duelo",
+    title: "Duelo Migratorio", 
+    desc: "Procesamiento saludable de las pérdidas, la nostalgia y la adaptación al nuevo entorno cultural.", 
+    fullDesc: "Migrar es una reconfiguración existencial. Te ofrecemos un espacio seguro para elaborar la nostalgia de lo que dejaste atrás, reconciliarte con tu decisión de partir y transformar la desorientación inicial en un nuevo y saludable arraigo bicultural.", 
+    icon: 'Heart', 
+    color: "bg-suculenta text-olivo-dark", 
+    image: "https://images.unsplash.com/photo-1516584282367-ac5f3f0bc835?q=80&w=800&auto=format&fit=crop", 
+    price: "60 CHF / 60 EUR", 
     duration: "50 min" 
   },
 ];
 
 export const teamData = [
   { 
-    id: "martin",
-    name: "Lic. Martín Suárez", 
-    role: "Psicólogo Clínico", 
-    bio: "Especialista en desarrollo personal y procesos de transición. Enfoque cognitivo constructivista con más de 10 años de experiencia acompañando a hispanohablantes en Suiza.", 
+    id: "jonathan",
+    name: "Ps. Jonathan Petersen Zañartu", 
+    role: "Psicólogo Clínico y Psicoterapeuta", 
+    bio: "Psicólogo Clínico con diplomado en Infancia y Adolescencia. Especializado en acompañar a adultos y jóvenes en problemáticas de estrés, ansiedad, crisis de pánico y depresión. Su práctica sostiene una orientación psicoanalítica práctica e integradora, libre de dogmatismos, que incorpora elementos humanistas, sistémicos y herramientas como el mindfulness para redescubrir y potenciar los recursos internos en una relación clínica horizontal y cercana.", 
     img: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=300&auto=format&fit=crop" 
   },
   { 
-    id: "elena",
-    name: "Lic. Elena Rojas", 
-    role: "Psicoterapeuta Sistémica", 
-    bio: "Experta en terapia de pareja y relacional. Ayuda a navegar el choque cultural en parejas binacionales y familias migrantes con un enfoque empático y estructurado.", 
+    id: "camila",
+    name: "Ps. Camila Malebrán F.", 
+    role: "Psicóloga Clínica y Psicoterapeuta", 
+    bio: "Psicóloga Clínica y Psicoterapeuta con un enfoque centrado en la persona y sus recursos. Especializada en el acompañamiento y apoyo en la búsqueda de sentido, trabaja potenciando las propias capacidades y herramientas para ayudar a la persona a alcanzar un vivenciar libre, mental y emocionalmente, y un trato autorresponsable consigo misma y con el mundo.", 
     img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=300&auto=format&fit=crop" 
   }
 ];

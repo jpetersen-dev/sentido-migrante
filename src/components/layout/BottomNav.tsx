@@ -21,8 +21,22 @@ export default function BottomNav() {
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.to || pathname?.startsWith(item.to + '/');
+          const isLanding = item.to === '/' || item.to === '/servicios';
           
-          return (
+          return isLanding ? (
+            <a
+              key={item.to}
+              href={item.to}
+              className={`flex flex-col items-center justify-center w-full h-full gap-1 transition-colors ${
+                isActive ? 'text-bosque' : 'text-bluegrey-400 hover:text-bluegrey-600'
+              }`}
+            >
+              <Icon size={22} className={isActive ? 'stroke-[2.5px]' : 'stroke-2'} />
+              <span className={`text-[0.65rem] font-medium ${isActive ? 'font-semibold' : ''}`}>
+                {item.label}
+              </span>
+            </a>
+          ) : (
             <Link
               key={item.to}
               href={item.to}

@@ -13,6 +13,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const languages = ['ES', 'DE', 'CH-DE', 'IT', 'FR', 'EN'];
+  const isAppRoute = (path: string) => ['/agendar', '/recursos', '/mi-cuenta', '/articulo'].some(route => path.startsWith(route));
 
   // Prevent scroll when menu is open
   useEffect(() => {
@@ -118,14 +119,14 @@ export default function Navbar() {
                         <p className="font-semibold text-sm text-bluegrey-900 truncate">{session.user.name}</p>
                         <p className="text-xs text-bluegrey-500 truncate">{session.user.email}</p>
                       </div>
-                      <Link
+                      <a
                         href="/mi-cuenta"
                         className="flex items-center gap-2 px-3 py-2.5 text-sm text-bluegrey-700 hover:bg-menta hover:text-bosque-dark transition-colors"
                         onClick={() => setShowUserMenu(false)}
                       >
                         <User size={16} />
                         Mi Cuenta
-                      </Link>
+                      </a>
                       <button
                         onClick={() => signOut()}
                         className="flex items-center gap-2 w-full text-left px-3 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
@@ -200,6 +201,7 @@ export default function Navbar() {
             <div className="flex flex-col gap-6 text-2xl font-display font-medium text-white mb-10">
               {navLinks.map((link, i) => {
                 const Icon = link.icon;
+                const isApp = isAppRoute(link.path);
                 return (
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -207,14 +209,25 @@ export default function Navbar() {
                     transition={{ delay: i * 0.1 }}
                     key={link.name}
                   >
-                    <Link
-                      href={link.path}
-                      className="flex items-center gap-4 hover:text-suculenta transition-colors py-4 border-b border-bluegrey-700/50 group"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      <Icon size={28} className="text-olivo group-hover:text-suculenta transition-colors" strokeWidth={1.5} />
-                      <span>{link.name}</span>
-                    </Link>
+                    {isApp ? (
+                      <a
+                        href={link.path}
+                        className="flex items-center gap-4 hover:text-suculenta transition-colors py-4 border-b border-bluegrey-700/50 group"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <Icon size={28} className="text-olivo group-hover:text-suculenta transition-colors" strokeWidth={1.5} />
+                        <span>{link.name}</span>
+                      </a>
+                    ) : (
+                      <Link
+                        href={link.path}
+                        className="flex items-center gap-4 hover:text-suculenta transition-colors py-4 border-b border-bluegrey-700/50 group"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <Icon size={28} className="text-olivo group-hover:text-suculenta transition-colors" strokeWidth={1.5} />
+                        <span>{link.name}</span>
+                      </Link>
+                    )}
                   </motion.div>
                 );
               })}

@@ -17,5 +17,6 @@ const nextConfig = {
       },
     ],
   },
+  allowedDevOrigins: ['sentidomigrante.local', 'app.sentidomigrante.local'],
 };
 export default nextConfig;
