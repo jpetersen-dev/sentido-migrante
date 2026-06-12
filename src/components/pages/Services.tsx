@@ -17,7 +17,7 @@ export default function Services({ servicesData }: { servicesData: any[] }) {
 
       <div className="flex flex-col gap-6 lg:grid lg:grid-cols-3">
         {servicesData.map((srv, i) => {
-          const Icon = typeof srv.icon === 'string' ? IconMap[srv.icon] : srv.icon;
+          const Icon = (typeof srv.icon === 'string' ? IconMap[srv.icon] : srv.icon) || User;
           return (
             <div key={i} className="bg-white rounded-3xl shadow-sm border border-cream-200 flex flex-col hover:shadow-lg transition-all overflow-hidden group">
               <div className="relative h-56 w-full bg-bluegrey-100 overflow-hidden">

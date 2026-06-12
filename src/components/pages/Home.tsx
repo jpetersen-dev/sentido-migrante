@@ -191,7 +191,7 @@ export default function Home({
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             {servicesData.map((srv, i) => {
-              const Icon = typeof srv.icon === 'string' ? IconMap[srv.icon] : srv.icon;
+              const Icon = (typeof srv.icon === 'string' ? IconMap[srv.icon] : srv.icon) || User;
               return (
                 <motion.div
                   key={i}
@@ -263,9 +263,8 @@ export default function Home({
               <div className="px-8 pb-8 pt-0 flex flex-col relative">
                 <div className={`absolute -top-10 left-8 p-3 rounded-2xl flex items-center justify-center bg-white/90 backdrop-blur-md shadow-sm border border-white/60 ${servicesData[selectedService].color}`}>
                   {(() => {
-                    const Icon = typeof servicesData[selectedService].icon === 'string'
-                      ? IconMap[servicesData[selectedService].icon]
-                      : servicesData[selectedService].icon;
+                    const iconVal = servicesData[selectedService].icon;
+                    const Icon = (typeof iconVal === 'string' ? IconMap[iconVal] : iconVal) || User;
                     return <Icon size={32} strokeWidth={1.5} />;
                   })()}
                 </div>
