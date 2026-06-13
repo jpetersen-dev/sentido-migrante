@@ -3,7 +3,20 @@
 import { Home, Calendar, Stethoscope, UserCircle, BookOpen } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { cn } from '../../lib/utils';
+import { motion } from 'motion/react';
+
+const isLocalDomain = () => {
+  if (typeof window !== 'undefined') {
+    return window.location.hostname.includes('local');
+  }
+  return process.env.NEXT_PUBLIC_COOKIE_DOMAIN?.includes('local') ?? false;
+};
+
+const getLandingUrl = (path: string) => {
+  const isLocal = isLocalDomain();
+  const base = isLocal ? 'http://sentidomigrante.local:3000' : 'https://sentidomigrante.com';
+  return `${base}${path}`;
+};
 
 export default function BottomNav() {
   const pathname = usePathname();
@@ -16,38 +29,50 @@ export default function BottomNav() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 pb-safe glass bg-white/80 border-t border-cream-200 shadow-[0_-4px_20px_-10px_rgba(0,0,0,0.1)] md:hidden">
-      <div className="flex items-center justify-around h-16 px-2">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-cream-50/95 backdrop-blur-xl border-t border-cream-200/50 shadow-[0_-8px_30px_rgba(0,0,0,0.06)] md:hidden">
+      <div className="flex items-center justify-around px-2 pt-2.5 pb-2 pb-[calc(10px+env(safe-area-inset-bottom))]">
         {navItems.map((item) => {
           const Icon = item.icon;
-          const isActive = pathname === item.to || pathname?.startsWith(item.to + '/');
           const isLanding = item.to === '/' || item.to === '/servicios';
-          
+          const isActive = !isLanding && (pathname === item.to || pathname?.startsWith(item.to + '/'));
+
+          const buttonContent = (
+            <motion.div
+              whileTap={{ scale: 0.92 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+              className="relative flex flex-col items-center justify-center w-full py-1 cursor-pointer select-none"
+            >
+              <div className="relative flex items-center justify-center w-12 h-7 rounded-full transition-all duration-300">
+                {isActive && (
+                  <motion.div
+                    layoutId="activeTabPill"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    className="absolute inset-0 bg-menta rounded-full -z-10"
+                  />
+                )}
+                <Icon size={20} className={isActive ? 'text-bosque-dark stroke-[2.25px] transition-colors duration-300' : 'text-bluegrey-500 stroke-[2px] transition-colors duration-300'} />
+              </div>
+              <span className={`text-[0.65rem] mt-1.5 transition-colors duration-200 ${isActive ? 'text-bosque-dark font-bold' : 'text-bluegrey-500 font-medium'}`}>
+                {item.label}
+              </span>
+            </motion.div>
+          );
+
           return isLanding ? (
             <a
               key={item.to}
-              href={item.to}
-              className={`flex flex-col items-center justify-center w-full h-full gap-1 transition-colors ${
-                isActive ? 'text-bosque' : 'text-bluegrey-400 hover:text-bluegrey-600'
-              }`}
+              href={getLandingUrl(item.to)}
+              className="flex-1 flex justify-center text-center cursor-pointer select-none"
             >
-              <Icon size={22} className={isActive ? 'stroke-[2.5px]' : 'stroke-2'} />
-              <span className={`text-[0.65rem] font-medium ${isActive ? 'font-semibold' : ''}`}>
-                {item.label}
-              </span>
+              {buttonContent}
             </a>
           ) : (
             <Link
               key={item.to}
               href={item.to}
-              className={`flex flex-col items-center justify-center w-full h-full gap-1 transition-colors ${
-                isActive ? 'text-bosque' : 'text-bluegrey-400 hover:text-bluegrey-600'
-              }`}
+              className="flex-1 flex justify-center text-center cursor-pointer select-none"
             >
-              <Icon size={22} className={isActive ? 'stroke-[2.5px]' : 'stroke-2'} />
-              <span className={`text-[0.65rem] font-medium ${isActive ? 'font-semibold' : ''}`}>
-                {item.label}
-              </span>
+              {buttonContent}
             </Link>
           );
         })}
