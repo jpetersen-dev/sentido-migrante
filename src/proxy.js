@@ -16,6 +16,12 @@ export function proxy(request) {
   const isProduction = process.env.NODE_ENV === 'production';
   const proto = isProduction ? 'https' : 'http';
 
+  // Normalizar: redirigir de inmediato si contiene subdominios anidados como app.www. o www.app.
+  if (hostname.includes('app.www.') || hostname.includes('www.app.')) {
+    const cleanHost = hostname.replace(/^(app\.www\.|www\.app\.)+/i, 'app.');
+    return NextResponse.redirect(`${proto}://${cleanHost}${url.pathname}${url.search}`);
+  }
+
   // Definir las rutas que pertenecen a cada ecosistema
   const appRoutes = ['/mi-cuenta', '/agendar', '/recursos', '/articulo'];
   const landingRoutes = ['/servicios', '/suiza', '/alemania', '/legal'];
@@ -31,7 +37,7 @@ export function proxy(request) {
     // Si intentan entrar a una ruta de la landing desde el subdominio, redirigir al dominio principal
     const isLandingRoute = landingRoutes.some(route => url.pathname.startsWith(route));
     if (isLandingRoute) {
-      const cleanHost = hostname.replace(/^app\./, '');
+      const cleanHost = hostname.replace(/^(app\.|www\.)+/i, '');
       return NextResponse.redirect(`${proto}://${cleanHost}${url.pathname}${url.search}`);
     }
 
@@ -43,7 +49,7 @@ export function proxy(request) {
   // Si solicitan una ruta del portal del paciente, redirigir al subdominio 'app.' correspondiente
   const isAppRoute = appRoutes.some(route => url.pathname.startsWith(route));
   if (isAppRoute) {
-    const cleanHost = hostname.replace(/^app\./, ''); // Evitar duplicar
+    const cleanHost = hostname.replace(/^(app\.|www\.)+/i, ''); // Limpiar cualquier residuo de app. o www.
     return NextResponse.redirect(`${proto}://app.${cleanHost}${url.pathname}${url.search}`);
   }
 

@@ -2,6 +2,7 @@
 
 import { Calendar as CalendarIcon, Clock, MoveRight, ArrowLeft, X, Quote, User, Users, Globe, Heart } from 'lucide-react';
 import Link from 'next/link';
+import { getAppUrl } from '@/lib/utils';
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import DescubreSection from '@/components/DescubreSection';
@@ -90,7 +91,7 @@ export default function Home({
             className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
           >
             <a
-              href="/agendar"
+              href={getAppUrl('/agendar')}
               className="px-8 py-4 bg-gradient-to-br from-bosque-dark via-bosque to-olivo hover:from-bosque hover:via-olivo-dark hover:to-olivo text-white font-bold rounded-2xl flex items-center justify-center gap-2 transition-all shadow-[0_5px_15px_rgba(81,103,80,0.3)] hover:shadow-[0_8px_25px_rgba(81,103,80,0.5)] hover:-translate-y-0.5 active:scale-95"
             >
               <CalendarIcon size={20} />
@@ -294,9 +295,9 @@ export default function Home({
                   </p>
                 </div>
 
-                <Link href={`/agendar?service=${servicesData[selectedService].title}`} className="mt-8 w-full py-4 bg-bosque/90 backdrop-blur-sm border border-olivo hover:bg-bosque-dark text-white font-bold rounded-xl text-center shadow-lg shadow-bosque-dark/20 active:scale-95 transition-all">
+                <a href={getAppUrl(`/agendar?service=${servicesData[selectedService].title}`)} className="mt-8 w-full py-4 bg-bosque/90 backdrop-blur-sm border border-olivo hover:bg-bosque-dark text-white font-bold rounded-xl text-center shadow-lg shadow-bosque-dark/20 active:scale-95 transition-all">
                   Seleccionar profesionales
-                </Link>
+                </a>
               </div>
             </motion.div>
           </motion.div>

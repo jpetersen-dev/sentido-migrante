@@ -4,19 +4,7 @@ import { Home, Calendar, Stethoscope, UserCircle, BookOpen } from 'lucide-react'
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'motion/react';
-
-const isLocalDomain = () => {
-  if (typeof window !== 'undefined') {
-    return window.location.hostname.includes('local');
-  }
-  return process.env.NEXT_PUBLIC_COOKIE_DOMAIN?.includes('local') ?? false;
-};
-
-const getLandingUrl = (path: string) => {
-  const isLocal = isLocalDomain();
-  const base = isLocal ? 'http://sentidomigrante.local:3000' : 'https://sentidomigrante.com';
-  return `${base}${path}`;
-};
+import { getLandingUrl } from '@/lib/utils';
 
 export default function BottomNav() {
   const pathname = usePathname();

@@ -6,19 +6,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { LogoSymbol } from '@/components/ui/LogoSymbol';
 import { useSession, signIn, signOut } from 'next-auth/react';
-
-const isLocalDomain = () => {
-  if (typeof window !== 'undefined') {
-    return window.location.hostname.includes('local');
-  }
-  return process.env.NEXT_PUBLIC_COOKIE_DOMAIN?.includes('local') ?? false;
-};
-
-const getAppUrl = (path: string) => {
-  const isLocal = isLocalDomain();
-  const base = isLocal ? 'http://app.sentidomigrante.local:3000' : 'https://app.sentidomigrante.com';
-  return `${base}${path}`;
-};
+import { getAppUrl } from '@/lib/utils';
 
 export default function Navbar() {
   const { data: session, status } = useSession();

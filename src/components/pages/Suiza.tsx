@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { getAppUrl } from '@/lib/utils';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   ArrowRight, 
@@ -314,12 +315,12 @@ export default function Suiza() {
                   </div>
                 </div>
 
-                <Link 
-                  href="/agendar?country=CH&service=individual" 
+                 <a 
+                  href={getAppUrl('/agendar?country=CH&service=individual')} 
                   className="w-full py-4 bg-bosque hover:bg-bosque-dark text-white font-bold rounded-2xl shadow-md transition-all active:scale-[0.98] text-center flex items-center justify-center gap-2"
                 >
                   Agendar Sesión <ArrowRight size={16} />
-                </Link>
+                </a>
               </motion.div>
             ) : (
               <motion.div
@@ -362,12 +363,12 @@ export default function Suiza() {
                   </div>
                 </div>
 
-                <Link 
-                  href="/agendar?country=CH&service=pareja" 
+                 <a 
+                  href={getAppUrl('/agendar?country=CH&service=pareja')} 
                   className="w-full py-4 bg-bosque hover:bg-bosque-dark text-white font-bold rounded-2xl shadow-md transition-all active:scale-[0.98] text-center flex items-center justify-center gap-2"
                 >
                   Agendar Sesión Pareja <ArrowRight size={16} />
-                </Link>
+                </a>
               </motion.div>
             )}
           </AnimatePresence>
@@ -431,9 +432,9 @@ export default function Suiza() {
             <p className="text-sm text-bluegrey-600 font-sans">Realiza nuestro test interactivo gratuito y recibe un informe clínico orientativo.</p>
           </div>
         </div>
-        <Link href="/recursos/test-duelo" className="px-5 py-3 bg-white hover:bg-cream-50 border border-cream-200 rounded-xl font-bold text-sm text-bosque shadow-sm flex items-center justify-center gap-2 shrink-0 transition-colors">
+         <a href={getAppUrl('/recursos/test-duelo')} className="px-5 py-3 bg-white hover:bg-cream-50 border border-cream-200 rounded-xl font-bold text-sm text-bosque shadow-sm flex items-center justify-center gap-2 shrink-0 transition-colors">
           Realizar Test <ArrowRight size={14} />
-        </Link>
+        </a>
       </motion.div>
     </motion.div>
   );

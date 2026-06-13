@@ -1,5 +1,6 @@
 import { Clock, User, Users, Globe, Heart, MoveRight } from 'lucide-react';
 import Link from 'next/link';
+import { getAppUrl } from '@/lib/utils';
 
 const IconMap: Record<string, any> = {
   User,
@@ -55,9 +56,9 @@ export default function Services({ servicesData }: { servicesData: any[] }) {
                     <Clock size={14} />
                     <span>{srv.duration}</span>
                   </div>
-                  <Link href={`/agendar?service=${srv.title}`} className="px-3 py-1.5 bg-cream-50 text-bosque-dark hover:bg-menta hover:text-bosque-dark font-semibold text-xs rounded-xl transition-colors flex items-center gap-1">
+                  <a href={getAppUrl(`/agendar?service=${srv.title}`)} className="px-3 py-1.5 bg-cream-50 text-bosque-dark hover:bg-menta hover:text-bosque-dark font-semibold text-xs rounded-xl transition-colors flex items-center gap-1">
                     Agendar <MoveRight size={12}/>
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>
